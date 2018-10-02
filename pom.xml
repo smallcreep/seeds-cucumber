@@ -31,7 +31,7 @@
     </parent>
     <groupId>com.github.smallcreep</groupId>
     <artifactId>cucumber-seeds</artifactId>
-    <version>0.1.0</version>
+    <version>0.0.1-Snapshot</version>
     <packaging>jar</packaging>
     <name>cucumber-seeds</name>
     <description>Definitions basic steps for automation test on cucumber</description>
