@@ -1,12 +1,11 @@
 docker:
   image: maven:3.5.4-jdk-8-alpine
 assets:
-  # Настроить
   settings.xml: "repo/.rultor/settings.xml.asc"
-  # Настроить
-  pubring.gpg: "repo/.rultor/pubring.gpg.asc"
-  # Настроить
-  secring.gpg: "repo/.rultor/secring.gpg.asc"
+  private-keys-v1.d/446C141838180E001CE2448CB8F7F75FB79D276E.key: "repo/.rultor/private-keys-v1.d/446C141838180E001CE2448CB8F7F75FB79D276E.key.asc"
+  private-keys-v1.d/C74CD4CC680C8DB53E950E80A750DCC25527E68D.key: "repo/.rultor/private-keys-v1.d/C74CD4CC680C8DB53E950E80A750DCC25527E68D.key.asc"
+  pubring.kbx: "repo/.rultor/pubring.kbx.asc"
+  secret.pgp: "repo/.rultor/secret.pgp.asc"
 env:
   MAVEN_OPTS: -Xmx1g
   JAVA_OPTS: -Xmx1g
@@ -16,16 +15,13 @@ install: |
 architect:
   - smallcreep
 merge:
-  # Настроить
   script: |
     pdd --file=/dev/null
     mvn clean install -Pqulice --errors --settings ../settings.xml
 deploy:
-  # Настроить
   script: |
     mvn clean deploy -Pqulice --errors --settings ../settings.xml
 release:
-  # Настроить
   script: |-
     [[ "${tag}" =~ ^[\d]+(\.\d+){2}$ ]] || exit -1
     mvn versions:set "-DnewVersion=${tag}"
