@@ -1,0 +1,33 @@
+docker:
+  image: maven:3.5.4-jdk-8-alpine
+assets:
+  # Настроить
+  settings.xml: "repo/.rultor/settings.xml.asc"
+  # Настроить
+  pubring.gpg: "repo/.rultor/pubring.gpg.asc"
+  # Настроить
+  secring.gpg: "repo/.rultor/secring.gpg.asc"
+env:
+  MAVEN_OPTS: -Xmx1g
+  JAVA_OPTS: -Xmx1g
+install: |
+  sudo gem install --no-rdoc --no-ri pdd
+  sudo gem install --no-rdoc --no-ri xcop
+architect:
+  - smallcreep
+merge:
+  # Настроить
+  script: |
+    pdd --file=/dev/null
+    mvn clean install -Pqulice --errors --settings ../settings.xml
+deploy:
+  # Настроить
+  script: |
+    mvn clean deploy -Pqulice --errors --settings ../settings.xml
+release:
+  # Настроить
+  script: |-
+    [[ "${tag}" =~ ^[\d]+(\.\d+){2}$ ]] || exit -1
+    mvn versions:set "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mvn clean deploy -Pcucumber-seeds -Psonar -Pqulice -Psonatype --errors --settings ../settings.xml

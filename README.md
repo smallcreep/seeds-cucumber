@@ -1,5 +1,5 @@
 # cucumber-seeds
-Defenitions basic steps for automation test on cucumber
+Definitions basic steps for automation test on cucumber
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
