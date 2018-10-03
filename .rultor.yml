@@ -1,5 +1,5 @@
 docker:
-  image: maven:3.5.4-jdk-8-alpine
+  image: yegor256/java8
 decrypt:
   settings.xml: "repo/.rultor/settings.xml.asc"
   446C141838180E001CE2448CB8F7F75FB79D276E.key: "repo/.rultor/private-keys-v1.d/446C141838180E001CE2448CB8F7F75FB79D276E.key.asc"
