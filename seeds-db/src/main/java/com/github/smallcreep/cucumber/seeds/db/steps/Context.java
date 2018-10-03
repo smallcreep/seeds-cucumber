@@ -64,6 +64,8 @@ public final class Context {
      * @return Current CURRENT_SUIT
      * @todo #10:45m/DEV Need remove using public static method.
      *  But I don't know how fixed it. This mistake in cucumber.
+     *  If not resolved this problem need remove this comment
+     *  and add doc why we use it.
      */
     @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static Suit suit() {
