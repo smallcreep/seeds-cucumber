@@ -82,7 +82,7 @@ SOFTWARE.
     </site>
   </distributionManagement>
   <dependencies>
-    </dependencies>
+  </dependencies>
   <build>
     <pluginManagement>
       <plugins>
@@ -124,7 +124,7 @@ SOFTWARE.
             <artifactId>qulice-maven-plugin</artifactId>
             <version>0.18.2</version>
             <configuration>
-                        </configuration>
+            </configuration>
           </plugin>
           <plugin>
             <groupId>org.jacoco</groupId>
