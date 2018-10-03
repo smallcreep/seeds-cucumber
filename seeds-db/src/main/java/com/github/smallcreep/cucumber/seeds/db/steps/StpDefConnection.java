@@ -21,9 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.smallcreep.cucumber.seeds.db;
+package com.github.smallcreep.cucumber.seeds.db.steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 
 /**
@@ -33,11 +32,34 @@ import cucumber.api.java.en.Given;
 public final class StpDefConnection {
 
     /**
+     * Current Suit.
+     */
+    private final Suit suit;
+
+    /**
+     * Ctor.
+     */
+    public StpDefConnection() {
+        this(Context.suit());
+    }
+
+    /**
+     * Ctor.
+     * @param suit Current Suit
+     */
+    StpDefConnection(final Suit suit) {
+        this.suit = suit;
+    }
+
+    /**
      * Connect to the database with alias.
      * @param alias Database alias
      */
     @Given("^The connection to the database ([^,]+)$")
     public void connect(final String alias) {
-        throw new PendingException();
+        final DataBaseConnection connection = (DataBaseConnection) this.suit
+            .context()
+            .get(String.format("db.%s", alias));
+        connection.connect();
     }
 }

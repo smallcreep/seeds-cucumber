@@ -22,7 +22,16 @@
  * SOFTWARE.
  */
 
+package com.github.smallcreep.cucumber.seeds.db.steps;
+
 /**
- * Cucumber steps to use DB.
+ * Connection to te DataBase.
+ * @since 0.1.1
  */
-package com.github.smallcreep.cucumber.seeds.db;
+public interface DataBaseConnection {
+
+    /**
+     * Check connection to the DataBase.
+     */
+    void connect();
+}
