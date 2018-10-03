@@ -28,6 +28,7 @@ import cucumber.api.java.en.Given;
 
 /**
  * Steps connection to the DB.
+ * @since 0.1.1
  */
 public final class StpDefConnection {
 
