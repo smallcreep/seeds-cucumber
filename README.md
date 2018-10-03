@@ -1,3 +1,11 @@
+[![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
+[![DevOps By Rultor.com](http://www.rultor.com/b/smallcreep/cucumber-seeds)](http://www.rultor.com/p/smallcreep/cucumber-seeds)
+[![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
+
+[![Build Status](https://travis-ci.org/smallcreep/cucumber-seeds.svg?branch=master)](https://travis-ci.org/smallcreep/cucumber-seeds)
+[![PDD status](http://www.0pdd.com/svg?name=smallcreep/cucumer-seeds)](http://www.0pdd.com/p?name=smallcreep/cucumer-seeds)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/smallcreep/cucumber-seeds/blob/master/LICENSE.txt)
+
 # cucumber-seeds
 Definitions basic steps for automation test on cucumber
 
@@ -102,3 +110,42 @@ And The public.test2 should has value first in the column name for iid=1 # Пр�
 Также можно переопределять генерацию полей во время теста, 
 в этом случае значение будет генерироваться из новой функции до окончания теста 
 или нового переопределения в этом тесте.
+
+## How to contribute?
+   
+Just fork the repo and send us a pull request.
+
+Make sure your branch builds without any warnings/issues:
+
+```
+mvn clean install -Pqulice
+```
+
+Note: [Checkstyle](https://en.wikipedia.org/wiki/Checkstyle) is used as a static code analyze tool with
+[checks list](http://checkstyle.sourceforge.net/checks.html) in GitHub precommits.
+
+## Contributors
+
+ - [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
+ 
+## License (MIT)
+
+Copyright (c) 2018 Ilia Rogozhin (@smallcreep) <ilia.rogozhin@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
