@@ -2,8 +2,8 @@ docker:
   image: maven:3.5.4-jdk-8-alpine
 decrypt:
   settings.xml: "repo/.rultor/settings.xml.asc"
-  private-keys-v1.d/446C141838180E001CE2448CB8F7F75FB79D276E.key: "repo/.rultor/private-keys-v1.d/446C141838180E001CE2448CB8F7F75FB79D276E.key.asc"
-  private-keys-v1.d/C74CD4CC680C8DB53E950E80A750DCC25527E68D.key: "repo/.rultor/private-keys-v1.d/C74CD4CC680C8DB53E950E80A750DCC25527E68D.key.asc"
+  446C141838180E001CE2448CB8F7F75FB79D276E.key: "repo/.rultor/private-keys-v1.d/446C141838180E001CE2448CB8F7F75FB79D276E.key.asc"
+  C74CD4CC680C8DB53E950E80A750DCC25527E68D.key: "repo/.rultor/private-keys-v1.d/C74CD4CC680C8DB53E950E80A750DCC25527E68D.key.asc"
   pubring.kbx: "repo/.rultor/pubring.kbx.asc"
   secret.pgp: "repo/.rultor/secret.pgp.asc"
 env:
@@ -12,6 +12,9 @@ env:
 install: |
   sudo gem install --no-rdoc --no-ri pdd
   sudo gem install --no-rdoc --no-ri xcop
+  mkdir -p ../private-keys-v1.d
+  mv ../C74CD4CC680C8DB53E950E80A750DCC25527E68D.key ../private-keys-v1.d/C74CD4CC680C8DB53E950E80A750DCC25527E68D.key
+  mv ../446C141838180E001CE2448CB8F7F75FB79D276E.key ../private-keys-v1.d/446C141838180E001CE2448CB8F7F75FB79D276E.key
 architect:
   - smallcreep
 merge:
