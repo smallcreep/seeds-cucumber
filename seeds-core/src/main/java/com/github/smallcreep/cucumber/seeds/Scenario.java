@@ -22,30 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db.steps;
+package com.github.smallcreep.cucumber.seeds;
 
-import com.github.smallcreep.cucumber.seeds.Scenario;
-import java.util.Map;
+import java.io.IOException;
+import javax.management.openmbean.KeyAlreadyExistsException;
 
 /**
- * Test Suit.
+ * Current scenario.
  * @since 0.1.1
- * @todo #10:15m/DEV Move this interface to the Core module.
+ * @todo #10:35m/DEV Need add new module with name Core.
+ *  And move this interface to this module.
  *  Ann create basic implementation for this interface.
- *  Because many modules maybe used it.
  */
-public interface Suit {
+public interface Scenario {
 
     /**
-     * Get context for this Suit.
-     * @return Suit context
+     * Get value by key from the current scenario context.
+     * @param key Key
+     * @return Value
+     * @throws NullPointerException if the specified key is null
      */
-    Map<String, Object> context();
+    Object value(String key);
 
     /**
-     * Get current scenario.
-     * @return Current Scenario.
+     * Add value to current scenario context.
+     * @param key Key
+     * @param value Value
+     * @throws KeyAlreadyExistsException if the specified already exist.
      */
-    Scenario scenario();
-
+    void add(String key, Object value);
 }

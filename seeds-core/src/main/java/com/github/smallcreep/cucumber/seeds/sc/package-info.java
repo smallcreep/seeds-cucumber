@@ -21,31 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.github.smallcreep.cucumber.seeds.db.steps;
-
-import com.github.smallcreep.cucumber.seeds.Scenario;
-import java.util.Map;
-
 /**
- * Test Suit.
- * @since 0.1.1
- * @todo #10:15m/DEV Move this interface to the Core module.
- *  Ann create basic implementation for this interface.
- *  Because many modules maybe used it.
+ * Scenario implementations.
  */
-public interface Suit {
-
-    /**
-     * Get context for this Suit.
-     * @return Suit context
-     */
-    Map<String, Object> context();
-
-    /**
-     * Get current scenario.
-     * @return Current Scenario.
-     */
-    Scenario scenario();
-
-}
+package com.github.smallcreep.cucumber.seeds.sc;

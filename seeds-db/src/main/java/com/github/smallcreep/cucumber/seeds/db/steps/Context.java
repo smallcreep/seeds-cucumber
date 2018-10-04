@@ -24,6 +24,7 @@
 
 package com.github.smallcreep.cucumber.seeds.db.steps;
 
+import com.github.smallcreep.cucumber.seeds.Scenario;
 import java.util.Map;
 
 /**

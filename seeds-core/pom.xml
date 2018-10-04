@@ -25,16 +25,16 @@ SOFTWARE.
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.github.smallcreep.cucumber</groupId>
     <artifactId>seeds</artifactId>
+    <groupId>com.github.smallcreep.cucumber</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>seeds-db</artifactId>
+  <artifactId>seeds-core</artifactId>
   <dependencies>
     <dependency>
-      <groupId>com.github.smallcreep.cucumber</groupId>
-      <artifactId>seeds-core</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <groupId>org.cactoos</groupId>
+      <artifactId>cactoos</artifactId>
+      <version>0.36</version>
     </dependency>
   </dependencies>
 </project>

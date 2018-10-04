@@ -22,22 +22,55 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db.steps;
+package com.github.smallcreep.cucumber.seeds.sc;
 
+import com.github.smallcreep.cucumber.seeds.Scenario;
+import java.util.HashMap;
 import java.util.Map;
+import javax.management.openmbean.KeyAlreadyExistsException;
 
 /**
- * Current scenario.
+ * Simple implementation of Scenario.
+ * This implementation use {@link HashMap} for store values.
  * @since 0.1.1
- * @todo #10:35m/DEV Need add new module with name Core.
- *  And move this interface to this module.
- *  Ann create basic implementation for this interface.
  */
-public interface Scenario {
+public final class ScSimple implements Scenario {
 
     /**
-     * Get context for this Scenario.
-     * @return Scenario context
+     * Values map.
      */
-    Map<String, Object> context();
+    private final Map<String, Object> values;
+
+    /**
+     * Ctor.
+     */
+    public ScSimple() {
+        this(new HashMap<>());
+    }
+
+    /**
+     * Ctor.
+     * @param values Values map
+     */
+    protected ScSimple(final Map<String, Object> values) {
+        this.values = values;
+    }
+
+    @Override
+    public Object value(final String key) {
+        return this.values.get(key);
+    }
+
+    @Override
+    public void add(final String key, final Object value) {
+        if (this.values.containsKey(key)) {
+            throw new KeyAlreadyExistsException(
+                String.format(
+                    "In scenario already exist key '%s'",
+                    key
+                )
+            );
+        }
+        this.values.put(key, value);
+    }
 }
