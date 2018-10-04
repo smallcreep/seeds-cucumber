@@ -22,55 +22,72 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.sc;
+package com.github.smallcreep.cucumber.seeds.suit;
 
 import com.github.smallcreep.cucumber.seeds.Scenario;
-import java.util.HashMap;
-import java.util.Map;
-import javax.management.openmbean.KeyAlreadyExistsException;
+import com.github.smallcreep.cucumber.seeds.Suit;
+import com.github.smallcreep.cucumber.seeds.sc.ScSimple;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Simple implementation of Scenario.
- * This implementation use {@link HashMap} for store values.
+ * Simple Suit implementation.
  * @since 0.1.1
+ * @todo #18:30m/DEV Redesign class. Suit must be a Singleton class.
+ *  This class must two static {@link AtomicReference} fields:
+ *  Context suit and Scenario. Scenario should be return context of scenario.
+ *  Because we don't want use dependency injection.
+ *  For correct using Before and After we can use order feature
+ *  @see <a href="http://toolsqa.com/cucumber/execution-order-hooks/">Hooks Ordering</a>
  */
-public final class ScSimple implements Scenario {
+public final class StSimple implements Suit {
 
     /**
-     * Values map.
+     * Current scenario.
      */
-    private final Map<String, Object> values;
+    private final AtomicReference<Scenario> scenario;
+
+    /**
+     * Suit context as Scenario context.
+     */
+    private final Scenario context;
 
     /**
      * Ctor.
      */
-    public ScSimple() {
-        this(new HashMap<>());
+    public StSimple() {
+        this(
+            new ScSimple(),
+            new ScSimple()
+        );
     }
 
     /**
      * Ctor.
-     * @param values Values map
+     * @param scenario Current Scenario
+     * @param context Current Suit context as scenario context
      */
-    ScSimple(final Map<String, Object> values) {
-        this.values = values;
+    StSimple(Scenario scenario, final Scenario context) {
+        this.scenario = new AtomicReference<>(scenario);
+        this.context = context;
+    }
+
+    @Override
+    public Scenario scenario() {
+        return this.scenario.get();
+    }
+
+    @Override
+    public void finish() {
+        this.scenario.lazySet(new ScSimple());
     }
 
     @Override
     public Object value(final String key) {
-        return this.values.get(key);
+        return this.context.value(key);
     }
 
     @Override
     public void add(final String key, final Object value) {
-        if (this.values.containsKey(key)) {
-            throw new KeyAlreadyExistsException(
-                String.format(
-                    "In scenario already exist key '%s'",
-                    key
-                )
-            );
-        }
-        this.values.put(key, value);
+        this.context.add(key, value);
     }
 }

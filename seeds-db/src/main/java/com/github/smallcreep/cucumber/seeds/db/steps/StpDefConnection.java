@@ -23,6 +23,7 @@
  */
 package com.github.smallcreep.cucumber.seeds.db.steps;
 
+import com.github.smallcreep.cucumber.seeds.Suit;
 import cucumber.api.java.en.Given;
 
 /**
@@ -58,8 +59,8 @@ public final class StpDefConnection {
     @Given("^The connection to the database ([^,]+)$")
     public void connect(final String alias) {
         final DataBaseConnection connection = (DataBaseConnection) this.suit
-            .context()
-            .get(String.format("db.%s", alias));
+            .scenario()
+            .value(String.format("db.%s", alias));
         connection.connect();
     }
 }

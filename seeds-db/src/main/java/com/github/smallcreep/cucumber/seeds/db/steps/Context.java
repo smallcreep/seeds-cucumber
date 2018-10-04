@@ -24,8 +24,8 @@
 
 package com.github.smallcreep.cucumber.seeds.db.steps;
 
-import com.github.smallcreep.cucumber.seeds.Scenario;
-import java.util.Map;
+import com.github.smallcreep.cucumber.seeds.Suit;
+import com.github.smallcreep.cucumber.seeds.suit.StSimple;
 
 /**
  * Context all tests.
@@ -41,17 +41,7 @@ public final class Context {
     /**
      * Current Suit.
      */
-    private static final Suit CURRENT_SUIT = new Suit() {
-        @Override
-        public Map<String, Object> context() {
-            return null;
-        }
-
-        @Override
-        public Scenario scenario() {
-            return null;
-        }
-    };
+    private static final Suit CURRENT_SUIT = new StSimple();
 
     /**
      * Ctor.

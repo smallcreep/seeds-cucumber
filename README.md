@@ -3,7 +3,8 @@
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Build Status](https://travis-ci.org/smallcreep/cucumber-seeds.svg?branch=master)](https://travis-ci.org/smallcreep/cucumber-seeds)
-[![PDD status](http://www.0pdd.com/svg?name=smallcreep/cucumer-seeds)](http://www.0pdd.com/p?name=smallcreep/cucumer-seeds)
+[![PDD status](http://www.0pdd.com/svg?name=smallcreep/cucumber-seeds)](http://www.0pdd.com/p?name=smallcreep/cucumber-seeds)
+[![codecov](https://codecov.io/gh/smallcreep/cucumber-seeds/branch/master/graph/badge.svg)](https://codecov.io/gh/smallcreep/cucumber-seeds)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/smallcreep/cucumber-seeds/blob/master/LICENSE.txt)
 
 # cucumber-seeds
