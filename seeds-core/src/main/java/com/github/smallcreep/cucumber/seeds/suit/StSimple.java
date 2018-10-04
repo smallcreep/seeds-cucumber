@@ -31,20 +31,20 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Simple Suit implementation.
+ * @see <a href="http://toolsqa.com/cucumber/execution-order-hooks/">Hooks Ordering</a>
  * @since 0.1.1
  * @todo #18:30m/DEV Redesign class. Suit must be a Singleton class.
  *  This class must two static {@link AtomicReference} fields:
- *  Context suit and Scenario. Scenario should be return context of scenario.
+ *  Context suit and Scenario. Scenario should be return context of current.
  *  Because we don't want use dependency injection.
  *  For correct using Before and After we can use order feature
- *  @see <a href="http://toolsqa.com/cucumber/execution-order-hooks/">Hooks Ordering</a>
  */
 public final class StSimple implements Suit {
 
     /**
-     * Current scenario.
+     * Current current.
      */
-    private final AtomicReference<Scenario> scenario;
+    private final AtomicReference<Scenario> current;
 
     /**
      * Suit context as Scenario context.
@@ -64,21 +64,21 @@ public final class StSimple implements Suit {
     /**
      * Ctor.
      * @param scenario Current Scenario
-     * @param context Current Suit context as scenario context
+     * @param context Current Suit context as current context
      */
-    StSimple(Scenario scenario, final Scenario context) {
-        this.scenario = new AtomicReference<>(scenario);
+    StSimple(final Scenario scenario, final Scenario context) {
+        this.current = new AtomicReference<>(scenario);
         this.context = context;
     }
 
     @Override
     public Scenario scenario() {
-        return this.scenario.get();
+        return this.current.get();
     }
 
     @Override
     public void finish() {
-        this.scenario.lazySet(new ScSimple());
+        this.current.lazySet(new ScSimple());
     }
 
     @Override
