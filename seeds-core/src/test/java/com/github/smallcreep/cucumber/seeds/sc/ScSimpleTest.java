@@ -26,6 +26,7 @@ package com.github.smallcreep.cucumber.seeds.sc;
 
 import com.github.smallcreep.cucumber.seeds.Scenario;
 import java.util.HashMap;
+import java.util.Map;
 import javax.management.openmbean.KeyAlreadyExistsException;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
@@ -35,6 +36,7 @@ import org.junit.Test;
 
 /**
  * Test Case for {@link ScSimple}.
+ * @since 0.1.1
  */
 public final class ScSimpleTest {
 
@@ -44,15 +46,16 @@ public final class ScSimpleTest {
     @Test
     public void checkValueByKey() {
         final Object expected = new Object();
+        final String key = "key1";
         MatcherAssert.assertThat(
             new ScSimple(
                 new MapOf<String, Object>(
                     new MapEntry<>(
-                        "key1",
+                        key,
                         expected
                     )
                 )
-            ).value("key1"),
+            ).value(key),
             CoreMatchers.equalTo(expected)
         );
     }
@@ -62,12 +65,13 @@ public final class ScSimpleTest {
      */
     @Test
     public void checkAddingNewValue() {
-        final HashMap<String, Object> values = new HashMap<>();
+        final Map<String, Object> values = new HashMap<>();
         final Scenario scenario = new ScSimple(values);
         final Object expected = new Object();
-        scenario.add("key1", expected);
+        final String key = "key_add";
+        scenario.add(key, expected);
         MatcherAssert.assertThat(
-            values.get("key1"),
+            values.get(key),
             CoreMatchers.equalTo(expected)
         );
     }
@@ -77,13 +81,14 @@ public final class ScSimpleTest {
      */
     @Test(expected = KeyAlreadyExistsException.class)
     public void checkAddingExistingKey() {
+        final String key = "key_threw";
         new ScSimple(
             new MapOf<String, Object>(
                 new MapEntry<>(
-                    "key1",
+                    key,
                     "first"
                 )
             )
-        ).add("key1", "second");
+        ).add(key, "second");
     }
 }

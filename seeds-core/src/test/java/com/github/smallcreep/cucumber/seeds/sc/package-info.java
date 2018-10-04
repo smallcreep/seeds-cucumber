@@ -21,30 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.github.smallcreep.cucumber.seeds;
-
-import javax.management.openmbean.KeyAlreadyExistsException;
-
 /**
- * Current scenario.
- * @since 0.1.1
+ * Test Cases for {@link com.github.smallcreep.cucumber.seeds.Scenario}
+ * implementations.
  */
-public interface Scenario {
-
-    /**
-     * Get value by key from the current scenario context.
-     * @param key Key
-     * @return Value
-     * @throws NullPointerException if the specified key is null
-     */
-    Object value(String key);
-
-    /**
-     * Add value to current scenario context.
-     * @param key Key
-     * @param value Value
-     * @throws KeyAlreadyExistsException if the specified already exist.
-     */
-    void add(String key, Object value);
-}
+package com.github.smallcreep.cucumber.seeds.sc;
