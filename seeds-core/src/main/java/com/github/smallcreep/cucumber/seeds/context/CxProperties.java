@@ -25,9 +25,13 @@
 package com.github.smallcreep.cucumber.seeds.context;
 
 import com.github.smallcreep.cucumber.seeds.Context;
+import java.io.File;
 import java.util.Properties;
+import org.cactoos.io.InputOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
+import org.cactoos.scalar.PropertiesOf;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
  * Context from properties.
@@ -41,14 +45,52 @@ public final class CxProperties implements Context {
     private final Context origin;
 
     /**
+     * Default Ctor.
+     */
+    public CxProperties() {
+        this(
+            System.getProperty(
+                "cucumber.seeds.property",
+                "cucumber.seeds.properties"
+            )
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param file File name
+     */
+    public CxProperties(final String file) {
+        this(
+            new File(file)
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param file File
+     */
+    public CxProperties(final File file) {
+        this(
+            new UncheckedScalar<>(
+                new PropertiesOf(
+                    new InputOf(
+                        file
+                    )
+                )
+            ).value()
+        );
+    }
+
+    /**
      * Ctor.
      * @param properties Properties
      */
-    CxProperties(final Properties properties) {
+    public CxProperties(final Properties properties) {
         this(
             new CxSimple(
                 new MapOf<String, Object>(
-                    (name) -> new MapEntry<>(
+                    name -> new MapEntry<>(
                         name,
                         properties.getProperty(name)
                     ),
@@ -73,9 +115,7 @@ public final class CxProperties implements Context {
 
     @Override
     public void add(final String key, final Object value) {
-        throw new UnsupportedOperationException(
-            "Can not add value to properties context"
-        );
+        this.origin.add(key, value);
     }
 
     @Override
