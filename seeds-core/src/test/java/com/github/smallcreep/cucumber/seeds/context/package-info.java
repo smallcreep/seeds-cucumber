@@ -21,18 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.github.smallcreep.cucumber.seeds;
-
 /**
- * Current scenario.
- * @since 0.1.1
+ * Test Cases for {@link com.github.smallcreep.cucumber.seeds.Context}
+ * implementations.
  */
-public interface Scenario {
-
-    /**
-     * Get context of this scenario.
-     * @return Scenario context
-     */
-    Context context();
-}
+package com.github.smallcreep.cucumber.seeds.context;

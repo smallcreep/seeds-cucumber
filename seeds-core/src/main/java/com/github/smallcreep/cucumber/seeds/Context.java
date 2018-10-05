@@ -22,55 +22,37 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.sc;
+package com.github.smallcreep.cucumber.seeds;
 
-import com.github.smallcreep.cucumber.seeds.Scenario;
-import java.util.HashMap;
-import java.util.Map;
 import javax.management.openmbean.KeyAlreadyExistsException;
 
 /**
- * Simple implementation of Scenario.
- * This implementation use {@link HashMap} for store values.
+ * Context scenario or suit.
  * @since 0.1.1
  */
-public final class ScSimple implements Scenario {
+public interface Context {
 
     /**
-     * Values map.
+     * Get value by key from the current scenario context.
+     * @param key Key
+     * @return Value
+     * @throws NullPointerException if the specified key is null
      */
-    private final Map<String, Object> values;
+    Object value(String key);
 
     /**
-     * Ctor.
+     * Add value to current scenario context.
+     * @param key Key
+     * @param value Value
+     * @throws KeyAlreadyExistsException if the specified already exist.
      */
-    public ScSimple() {
-        this(new HashMap<>());
-    }
+    void add(String key, Object value);
 
     /**
-     * Ctor.
-     * @param values Values map
+     * Check the value with this key contains in this context.
+     * @param key Key value
+     * @return True if value with this key contains
      */
-    ScSimple(final Map<String, Object> values) {
-        this.values = values;
-    }
+    boolean contains(String key);
 
-    @Override
-    public Object value(final String key) {
-        return this.values.get(key);
-    }
-
-    @Override
-    public void add(final String key, final Object value) {
-        if (this.values.containsKey(key)) {
-            throw new KeyAlreadyExistsException(
-                String.format(
-                    "In scenario already exist key '%s'",
-                    key
-                )
-            );
-        }
-        this.values.put(key, value);
-    }
 }

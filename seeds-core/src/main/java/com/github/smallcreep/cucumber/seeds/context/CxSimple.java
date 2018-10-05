@@ -21,47 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.smallcreep.cucumber.seeds.db.steps;
 
-import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.suit.StSimple;
-import cucumber.api.java.en.Given;
+package com.github.smallcreep.cucumber.seeds.context;
+
+import com.github.smallcreep.cucumber.seeds.Context;
+import java.util.HashMap;
+import java.util.Map;
+import javax.management.openmbean.KeyAlreadyExistsException;
 
 /**
- * Steps connection to the DB.
+ * Simple implementation of {@link Context}.
+ * This implementation use {@link HashMap} for store values.
  * @since 0.1.1
  */
-public final class StpDefConnection {
+public final class CxSimple implements Context {
 
     /**
-     * Current Suit.
+     * Values map.
      */
-    private final Suit suit;
+    private final Map<String, Object> values;
 
     /**
      * Ctor.
      */
-    public StpDefConnection() {
-        this(StSimple.instance());
+    public CxSimple() {
+        this(new HashMap<>());
     }
 
     /**
      * Ctor.
-     * @param suit Current Suit
+     * @param values Values map
      */
-    StpDefConnection(final Suit suit) {
-        this.suit = suit;
+    CxSimple(final Map<String, Object> values) {
+        this.values = values;
     }
 
-    /**
-     * Connect to the database with alias.
-     * @param alias Database alias
-     */
-    @Given("^The connection to the database ([^,]+)$")
-    public void connect(final String alias) {
-        final DataBaseConnection connection = (DataBaseConnection) this.suit
-            .context()
-            .value(String.format("db.%s", alias));
-        connection.connect();
+    @Override
+    public Object value(final String key) {
+        return this.values.get(key);
+    }
+
+    @Override
+    public void add(final String key, final Object value) {
+        if (this.contains(key)) {
+            throw new KeyAlreadyExistsException(
+                String.format(
+                    "In scenario already exist key '%s'",
+                    key
+                )
+            );
+        }
+        this.values.put(key, value);
+    }
+
+    @Override
+    public boolean contains(final String key) {
+        return this.values.containsKey(key);
     }
 }

@@ -22,17 +22,42 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.scenario;
+
+import com.github.smallcreep.cucumber.seeds.Context;
+import com.github.smallcreep.cucumber.seeds.Scenario;
+import com.github.smallcreep.cucumber.seeds.context.CxSimple;
+import java.util.HashMap;
 
 /**
- * Current scenario.
+ * Simple implementation of Scenario.
+ * This implementation use {@link HashMap} for store values.
  * @since 0.1.1
  */
-public interface Scenario {
+public final class ScSimple implements Scenario {
 
     /**
-     * Get context of this scenario.
-     * @return Scenario context
+     * Context.
      */
-    Context context();
+    private final Context cxt;
+
+    /**
+     * Ctor.
+     */
+    public ScSimple() {
+        this(new CxSimple());
+    }
+
+    /**
+     * Ctor.
+     * @param context Context
+     */
+    ScSimple(final Context context) {
+        this.cxt = context;
+    }
+
+    @Override
+    public Context context() {
+        return this.cxt;
+    }
 }

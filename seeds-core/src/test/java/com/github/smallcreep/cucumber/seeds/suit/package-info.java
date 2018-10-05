@@ -21,46 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.github.smallcreep.cucumber.seeds.db.steps;
-
-import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.suit.StSimple;
-
 /**
- * Context all tests.
- * It's a workaround, because cucumber doesn't OOP.
- * @since 0.1.1
- * @todo #10:30m/DEV Move this class to the Core module.
- *  Because many modules maybe used it.
- *  Method {@link Context#suit()} should return the same suit every time.
- *  After add implementation of {@link Suit} need replace it.
+ * Test Cases for {@link com.github.smallcreep.cucumber.seeds.Suit}
+ * implementations.
  */
-public final class Context {
-
-    /**
-     * Current Suit.
-     */
-    private static final Suit CURRENT_SUIT = new StSimple();
-
-    /**
-     * Ctor.
-     */
-    private Context() {
-        // Nothing. This is utility class.
-    }
-
-    /**
-     * Get current CURRENT_SUIT.
-     * @return Current CURRENT_SUIT
-     * @todo #10:45m/DEV Need remove using public static method.
-     *  But I don't know how fixed it. This mistake in cucumber.
-     *  If not resolved this problem need remove this comment
-     *  and add doc why we use it.
-     */
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static Suit suit() {
-        return Context.CURRENT_SUIT;
-    }
-
-}
+package com.github.smallcreep.cucumber.seeds.suit;

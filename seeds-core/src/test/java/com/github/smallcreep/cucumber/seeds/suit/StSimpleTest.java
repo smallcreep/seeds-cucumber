@@ -22,17 +22,54 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.suit;
+
+import com.github.smallcreep.cucumber.seeds.Context;
+import com.github.smallcreep.cucumber.seeds.Scenario;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Current scenario.
+ * Test Case for {@link StSimple}.
  * @since 0.1.1
  */
-public interface Scenario {
+public class StSimpleTest {
 
     /**
-     * Get context of this scenario.
-     * @return Scenario context
+     * Check suit return context.
      */
-    Context context();
+    @Test
+    public void checkContext() {
+        MatcherAssert.assertThat(
+            StSimple.instance().context(),
+            CoreMatchers.notNullValue(Context.class)
+        );
+    }
+
+    /**
+     * Check suit return current scenario.
+     */
+    @Test
+    public void checkScenario() {
+        MatcherAssert.assertThat(
+            StSimple.instance().scenario(),
+            CoreMatchers.notNullValue(Scenario.class)
+        );
+    }
+
+    /**
+     * Check suit return new scenario after finish current.
+     */
+    @Test
+    public void checkNewScenarioAfterFinish() {
+        final Scenario first = StSimple.instance().scenario();
+        StSimple.instance().finish();
+        MatcherAssert.assertThat(
+            StSimple.instance().scenario(),
+            CoreMatchers.not(
+                CoreMatchers.equalTo(first)
+            )
+        );
+    }
 }

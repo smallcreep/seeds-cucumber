@@ -27,7 +27,13 @@ package com.github.smallcreep.cucumber.seeds;
  * Test Suit.
  * @since 0.1.1
  */
-public interface Suit extends Scenario {
+public interface Suit {
+
+    /**
+     * Get context of this suit.
+     * @return Suit context
+     */
+    Context context();
 
     /**
      * Get current scenario.
@@ -39,5 +45,4 @@ public interface Suit extends Scenario {
      * Finish current scenario.
      */
     void finish();
-
 }

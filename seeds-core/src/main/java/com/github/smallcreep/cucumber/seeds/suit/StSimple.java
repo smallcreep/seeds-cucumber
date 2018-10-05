@@ -24,70 +24,77 @@
 
 package com.github.smallcreep.cucumber.seeds.suit;
 
+import com.github.smallcreep.cucumber.seeds.Context;
 import com.github.smallcreep.cucumber.seeds.Scenario;
 import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.sc.ScSimple;
+import com.github.smallcreep.cucumber.seeds.context.CxSimple;
+import com.github.smallcreep.cucumber.seeds.scenario.ScSimple;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Simple Suit implementation.
- * @see <a href="http://toolsqa.com/cucumber/execution-order-hooks/">Hooks Ordering</a>
  * @since 0.1.1
- * @todo #18:30m/DEV Redesign class. Suit must be a Singleton class.
- *  This class must two static {@link AtomicReference} fields:
- *  Context suit and Scenario. Scenario should be return context of current.
- *  Because we don't want use dependency injection.
- *  For correct using Before and After we can use order feature
  */
 public final class StSimple implements Suit {
 
     /**
-     * Current current.
+     * Current suit.
      */
-    private final AtomicReference<Scenario> current;
+    private static final Suit CURRENT = new StSimple();
 
     /**
-     * Suit context as Scenario context.
+     * Suit context.
      */
-    private final Scenario context;
+    private final Context ctx;
+
+    /**
+     * Current scenario.
+     */
+    private final AtomicReference<Scenario> scr;
 
     /**
      * Ctor.
      */
-    public StSimple() {
+    private StSimple() {
         this(
-            new ScSimple(),
-            new ScSimple()
+            new CxSimple()
         );
     }
 
     /**
      * Ctor.
-     * @param scenario Current Scenario
-     * @param context Current Suit context as current context
+     * @param context Current Suit ctx
      */
-    StSimple(final Scenario scenario, final Scenario context) {
-        this.current = new AtomicReference<>(scenario);
-        this.context = context;
+    private StSimple(final Context context) {
+        this.ctx = context;
+        this.scr = new AtomicReference<>(new ScSimple());
+    }
+
+    @Override
+    public Context context() {
+        return this.ctx;
     }
 
     @Override
     public Scenario scenario() {
-        return this.current.get();
+        return this.scr.get();
     }
 
     @Override
     public void finish() {
-        this.current.lazySet(new ScSimple());
+        this.scr.lazySet(new ScSimple());
     }
 
-    @Override
-    public Object value(final String key) {
-        return this.context.value(key);
-    }
-
-    @Override
-    public void add(final String key, final Object value) {
-        this.context.add(key, value);
+    /**
+     * Get current suit instance.
+     * @return Current suit instance
+     * @todo #10:45m/DEV Need remove using public static method.
+     *  But I don't know how fixed it. This mistake in cucumber.
+     *  If not resolved this problem need remove this comment
+     *  and add doc why we use it.
+     */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
+    public static Suit instance() {
+        return StSimple.CURRENT;
     }
 }

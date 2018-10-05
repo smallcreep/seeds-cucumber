@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 /**
- * Scenario implementations.
+ * Test Cases for {@link com.github.smallcreep.cucumber.seeds.Scenario}
+ * implementations.
  */
-package com.github.smallcreep.cucumber.seeds.sc;
+package com.github.smallcreep.cucumber.seeds.scenario;

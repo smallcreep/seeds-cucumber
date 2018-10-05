@@ -21,8 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+package com.github.smallcreep.cucumber.seeds.scenario;
+
+import com.github.smallcreep.cucumber.seeds.Context;
+import com.github.smallcreep.cucumber.seeds.context.CxSimple;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+
 /**
- * Test Cases for {@link com.github.smallcreep.cucumber.seeds.Scenario}
- * implementations.
+ * Test Case for {@link ScSimple}.
+ * @since 0.1.1
  */
-package com.github.smallcreep.cucumber.seeds.sc;
+public class ScSimpleTest {
+
+    /**
+     * Check return correct context.
+     */
+    @Test
+    public void checkReturnContext() {
+        final Context context = new CxSimple();
+        MatcherAssert.assertThat(
+            new ScSimple(
+                context
+            ).context(),
+            CoreMatchers.equalTo(context)
+        );
+    }
+}
