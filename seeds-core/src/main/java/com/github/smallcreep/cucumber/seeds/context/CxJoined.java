@@ -32,6 +32,7 @@ import com.github.smallcreep.cucumber.seeds.Context;
  * @todo #28:15m/DEV Need implement this class.
  *  This class must search properties in all context.
  *  And have storage for new values.
+ *  Need use many context from constructor.
  */
 public final class CxJoined implements Context {
 
