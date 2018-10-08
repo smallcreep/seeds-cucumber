@@ -32,7 +32,7 @@ import com.github.smallcreep.cucumber.seeds.context.CxProperties;
  * Default suit.
  * @since 0.1.1
  */
-public final class StDefault extends StWrap {
+public final class StDefault extends StEnvelope {
 
     /**
      * Ctor.

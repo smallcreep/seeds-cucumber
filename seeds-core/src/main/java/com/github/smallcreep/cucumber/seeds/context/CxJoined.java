@@ -25,17 +25,27 @@
 package com.github.smallcreep.cucumber.seeds.context;
 
 import com.github.smallcreep.cucumber.seeds.Context;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import javax.management.openmbean.KeyAlreadyExistsException;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Joined;
 
 /**
  * Joined context.
  * @since 0.1.1
- * @todo #28:15m/DEV Need implement this class.
- *  This class must search properties in all context.
- *  And have storage for new values.
- *  Need use many context from constructor.
  */
 public final class CxJoined implements Context {
+
+    /**
+     * Contexts.
+     */
+    private final Iterable<Context> contexts;
+
+    /**
+     * Extra context.
+     */
+    private final Context extra;
 
     /**
      * Ctor.
@@ -53,23 +63,65 @@ public final class CxJoined implements Context {
      * Ctor.
      * @param contexts Contexts
      */
-    @SuppressWarnings("PMD.UnusedFormalParameter")
     CxJoined(final Iterable<Context> contexts) {
-        // Nothing
+        this(contexts, new CxSimple());
+    }
+
+    /**
+     * Ctor.
+     * @param contexts Contexts
+     * @param extra Extra context
+     */
+    CxJoined(
+        final Iterable<Context> contexts,
+        final Context extra
+    ) {
+        this.contexts = contexts;
+        this.extra = extra;
     }
 
     @Override
     public Object value(final String key) {
-        return null;
+        final AtomicReference<Object> result = new AtomicReference<>();
+        new Joined<>(
+            this.extra,
+            this.contexts
+        ).forEach(
+            context -> {
+                if (context.contains(key) && result.get() == null) {
+                    result.set(context.value(key));
+                }
+            }
+        );
+        return result.get();
     }
 
     @Override
     public void add(final String key, final Object value) {
-        // Nothing
+        if (this.contains(key)) {
+            throw new KeyAlreadyExistsException(
+                String.format(
+                    "In scenario already exist key '%s'",
+                    key
+                )
+            );
+        }
+        this.extra.add(key, value);
     }
 
     @Override
     public boolean contains(final String key) {
-        return false;
+        final AtomicBoolean result = new AtomicBoolean(false);
+        new Joined<>(
+            this.extra,
+            this.contexts
+        ).forEach(
+            context -> {
+                if (context.contains(key) && !result.get()) {
+                    result.set(true);
+                }
+            }
+        );
+        return result.get();
     }
 }

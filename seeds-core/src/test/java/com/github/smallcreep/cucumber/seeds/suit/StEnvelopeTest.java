@@ -31,10 +31,10 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * TestCase for {@link StWrap}.
+ * TestCase for {@link StEnvelope}.
  * @since 0.1.1
  */
-public class StWrapTest {
+public class StEnvelopeTest {
 
     /**
      * Check context return from origin.
@@ -42,7 +42,7 @@ public class StWrapTest {
     @Test
     public void checkContextTheSameOrigin() {
         MatcherAssert.assertThat(
-            new StCheckWrap().context(),
+            new StCheckEnvelope().context(),
             CoreMatchers.equalTo(
                 StSmart.instance().context()
             )
@@ -55,7 +55,7 @@ public class StWrapTest {
     @Test
     public void checkScenarioTheSameOrigin() {
         MatcherAssert.assertThat(
-            new StCheckWrap().scenario(),
+            new StCheckEnvelope().scenario(),
             CoreMatchers.equalTo(
                 StSmart.instance().scenario()
             )
@@ -67,7 +67,7 @@ public class StWrapTest {
      */
     @Test
     public void checkFinishWasRun() {
-        final Suit suit = new StCheckWrap();
+        final Suit suit = new StCheckEnvelope();
         final Scenario first = suit.scenario();
         suit.finish();
         MatcherAssert.assertThat(
@@ -81,14 +81,14 @@ public class StWrapTest {
     }
 
     /**
-     * Test Suit for check wrapped suit.
+     * Test Suit for check envelope suit.
      */
-    private final class StCheckWrap extends StWrap {
+    private final class StCheckEnvelope extends StEnvelope {
 
         /**
          * Ctor.
          */
-        StCheckWrap() {
+        StCheckEnvelope() {
             super(StSmart.instance());
         }
     }

@@ -28,6 +28,7 @@ import com.github.smallcreep.cucumber.seeds.Context;
 import java.util.HashMap;
 import java.util.Map;
 import javax.management.openmbean.KeyAlreadyExistsException;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.hamcrest.CoreMatchers;
@@ -37,10 +38,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
- * Test Case for {@link CxSimple}.
+ * Test Case for {@link CxJoined}.
  * @since 0.1.1
  */
-public final class CxSimpleTest {
+public class CxJoinedTest {
 
     /**
      * A rule for handling an exception.
@@ -56,11 +57,13 @@ public final class CxSimpleTest {
         final Object expected = new Object();
         final String key = "key1";
         MatcherAssert.assertThat(
-            new CxSimple(
-                new MapOf<String, Object>(
-                    new MapEntry<>(
-                        key,
-                        expected
+            new CxJoined(
+                new CxSimple(
+                    new MapOf<String, Object>(
+                        new MapEntry<>(
+                            key,
+                            expected
+                        )
                     )
                 )
             ).value(key),
@@ -74,7 +77,12 @@ public final class CxSimpleTest {
     @Test
     public void checkAddingNewValue() {
         final Map<String, Object> values = new HashMap<>();
-        final Context context = new CxSimple(values);
+        final Context context = new CxJoined(
+            new IterableOf<>(
+                new CxSimple()
+            ),
+            new CxSimple(values)
+        );
         final Object expected = new Object();
         final String key = "key_add";
         context.add(key, expected);
@@ -97,29 +105,16 @@ public final class CxSimpleTest {
                 key
             )
         );
-        new CxSimple(
-            new MapOf<String, Object>(
-                new MapEntry<>(
-                    key,
-                    "first"
+        new CxJoined(
+            new CxSimple(
+                new MapOf<String, Object>(
+                    new MapEntry<>(
+                        key,
+                        "first"
+                    )
                 )
             )
         ).add(key, "second");
-    }
-
-    /**
-     * Check default Ctor.
-     */
-    @Test
-    public void checkDefaultCtor() {
-        final Object expected = new Object();
-        final String key = "key_ctor";
-        final Context context = new CxSimple();
-        context.add(key, expected);
-        MatcherAssert.assertThat(
-            context.value(key),
-            CoreMatchers.equalTo(expected)
-        );
     }
 
     /**
@@ -130,16 +125,17 @@ public final class CxSimpleTest {
         final Object expected = new Object();
         final String key = "key_contains";
         MatcherAssert.assertThat(
-            new CxSimple(
-                new MapOf<String, Object>(
-                    new MapEntry<>(
-                        key,
-                        expected
+            new CxJoined(
+                new CxSimple(
+                    new MapOf<String, Object>(
+                        new MapEntry<>(
+                            key,
+                            expected
+                        )
                     )
                 )
             ).contains(key),
             CoreMatchers.equalTo(true)
         );
     }
-
 }

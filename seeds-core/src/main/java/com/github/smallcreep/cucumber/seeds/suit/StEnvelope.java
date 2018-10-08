@@ -29,10 +29,10 @@ import com.github.smallcreep.cucumber.seeds.Scenario;
 import com.github.smallcreep.cucumber.seeds.Suit;
 
 /**
- * Wrap of suit.
+ * Envelope of suit.
  * @since 0.1.1
  */
-public abstract class StWrap implements Suit {
+public abstract class StEnvelope implements Suit {
 
     /**
      * Origin suit.
@@ -43,7 +43,7 @@ public abstract class StWrap implements Suit {
      * Ctor.
      * @param origin Origin suit
      */
-    StWrap(final Suit origin) {
+    StEnvelope(final Suit origin) {
         this.origin = origin;
     }
 
