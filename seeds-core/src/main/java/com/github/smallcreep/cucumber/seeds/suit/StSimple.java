@@ -40,7 +40,9 @@ public final class StSimple implements Suit {
     /**
      * Current suit.
      */
-    private static final Suit CURRENT = new StSimple();
+    private static final AtomicReference<Suit> CURRENT = new AtomicReference<>(
+        new StSimple()
+    );
 
     /**
      * Suit context.
@@ -95,6 +97,15 @@ public final class StSimple implements Suit {
      */
     @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static Suit instance() {
-        return StSimple.CURRENT;
+        return StSimple.CURRENT.get();
+    }
+
+    /**
+     * Update current suit.
+     * It's bad idea. But I don't know how do it another way.
+     * @param suit New suit
+     */
+    public static void update(final Suit suit) {
+        StSimple.CURRENT.set(suit);
     }
 }
