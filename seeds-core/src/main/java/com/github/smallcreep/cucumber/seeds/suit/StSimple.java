@@ -105,6 +105,7 @@ public final class StSimple implements Suit {
      * It's bad idea. But I don't know how do it another way.
      * @param suit New suit
      */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static void update(final Suit suit) {
         StSimple.CURRENT.set(suit);
     }

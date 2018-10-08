@@ -22,63 +22,40 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.suit;
+package com.github.smallcreep.cucumber.seeds.context;
 
 import com.github.smallcreep.cucumber.seeds.Context;
-import com.github.smallcreep.cucumber.seeds.Scenario;
-import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.context.CxJoined;
-import com.github.smallcreep.cucumber.seeds.context.CxProperties;
 
 /**
- * Default suit.
+ * Joined context.
  * @since 0.1.1
+ * @todo #28:15m/DEV Need implement this class.
+ *  This class must search properties in all context.
+ *  And have storage for new values.
  */
-public final class StDefault implements Suit {
-
-    /**
-     * Origin suit.
-     */
-    private final Suit origin;
-
-    /**
-     * Properties context.
-     */
-    private final CxProperties ctx;
+public final class CxJoined implements Context {
 
     /**
      * Ctor.
-     * @param origin Origin suit
+     * @param ctx Context
      */
-    public StDefault(final Suit origin) {
-        this(origin, new CxProperties());
-    }
-
-    /**
-     * Ctor.
-     * @param origin Origin suit
-     * @param ctx Properties context
-     */
-    StDefault(final Suit origin, final CxProperties ctx) {
-        this.origin = origin;
-        this.ctx = ctx;
+    @SuppressWarnings("PMD.UnusedFormalParameter")
+    public CxJoined(final Context... ctx) {
+        // Nothing
     }
 
     @Override
-    public Context context() {
-        return new CxJoined(
-            this.ctx,
-            this.origin.context()
-        );
+    public Object value(final String key) {
+        return null;
     }
 
     @Override
-    public Scenario scenario() {
-        return this.origin.scenario();
+    public void add(final String key, final Object value) {
+        // Nothing
     }
 
     @Override
-    public void finish() {
-        this.origin.finish();
+    public boolean contains(final String key) {
+        return false;
     }
 }
