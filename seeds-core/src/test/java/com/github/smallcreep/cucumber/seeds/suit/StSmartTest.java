@@ -21,47 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.smallcreep.cucumber.seeds.db.steps;
 
-import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.suit.StSmart;
-import cucumber.api.java.en.Given;
+package com.github.smallcreep.cucumber.seeds.suit;
+
+import com.github.smallcreep.cucumber.seeds.Context;
+import com.github.smallcreep.cucumber.seeds.Scenario;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Steps connection to the DB.
+ * Test Case for {@link StSmart}.
  * @since 0.1.1
  */
-public final class StpDefConnection {
+public class StSmartTest {
 
     /**
-     * Current Suit.
+     * Check suit return context.
      */
-    private final Suit suit;
-
-    /**
-     * Ctor.
-     */
-    public StpDefConnection() {
-        this(StSmart.instance());
+    @Test
+    public void checkContext() {
+        MatcherAssert.assertThat(
+            StSmart.instance().context(),
+            CoreMatchers.notNullValue(Context.class)
+        );
     }
 
     /**
-     * Ctor.
-     * @param suit Current Suit
+     * Check suit return current scenario.
      */
-    StpDefConnection(final Suit suit) {
-        this.suit = suit;
+    @Test
+    public void checkScenario() {
+        MatcherAssert.assertThat(
+            StSmart.instance().scenario(),
+            CoreMatchers.notNullValue(Scenario.class)
+        );
     }
 
     /**
-     * Connect to the database with alias.
-     * @param alias Database alias
+     * Check suit return new scenario after finish current.
      */
-    @Given("^The connection to the database ([^,]+)$")
-    public void connect(final String alias) {
-        final DataBaseConnection connection = (DataBaseConnection) this.suit
-            .context()
-            .value(String.format("db.%s", alias));
-        connection.connect();
+    @Test
+    public void checkNewScenarioAfterFinish() {
+        final Scenario first = StSmart.instance().scenario();
+        StSmart.instance().finish();
+        MatcherAssert.assertThat(
+            StSmart.instance().scenario(),
+            CoreMatchers.not(
+                CoreMatchers.equalTo(first)
+            )
+        );
     }
 }

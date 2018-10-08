@@ -24,50 +24,72 @@
 
 package com.github.smallcreep.cucumber.seeds.suit;
 
+import com.github.smallcreep.cucumber.seeds.Scenario;
 import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.context.CxJoined;
-import com.github.smallcreep.cucumber.seeds.context.CxProperties;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Default suit.
+ * TestCase for {@link StWrap}.
  * @since 0.1.1
  */
-public final class StDefault extends StWrap {
+public class StWrapTest {
 
     /**
-     * Ctor.
-     * @param origin Origin suit
+     * Check context return from origin.
      */
-    public StDefault(final Suit origin) {
-        this(origin, new CxProperties());
-    }
-
-    /**
-     * Ctor.
-     * @param origin Origin suit
-     * @param ctx Properties context
-     */
-    StDefault(final Suit origin, final CxProperties ctx) {
-        this(
-            origin,
-            new CxJoined(
-                ctx,
-                origin.context()
+    @Test
+    public void checkContextTheSameOrigin() {
+        MatcherAssert.assertThat(
+            new StCheckWrap().context(),
+            CoreMatchers.equalTo(
+                StSmart.instance().context()
             )
         );
     }
 
     /**
-     * Ctor.
-     * @param origin Origin suit
-     * @param ctx Joined context with properties context
+     * Check scenario return from origin.
      */
-    StDefault(final Suit origin, final CxJoined ctx) {
-        super(
-            new StSimple(
-                origin,
-                ctx
+    @Test
+    public void checkScenarioTheSameOrigin() {
+        MatcherAssert.assertThat(
+            new StCheckWrap().scenario(),
+            CoreMatchers.equalTo(
+                StSmart.instance().scenario()
             )
         );
+    }
+
+    /**
+     * Check finish from origin was run.
+     */
+    @Test
+    public void checkFinishWasRun() {
+        final Suit suit = new StCheckWrap();
+        final Scenario first = suit.scenario();
+        suit.finish();
+        MatcherAssert.assertThat(
+            suit.scenario(),
+            CoreMatchers.not(
+                CoreMatchers.equalTo(
+                    first
+                )
+            )
+        );
+    }
+
+    /**
+     * Test Suit for check wrapped suit.
+     */
+    private final class StCheckWrap extends StWrap {
+
+        /**
+         * Ctor.
+         */
+        StCheckWrap() {
+            super(StSmart.instance());
+        }
     }
 }

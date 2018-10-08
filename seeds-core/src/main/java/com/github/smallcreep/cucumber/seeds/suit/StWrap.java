@@ -21,47 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.smallcreep.cucumber.seeds.db.steps;
 
+package com.github.smallcreep.cucumber.seeds.suit;
+
+import com.github.smallcreep.cucumber.seeds.Context;
+import com.github.smallcreep.cucumber.seeds.Scenario;
 import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.suit.StSmart;
-import cucumber.api.java.en.Given;
 
 /**
- * Steps connection to the DB.
+ * Wrap of suit.
  * @since 0.1.1
  */
-public final class StpDefConnection {
+public abstract class StWrap implements Suit {
 
     /**
-     * Current Suit.
+     * Origin suit.
      */
-    private final Suit suit;
-
-    /**
-     * Ctor.
-     */
-    public StpDefConnection() {
-        this(StSmart.instance());
-    }
+    private final Suit origin;
 
     /**
      * Ctor.
-     * @param suit Current Suit
+     * @param origin Origin suit
      */
-    StpDefConnection(final Suit suit) {
-        this.suit = suit;
+    StWrap(final Suit origin) {
+        this.origin = origin;
     }
 
-    /**
-     * Connect to the database with alias.
-     * @param alias Database alias
-     */
-    @Given("^The connection to the database ([^,]+)$")
-    public void connect(final String alias) {
-        final DataBaseConnection connection = (DataBaseConnection) this.suit
-            .context()
-            .value(String.format("db.%s", alias));
-        connection.connect();
+    @Override
+    public final Context context() {
+        return this.origin.context();
+    }
+
+    @Override
+    public final Scenario scenario() {
+        return this.origin.scenario();
+    }
+
+    @Override
+    public final void finish() {
+        this.origin.finish();
     }
 }

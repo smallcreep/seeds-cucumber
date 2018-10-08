@@ -25,6 +25,7 @@
 package com.github.smallcreep.cucumber.seeds.context;
 
 import com.github.smallcreep.cucumber.seeds.Context;
+import org.cactoos.iterable.IterableOf;
 
 /**
  * Joined context.
@@ -40,8 +41,20 @@ public final class CxJoined implements Context {
      * Ctor.
      * @param ctx Context
      */
-    @SuppressWarnings("PMD.UnusedFormalParameter")
     public CxJoined(final Context... ctx) {
+        this(
+            new IterableOf<>(
+                ctx
+            )
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param contexts Contexts
+     */
+    @SuppressWarnings("PMD.UnusedFormalParameter")
+    CxJoined(final Iterable<Context> contexts) {
         // Nothing
     }
 

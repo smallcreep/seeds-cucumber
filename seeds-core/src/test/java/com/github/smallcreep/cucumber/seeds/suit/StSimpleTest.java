@@ -26,6 +26,8 @@ package com.github.smallcreep.cucumber.seeds.suit;
 
 import com.github.smallcreep.cucumber.seeds.Context;
 import com.github.smallcreep.cucumber.seeds.Scenario;
+import com.github.smallcreep.cucumber.seeds.Suit;
+import com.github.smallcreep.cucumber.seeds.context.CxSimple;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -37,38 +39,55 @@ import org.junit.Test;
 public class StSimpleTest {
 
     /**
-     * Check suit return context.
+     * Check context return from origin.
      */
     @Test
-    public void checkContext() {
+    public void checkContextTheSameOrigin() {
+        final Context simple = new CxSimple();
         MatcherAssert.assertThat(
-            StSimple.instance().context(),
-            CoreMatchers.notNullValue(Context.class)
+            new StSimple(
+                StSmart.instance(),
+                simple
+            ).context(),
+            CoreMatchers.equalTo(
+                simple
+            )
         );
     }
 
     /**
-     * Check suit return current scenario.
+     * Check scenario return from origin.
      */
     @Test
-    public void checkScenario() {
+    public void checkScenarioTheSameOrigin() {
         MatcherAssert.assertThat(
-            StSimple.instance().scenario(),
-            CoreMatchers.notNullValue(Scenario.class)
+            new StSimple(
+                StSmart.instance(),
+                new CxSimple()
+            ).scenario(),
+            CoreMatchers.equalTo(
+                StSmart.instance().scenario()
+            )
         );
     }
 
     /**
-     * Check suit return new scenario after finish current.
+     * Check finish from origin was run.
      */
     @Test
-    public void checkNewScenarioAfterFinish() {
-        final Scenario first = StSimple.instance().scenario();
-        StSimple.instance().finish();
+    public void checkFinishWasRun() {
+        final Suit suit = new StSimple(
+            StSmart.instance(),
+            new CxSimple()
+        );
+        final Scenario first = suit.scenario();
+        suit.finish();
         MatcherAssert.assertThat(
-            StSimple.instance().scenario(),
+            suit.scenario(),
             CoreMatchers.not(
-                CoreMatchers.equalTo(first)
+                CoreMatchers.equalTo(
+                    first
+                )
             )
         );
     }

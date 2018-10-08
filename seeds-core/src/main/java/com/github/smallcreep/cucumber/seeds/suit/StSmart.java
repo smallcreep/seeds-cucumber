@@ -27,31 +27,49 @@ package com.github.smallcreep.cucumber.seeds.suit;
 import com.github.smallcreep.cucumber.seeds.Context;
 import com.github.smallcreep.cucumber.seeds.Scenario;
 import com.github.smallcreep.cucumber.seeds.Suit;
+import com.github.smallcreep.cucumber.seeds.context.CxSimple;
+import com.github.smallcreep.cucumber.seeds.scenario.ScSimple;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Simple Suit.
+ * Simple Suit implementation.
  * @since 0.1.1
  */
-public final class StSimple implements Suit {
+public final class StSmart implements Suit {
 
     /**
-     * Context.
+     * Current suit.
+     */
+    private static final AtomicReference<Suit> CURRENT = new AtomicReference<>(
+        new StSmart()
+    );
+
+    /**
+     * Suit context.
      */
     private final Context ctx;
 
     /**
-     * Origin suit.
+     * Current scenario.
      */
-    private final Suit origin;
+    private final AtomicReference<Scenario> scr;
 
     /**
      * Ctor.
-     * @param suit Origin suit
-     * @param context Context
      */
-    public StSimple(final Suit suit, final Context context) {
-        this.origin = suit;
+    private StSmart() {
+        this(
+            new CxSimple()
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param context Current Suit ctx
+     */
+    StSmart(final Context context) {
         this.ctx = context;
+        this.scr = new AtomicReference<>(new ScSimple());
     }
 
     @Override
@@ -61,11 +79,34 @@ public final class StSimple implements Suit {
 
     @Override
     public Scenario scenario() {
-        return this.origin.scenario();
+        return this.scr.get();
     }
 
     @Override
     public void finish() {
-        this.origin.finish();
+        this.scr.lazySet(new ScSimple());
+    }
+
+    /**
+     * Get current suit instance.
+     * @return Current suit instance
+     * @todo #10:45m/DEV Need remove using public static method.
+     *  But I don't know how fixed it. This mistake in cucumber.
+     *  If not resolved this problem need remove this comment
+     *  and add doc why we use it.
+     */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
+    public static Suit instance() {
+        return StSmart.CURRENT.get();
+    }
+
+    /**
+     * Update current suit.
+     * It's bad idea. But I don't know how do it another way.
+     * @param suit New suit
+     */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
+    public static void update(final Suit suit) {
+        StSmart.CURRENT.set(suit);
     }
 }
