@@ -27,8 +27,12 @@ package com.github.smallcreep.cucumber.seeds.db.steps;
 /**
  * Connection to te DataBase.
  * @since 0.1.1
+ * @todo #10:25m/DEV Need add basic implementation for this interface.
+ *  For basic implementation method #connect should send simple select,
+ *  for example `SELECT 1;`, to real database, and check that connect is
+ *  available.
  */
-public interface DataBaseConnection {
+public interface DataBase {
 
     /**
      * Check connection to the DataBase.

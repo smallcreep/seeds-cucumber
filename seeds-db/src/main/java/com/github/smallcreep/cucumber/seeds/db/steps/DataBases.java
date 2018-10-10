@@ -21,49 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package com.github.smallcreep.cucumber.seeds.db.steps;
 
-import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.suit.StSmart;
-import cucumber.api.java.en.Given;
-
 /**
- * Steps connection to the DB.
+ * Data Bases store.
  * @since 0.1.1
+ * @todo #10:25m/DEV Need add basic implementation for this interface.
+ *  For basic implementation method #database(String) should return default
+ *  database. And doesn't create new database, if this database already
+ *  created. And return already created database. For sharing database between
+ *  scenarios we can use Suit#context().
  */
-public final class StpDefConnection {
+public interface DataBases {
 
     /**
-     * Current Suit.
+     * Return data base by name or alias.
+     * @param name Name or alias DB
+     * @return Data base
      */
-    private final Suit suit;
-
-    /**
-     * Ctor.
-     */
-    public StpDefConnection() {
-        this(StSmart.instance());
-    }
-
-    /**
-     * Ctor.
-     * @param suit Current Suit
-     */
-    StpDefConnection(final Suit suit) {
-        this.suit = suit;
-    }
-
-    /**
-     * Connect to the database with alias.
-     * @param alias Database alias
-     * @todo #10:20m/DEV Need add hooks for update suit context.
-     *  Suit context should contains Properties Context (CxProperties).
-     *  This need to transfer data between scenarios.
-     */
-    @Given("^The connection to the database ([^,]+)$")
-    public void connect(final String alias) {
-        ((DataBases) this.suit
-            .context()
-            .value("databases")).database(alias).connect();
-    }
+    DataBase database(String name);
 }
