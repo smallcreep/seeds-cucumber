@@ -22,20 +22,45 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db.steps;
+package com.github.smallcreep.cucumber.seeds.db;
+
+import com.github.smallcreep.cucumber.seeds.DataBase;
+import com.jcabi.jdbc.JdbcSession;
+import com.jcabi.jdbc.Outcome;
+import com.jcabi.jdbc.SingleOutcome;
+import java.sql.SQLException;
+import java.util.regex.Matcher;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 
 /**
- * Connection to te DataBase.
+ * Default implementation of {@link DataBase}.
+ * Connect method request `SELECT 1;` from database.
  * @since 0.1.1
- * @todo #10:25m/DEV Need add basic implementation for this interface.
- *  For basic implementation method #connect should send simple select,
- *  for example `SELECT 1;`, to real database, and check that connect is
- *  available.
  */
-public interface DataBase {
+public final class DbDefault implements DataBase {
 
     /**
-     * Check connection to the DataBase.
+     * Session.
      */
-    void connect();
+    private final JdbcSession session;
+
+    /**
+     * Ctor.
+     * @param session JDBC session
+     */
+    DbDefault(final JdbcSession session) {
+        this.session = session;
+    }
+
+    @Override
+    public void connect() throws SQLException {
+        MatcherAssert.assertThat(
+            "Connection to DB response not expected",
+            this.session.sql("SELECT 1;").select(
+                new SingleOutcome<>(Long.class)
+            ),
+            CoreMatchers.equalTo(1)
+        );
+    }
 }

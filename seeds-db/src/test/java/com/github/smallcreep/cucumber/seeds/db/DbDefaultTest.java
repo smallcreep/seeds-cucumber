@@ -21,50 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.smallcreep.cucumber.seeds.db.steps;
 
-import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.DataBases;
-import com.github.smallcreep.cucumber.seeds.suit.StSmart;
-import cucumber.api.java.en.Given;
+package com.github.smallcreep.cucumber.seeds.db;
+
+import com.jcabi.jdbc.JdbcSession;
+import com.jolbox.bonecp.BoneCPDataSource;
+import java.sql.SQLException;
+import org.junit.Test;
 
 /**
- * Steps connection to the DB.
+ * Test Case for {@link DbDefault}.
  * @since 0.1.1
  */
-public final class StpDefConnection {
+public final class DbDefaultTest {
 
-    /**
-     * Current Suit.
-     */
-    private final Suit suit;
-
-    /**
-     * Ctor.
-     */
-    public StpDefConnection() {
-        this(StSmart.instance());
-    }
-
-    /**
-     * Ctor.
-     * @param suit Current Suit
-     */
-    StpDefConnection(final Suit suit) {
-        this.suit = suit;
-    }
-
-    /**
-     * Connect to the database with alias.
-     * @param alias Database alias
-     * @todo #10:20m/DEV Need add hooks for update suit context.
-     *  Suit context should contains Properties Context (CxProperties).
-     *  This need to transfer data between scenarios.
-     */
-    @Given("^The connection to the database ([^,]+)$")
-    public void connect(final String alias) {
-        ((DataBases) this.suit
-            .context()
-            .value("databases")).database(alias).connect();
+    @Test
+    public void name() throws SQLException {
+        final BoneCPDataSource src = new BoneCPDataSource();
+        src.setDriverClass("org.postgresql.Driver");
+        src.setJdbcUrl("jdbc:postgresql://localhost/db_name");
+        src.setUser("jeff");
+        src.setPassword("secret");
+        new DbDefault(
+            new JdbcSession(src)
+        ).connect();
     }
 }

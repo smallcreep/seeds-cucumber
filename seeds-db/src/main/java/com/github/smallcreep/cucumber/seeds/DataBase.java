@@ -22,23 +22,22 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db.steps;
+package com.github.smallcreep.cucumber.seeds;
+
+import java.sql.SQLException;
 
 /**
- * Data Bases store.
+ * Connection to te DataBase.
  * @since 0.1.1
  * @todo #10:25m/DEV Need add basic implementation for this interface.
- *  For basic implementation method #database(String) should return default
- *  database. And doesn't create new database, if this database already
- *  created. And return already created database. For sharing database between
- *  scenarios we can use Suit#context().
+ *  For basic implementation method #connect should send simple select,
+ *  for example `SELECT 1;`, to real database, and check that connect is
+ *  available.
  */
-public interface DataBases {
+public interface DataBase {
 
     /**
-     * Return data base by name or alias.
-     * @param name Name or alias DB
-     * @return Data base
+     * Check connection to the DataBase.
      */
-    DataBase database(String name);
+    void connect() throws SQLException;
 }
