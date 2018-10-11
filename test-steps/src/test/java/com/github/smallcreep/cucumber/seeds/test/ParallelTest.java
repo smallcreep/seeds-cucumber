@@ -47,13 +47,18 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
     plugin = {
         "html:target/cucumber/cucumber-html-report",
-        "json:target/cucumber/cucumber.json"
+        "json:target/cucumber/cucumber.json",
+        "pretty:target/cucumber/cucumber-pretty.txt",
+        "junit:target/cucumber/cucumber-results.xml"
     },
     glue = {
         "com/github/smallcreep"
     },
     features = {
         "src/test/resources/com/github/smallcreep"
+    },
+    tags = {
+        "~@inprogress"
     }
 )
 public final class ParallelTest {

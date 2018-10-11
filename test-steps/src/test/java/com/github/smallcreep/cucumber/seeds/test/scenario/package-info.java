@@ -22,48 +22,8 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.suit;
-
-import com.github.smallcreep.cucumber.seeds.Context;
-import com.github.smallcreep.cucumber.seeds.Scenario;
-import com.github.smallcreep.cucumber.seeds.Suit;
-
 /**
- * Envelope of suit.
+ * Steps for scenario context.
  * @since 0.1.1
  */
-public abstract class StEnvelope implements Suit {
-
-    /**
-     * Origin suit.
-     */
-    private final Suit origin;
-
-    /**
-     * Ctor.
-     * @param origin Origin suit
-     */
-    StEnvelope(final Suit origin) {
-        this.origin = origin;
-    }
-
-    @Override
-    public final Context context() {
-        return this.origin.context();
-    }
-
-    @Override
-    public final Scenario scenario() {
-        return this.origin.scenario();
-    }
-
-    @Override
-    public final void finish() {
-        this.origin.finish();
-    }
-
-    @Override
-    public final void start() {
-        this.origin.start();
-    }
-}
+package com.github.smallcreep.cucumber.seeds.test.scenario;

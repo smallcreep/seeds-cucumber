@@ -68,4 +68,9 @@ public final class StSimple implements Suit {
     public void finish() {
         this.origin.finish();
     }
+
+    @Override
+    public void start() {
+        this.origin.start();
+    }
 }

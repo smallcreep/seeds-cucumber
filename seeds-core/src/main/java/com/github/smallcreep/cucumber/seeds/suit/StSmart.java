@@ -29,6 +29,8 @@ import com.github.smallcreep.cucumber.seeds.Scenario;
 import com.github.smallcreep.cucumber.seeds.Suit;
 import com.github.smallcreep.cucumber.seeds.context.CxSimple;
 import com.github.smallcreep.cucumber.seeds.scenario.ScSimple;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -50,9 +52,9 @@ public final class StSmart implements Suit {
     private final Context ctx;
 
     /**
-     * Current scenario.
+     * Running scenarios.
      */
-    private final AtomicReference<Scenario> scr;
+    private final Map<Long, Scenario> scenarios;
 
     /**
      * Ctor.
@@ -69,7 +71,7 @@ public final class StSmart implements Suit {
      */
     StSmart(final Context context) {
         this.ctx = context;
-        this.scr = new AtomicReference<>(new ScSimple());
+        this.scenarios = new HashMap<>();
     }
 
     @Override
@@ -79,12 +81,20 @@ public final class StSmart implements Suit {
 
     @Override
     public Scenario scenario() {
-        return this.scr.get();
+        return this.scenarios.get(Thread.currentThread().getId());
     }
 
     @Override
     public void finish() {
-        this.scr.lazySet(new ScSimple());
+        this.scenarios.remove(Thread.currentThread().getId());
+    }
+
+    @Override
+    public void start() {
+        this.scenarios.put(
+            Thread.currentThread().getId(),
+            new ScSimple()
+        );
     }
 
     /**

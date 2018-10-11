@@ -68,6 +68,7 @@ public class StEnvelopeTest {
     @Test
     public void checkFinishWasRun() {
         final Suit suit = new StCheckEnvelope();
+        suit.start();
         final Scenario first = suit.scenario();
         suit.finish();
         MatcherAssert.assertThat(

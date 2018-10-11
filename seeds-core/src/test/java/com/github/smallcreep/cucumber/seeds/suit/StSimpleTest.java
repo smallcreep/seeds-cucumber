@@ -80,8 +80,10 @@ public class StSimpleTest {
             StSmart.instance(),
             new CxSimple()
         );
+        suit.start();
         final Scenario first = suit.scenario();
         suit.finish();
+        suit.start();
         MatcherAssert.assertThat(
             suit.scenario(),
             CoreMatchers.not(

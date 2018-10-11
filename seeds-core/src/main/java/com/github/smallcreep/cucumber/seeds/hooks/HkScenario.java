@@ -22,48 +22,53 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.suit;
+package com.github.smallcreep.cucumber.seeds.hooks;
 
-import com.github.smallcreep.cucumber.seeds.Context;
-import com.github.smallcreep.cucumber.seeds.Scenario;
 import com.github.smallcreep.cucumber.seeds.Suit;
+import com.github.smallcreep.cucumber.seeds.suit.StSmart;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
 
 /**
- * Envelope of suit.
+ * Default hooks for every scenario.
+ * Start and finish new scenario.
  * @since 0.1.1
  */
-public abstract class StEnvelope implements Suit {
+public final class HkScenario {
 
     /**
-     * Origin suit.
+     * Current suit.
      */
-    private final Suit origin;
+    private Suit suit;
 
     /**
      * Ctor.
-     * @param origin Origin suit
      */
-    StEnvelope(final Suit origin) {
-        this.origin = origin;
+    public HkScenario() {
+        this(StSmart.instance());
     }
 
-    @Override
-    public final Context context() {
-        return this.origin.context();
+    /**
+     * Ctor.
+     * @param suit Current suit
+     */
+    private HkScenario(final Suit suit) {
+        this.suit = suit;
     }
 
-    @Override
-    public final Scenario scenario() {
-        return this.origin.scenario();
+    /**
+     * Start new scenario.
+     */
+    @Before(order = 0)
+    public void start() {
+        this.suit.start();
     }
 
-    @Override
-    public final void finish() {
-        this.origin.finish();
-    }
-
-    @Override
-    public final void start() {
-        this.origin.start();
+    /**
+     * Finish current scenario.
+     */
+    @After(order = 0)
+    public void finish() {
+        this.suit.finish();
     }
 }

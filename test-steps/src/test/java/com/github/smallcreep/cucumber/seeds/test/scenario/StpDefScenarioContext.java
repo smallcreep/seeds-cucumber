@@ -22,71 +22,64 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.suit;
+package com.github.smallcreep.cucumber.seeds.test.scenario;
 
-import com.github.smallcreep.cucumber.seeds.Context;
-import com.github.smallcreep.cucumber.seeds.Scenario;
 import com.github.smallcreep.cucumber.seeds.Suit;
+import com.github.smallcreep.cucumber.seeds.suit.StSmart;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
 
 /**
- * Test Case for {@link StSmart}.
+ * Steps to check start and finish Scenario.
  * @since 0.1.1
  */
-public class StSmartTest {
+public class StpDefScenarioContext {
 
     /**
-     * Check suit return context.
+     * Current suit.
      */
-    @Test
-    public void checkContext() {
-        MatcherAssert.assertThat(
-            StSmart.instance().context(),
-            CoreMatchers.notNullValue(Context.class)
-        );
+    private final Suit suit;
+
+    /**
+     * Ctor.
+     */
+    public StpDefScenarioContext() {
+        this(StSmart.instance());
     }
 
     /**
-     * Check suit return current scenario.
+     * Ctor.
+     * @param suit Current suit
      */
-    @Test
-    public void checkScenario() {
-        StSmart.instance().start();
-        MatcherAssert.assertThat(
-            StSmart.instance().scenario(),
-            CoreMatchers.notNullValue(Scenario.class)
-        );
+    private StpDefScenarioContext(final Suit suit) {
+        this.suit = suit;
     }
 
     /**
-     * Check suit return new scenario after finish current.
+     * Steps add property to scenario context.
+     * @param name Property name
+     * @param value Property value
      */
-    @Test
-    public void checkNewScenarioAfterFinish() {
-        final Suit suit = StSmart.instance();
-        suit.start();
-        final Scenario first = suit.scenario();
-        suit.finish();
-        MatcherAssert.assertThat(
-            suit.scenario(),
-            CoreMatchers.not(
-                CoreMatchers.equalTo(first)
-            )
-        );
+    @Given("^There is property (.*)=(.*) in scenario context$")
+    public void addProperty(final String name, final String value) {
+        this.suit.scenario().context().add(name, value);
     }
 
     /**
-     * Check Update Suit save new suit.
+     * Check scenario property equals expected value.
+     * @param name Property name
+     * @param value Expected value
      */
-    @Test
-    public void checkUpdateSaveNewSuit() {
-        final Suit second = new StDefault(StSmart.instance());
-        StSmart.update(second);
+    @Then("^The property (.*) in scenario context has value (.*)$")
+    public void checkPropertyHasCorrectValue(
+        final String name,
+        final String value
+    ) {
         MatcherAssert.assertThat(
-            StSmart.instance(),
-            CoreMatchers.equalTo(second)
+            this.suit.scenario().context().value(name),
+            CoreMatchers.equalTo(value)
         );
     }
 }

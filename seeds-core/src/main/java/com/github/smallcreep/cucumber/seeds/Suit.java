@@ -45,4 +45,9 @@ public interface Suit {
      * Finish current scenario.
      */
     void finish();
+
+    /**
+     * Start current scenario.
+     */
+    void start();
 }
