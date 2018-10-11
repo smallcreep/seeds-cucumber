@@ -21,60 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.smallcreep.cucumber.seeds.test;
 
-import com.github.mkolisnyk.cucumber.runner.BeforeSuite;
-import com.github.mkolisnyk.cucumber.runner.ExtendedCucumberOptions;
-import com.github.mkolisnyk.cucumber.runner.ExtendedParallelCucumber;
-import com.github.smallcreep.cucumber.seeds.hooks.HkProperties;
-import cucumber.api.CucumberOptions;
-import org.junit.runner.RunWith;
+package com.github.smallcreep.cucumber.seeds.hooks;
+
+import com.github.smallcreep.cucumber.seeds.context.CxProperties;
+import com.github.smallcreep.cucumber.seeds.suit.StDefault;
+import com.github.smallcreep.cucumber.seeds.suit.StSmart;
 
 /**
- * Parallel runner for cucumber test.
+ * Cucumber hook. Added to suit context {@link CxProperties}.
  * @since 0.1.1
  */
-@RunWith(ExtendedParallelCucumber.class)
-@ExtendedCucumberOptions(
-    threadsCount = 2,
-    jsonReport = "target/cucumber/cucumber.json",
-    detailedReport = true,
-    detailedAggregatedReport = true,
-    overviewReport = true,
-    jsonUsageReport = "target/cucumber-usage.json",
-    outputFolder = "target"
-)
-@CucumberOptions(
-    plugin = {
-        "html:target/cucumber/cucumber-html-report",
-        "json:target/cucumber/cucumber.json"
-    },
-    glue = {
-        "com/github/smallcreep"
-    },
-    features = {
-        "src/test/resources/com/github/smallcreep"
-    }
-)
-public final class ParallelTest {
+public final class HkProperties {
 
     /**
      * Ctor.
      */
-    private ParallelTest() {
+    private HkProperties() {
+        // Nothing
     }
 
     /**
-     * Add properties to Suit context.
+     * Add {@link CxProperties} to suit context.
      */
-    @SuppressWarnings(
-        {
-            "PMD.JUnit4TestShouldUseBeforeAnnotation",
-            "PMD.ProhibitPublicStaticMethods"
-        }
-    )
-    @BeforeSuite
+    @SuppressWarnings({
+        "PMD.ProhibitPublicStaticMethods",
+        "PMD.JUnit4TestShouldUseBeforeAnnotation"
+    })
     public static void setUp() {
-        HkProperties.setUp();
+        StSmart.update(
+            new StDefault(
+                StSmart.instance()
+            )
+        );
     }
 }
