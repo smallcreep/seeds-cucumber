@@ -27,14 +27,48 @@ package com.github.smallcreep.cucumber.seeds.db;
 import com.jcabi.jdbc.JdbcSession;
 import com.jolbox.bonecp.BoneCPDataSource;
 import java.sql.SQLException;
-import org.junit.Ignore;
+import javax.sql.DataSource;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Test Case for {@link DbDefault}.
  * @since 0.1.1
  */
-public final class DbDefaultTest {
+public final class DbDefaultItCase {
+
+    /**
+     * Data Source.
+     */
+    private final DataSource src;
+
+    /**
+     * Ctor.
+     */
+    public DbDefaultItCase() {
+        this(new BoneCPDataSource());
+    }
+
+    /**
+     * Ctor.
+     * @param src Data Source
+     */
+    private DbDefaultItCase(final DataSource src) {
+        this.src = src;
+    }
+
+    /**
+     * SetUp Data Source.
+     */
+    @Before
+    public void setUp() {
+        ((BoneCPDataSource) this.src).setDriverClass("org.postgresql.Driver");
+        ((BoneCPDataSource) this.src).setJdbcUrl(
+            System.getProperty("jdbs.url.postgres")
+        );
+        ((BoneCPDataSource) this.src).setUser("testuser");
+        ((BoneCPDataSource) this.src).setPassword("mysecret");
+    }
 
     /**
      * Check connection correct.
@@ -47,15 +81,9 @@ public final class DbDefaultTest {
      * @throws SQLException If any error of connection
      */
     @Test
-    @Ignore
     public void checkConnection() throws SQLException {
-        final BoneCPDataSource src = new BoneCPDataSource();
-        src.setDriverClass("org.postgresql.Driver");
-        src.setJdbcUrl("jdbc:postgresql://localhost:5432/testuser");
-        src.setUser("testuser");
-        src.setPassword("mysecret");
         new DbDefault(
-            new JdbcSession(src)
+            new JdbcSession(this.src)
         ).connect();
     }
 }

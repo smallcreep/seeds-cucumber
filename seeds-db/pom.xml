@@ -62,4 +62,57 @@ SOFTWARE.
       <scope>provided</scope>
     </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>integration</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.26.1</version>
+            <configuration>
+              <images>
+                <image>
+                  <name>healthcheck/postgres:alpine</name>
+                  <alias>postgres</alias>
+                  <run>
+                    <ports>
+                      <port>postgres.port:5432</port>
+                    </ports>
+                    <env>
+                      <POSTGRES_PASSWORD>mysecret</POSTGRES_PASSWORD>
+                      <POSTGRES_USER>testuser</POSTGRES_USER>
+                    </env>
+                    <wait>
+                      <healthy>true</healthy>
+                      <time>60000</time>
+                    </wait>
+                  </run>
+                </image>
+              </images>
+            </configuration>
+            <executions>
+              <execution>
+                <id>start</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>start</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <systemPropertyVariables>
+                <jdbs.url.postgres>jdbc:postgresql://localhost:${postgres.port}/testuser</jdbs.url.postgres>
+              </systemPropertyVariables>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
