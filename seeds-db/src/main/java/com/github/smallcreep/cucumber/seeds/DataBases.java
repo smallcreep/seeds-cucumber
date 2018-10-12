@@ -24,8 +24,6 @@
 
 package com.github.smallcreep.cucumber.seeds;
 
-import com.github.smallcreep.cucumber.seeds.DataBase;
-
 /**
  * Data Bases store.
  * @since 0.1.1

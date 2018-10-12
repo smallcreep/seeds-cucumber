@@ -22,40 +22,8 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db;
-
-import com.jcabi.jdbc.JdbcSession;
-import com.jolbox.bonecp.BoneCPDataSource;
-import java.sql.SQLException;
-import org.junit.Ignore;
-import org.junit.Test;
-
 /**
- * Test Case for {@link DbDefault}.
+ * Implementation of Data Bases.
  * @since 0.1.1
  */
-public final class DbDefaultTest {
-
-    /**
-     * Check connection correct.
-     * @todo #33:30m/DEV Move this test to integration tests.
-     *  Need startup any Database (ex. Postgres) before run integration test.
-     *  We can start DB in docker, for running docker images we can use
-     *  fabric8io/docker-maven-plugin.
-     *  For more info about this plugin go to the link
-     *  http://dmp.fabric8.io/
-     * @throws SQLException If any error of connection
-     */
-    @Test
-    @Ignore
-    public void checkConnection() throws SQLException {
-        final BoneCPDataSource src = new BoneCPDataSource();
-        src.setDriverClass("org.postgresql.Driver");
-        src.setJdbcUrl("jdbc:postgresql://localhost:5432/testuser");
-        src.setUser("testuser");
-        src.setPassword("mysecret");
-        new DbDefault(
-            new JdbcSession(src)
-        ).connect();
-    }
-}
+package com.github.smallcreep.cucumber.seeds.db;

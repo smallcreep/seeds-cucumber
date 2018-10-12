@@ -26,10 +26,8 @@ package com.github.smallcreep.cucumber.seeds.db;
 
 import com.github.smallcreep.cucumber.seeds.DataBase;
 import com.jcabi.jdbc.JdbcSession;
-import com.jcabi.jdbc.Outcome;
 import com.jcabi.jdbc.SingleOutcome;
 import java.sql.SQLException;
-import java.util.regex.Matcher;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 
@@ -60,7 +58,7 @@ public final class DbDefault implements DataBase {
             this.session.sql("SELECT 1;").select(
                 new SingleOutcome<>(Long.class)
             ),
-            CoreMatchers.equalTo(1)
+            CoreMatchers.equalTo(1L)
         );
     }
 }
