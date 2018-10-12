@@ -61,12 +61,12 @@ import org.junit.runner.RunWith;
         "~@inprogress"
     }
 )
-public final class ParallelTest {
+public final class ParallelCucumberCase {
 
     /**
      * Ctor.
      */
-    private ParallelTest() {
+    private ParallelCucumberCase() {
     }
 
     /**
