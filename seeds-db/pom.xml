@@ -77,9 +77,8 @@ SOFTWARE.
                   <name>healthcheck/postgres:alpine</name>
                   <alias>postgres</alias>
                   <run>
-                    <ports>
-                      <port>postgres.port:5432</port>
-                    </ports>
+                    <exposedPropertyKey>postgres</exposedPropertyKey>
+                    <namingStrategy>alias</namingStrategy>
                     <env>
                       <POSTGRES_PASSWORD>mysecret</POSTGRES_PASSWORD>
                       <POSTGRES_USER>testuser</POSTGRES_USER>
@@ -100,6 +99,20 @@ SOFTWARE.
                   <goal>start</goal>
                 </goals>
               </execution>
+              <execution>
+                <id>stop</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>remove</id>
+                <phase>post-integration-test</phase>
+                <goals>
+                  <goal>remove</goal>
+                </goals>
+              </execution>
             </executions>
           </plugin>
           <plugin>
@@ -107,7 +120,7 @@ SOFTWARE.
             <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
               <systemPropertyVariables>
-                <jdbs.url.postgres>jdbc:postgresql://localhost:${postgres.port}/testuser</jdbs.url.postgres>
+                <jdbs.url.postgres>jdbc:postgresql://${docker.container.postgres.ip}:5432/testuser</jdbs.url.postgres>
               </systemPropertyVariables>
             </configuration>
           </plugin>
