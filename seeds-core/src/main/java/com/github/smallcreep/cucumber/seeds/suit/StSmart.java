@@ -81,6 +81,9 @@ public final class StSmart implements Suit {
 
     @Override
     public Scenario scenario() {
+        if (this.scenarios.get(Thread.currentThread().getId()) == null) {
+            this.start();
+        }
         return this.scenarios.get(Thread.currentThread().getId());
     }
 

@@ -272,8 +272,14 @@ SOFTWARE.
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
+            <dependencies>
+              <dependency>
+                <groupId>org.apache.maven.surefire</groupId>
+                <artifactId>surefire-junit47</artifactId>
+                <version>2.22.0</version>
+              </dependency>
+            </dependencies>
             <configuration>
               <includes>
                 <include>**/*ItCase.java</include>
