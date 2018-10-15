@@ -22,18 +22,8 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
-
 /**
- * Data Bases store.
+ * Properties implementation.
  * @since 0.1.1
  */
-public interface DataBases {
-
-    /**
-     * Return data base by name or alias.
-     * @param name Name or alias DB
-     * @return Data base
-     */
-    DataBase database(String name);
-}
+package com.github.smallcreep.cucumber.seeds.props;

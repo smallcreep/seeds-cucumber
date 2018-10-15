@@ -22,18 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.props;
+
+import com.github.smallcreep.cucumber.seeds.Props;
+import java.util.Map;
 
 /**
- * Data Bases store.
+ * Props from Map.
+ * @param <T> Properties type
  * @since 0.1.1
  */
-public interface DataBases {
+public final class PrMap<T> implements Props<T> {
 
     /**
-     * Return data base by name or alias.
-     * @param name Name or alias DB
-     * @return Data base
+     * Properties Map.
      */
-    DataBase database(String name);
+    private final Map<String, T> props;
+
+    /**
+     * Ctor.
+     * @param props Properties Map
+     */
+    public PrMap(final Map<String, T> props) {
+        this.props = props;
+    }
+
+    @Override
+    public T property(final String name) {
+        return this.props.get(name);
+    }
 }

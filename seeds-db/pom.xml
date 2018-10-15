@@ -60,6 +60,12 @@ SOFTWARE.
       <version>0.8.0.RELEASE</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.cactoos</groupId>
+      <artifactId>cactoos</artifactId>
+      <version>0.36</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <profiles>
     <profile>

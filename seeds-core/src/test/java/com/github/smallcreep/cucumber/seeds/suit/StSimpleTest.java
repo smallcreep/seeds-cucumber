@@ -46,7 +46,9 @@ public class StSimpleTest {
         final Context simple = new CxSimple();
         MatcherAssert.assertThat(
             new StSimple(
-                StSmart.instance(),
+                new StSmart(
+                    new CxSimple()
+                ),
                 simple
             ).context(),
             CoreMatchers.equalTo(
@@ -60,13 +62,16 @@ public class StSimpleTest {
      */
     @Test
     public void checkScenarioTheSameOrigin() {
+        final Suit suit = new StSmart(
+            new CxSimple()
+        );
         MatcherAssert.assertThat(
             new StSimple(
-                StSmart.instance(),
+                suit,
                 new CxSimple()
             ).scenario(),
             CoreMatchers.equalTo(
-                StSmart.instance().scenario()
+                suit.scenario()
             )
         );
     }
@@ -77,7 +82,9 @@ public class StSimpleTest {
     @Test
     public void checkFinishWasRun() {
         final Suit suit = new StSimple(
-            StSmart.instance(),
+            new StSmart(
+                new CxSimple()
+            ),
             new CxSimple()
         );
         suit.start();

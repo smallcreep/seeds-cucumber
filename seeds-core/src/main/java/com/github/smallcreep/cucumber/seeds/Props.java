@@ -25,15 +25,16 @@
 package com.github.smallcreep.cucumber.seeds;
 
 /**
- * Data Bases store.
+ * Properties.
+ * @param <T> Properties type
  * @since 0.1.1
  */
-public interface DataBases {
+public interface Props<T> {
 
     /**
-     * Return data base by name or alias.
-     * @param name Name or alias DB
-     * @return Data base
+     * Get property by name.
+     * @param name Property name
+     * @return Property value by property name
      */
-    DataBase database(String name);
+    T property(String name);
 }

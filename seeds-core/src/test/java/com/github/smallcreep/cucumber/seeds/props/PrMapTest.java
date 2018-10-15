@@ -22,18 +22,36 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.props;
+
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Data Bases store.
+ * Test Case for {@link PrMap}.
  * @since 0.1.1
  */
-public interface DataBases {
+public final class PrMapTest {
 
     /**
-     * Return data base by name or alias.
-     * @param name Name or alias DB
-     * @return Data base
+     * Check get property.
      */
-    DataBase database(String name);
+    @Test
+    public void checkGetProperty() {
+        final String first = "first";
+        final String value = "value1";
+        MatcherAssert.assertThat(
+            new PrMap<String>(
+                new MapOf<String, String>(
+                    new MapEntry<>(
+                        first, value
+                    )
+                )
+            ).property(first),
+            CoreMatchers.equalTo(value)
+        );
+    }
 }
