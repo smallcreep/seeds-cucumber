@@ -53,7 +53,7 @@ public class StpDefConnectionTest {
                 "connect",
                 String.class
             ).getDeclaredAnnotation(Given.class).value(),
-            CoreMatchers.equalTo("^The connection to the database ([^,]+)$")
+            CoreMatchers.equalTo("^The connection to the ([^,]+) database$")
         );
     }
 }

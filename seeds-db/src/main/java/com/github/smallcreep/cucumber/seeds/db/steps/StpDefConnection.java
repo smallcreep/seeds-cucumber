@@ -60,7 +60,7 @@ public final class StpDefConnection {
      * @param alias Database alias
      * @throws SQLException If any error of connection
      */
-    @Given("^The connection to the database ([^,]+)$")
+    @Given("^The connection to the ([^,]+) database$")
     public void connect(final String alias) throws SQLException {
         ((DataBases) this.suit
             .context()
