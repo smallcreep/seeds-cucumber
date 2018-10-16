@@ -71,6 +71,12 @@ SOFTWARE.
       <artifactId>lombok</artifactId>
       <version>1.18.2</version>
     </dependency>
+    <dependency>
+      <groupId>nl.jqno.equalsverifier</groupId>
+      <artifactId>equalsverifier</artifactId>
+      <version>3.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <profiles>
     <profile>

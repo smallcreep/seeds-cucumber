@@ -59,9 +59,6 @@ public final class StpDefConnection {
      * Connect to the database with alias.
      * @param alias Database alias
      * @throws SQLException If any error of connection
-     * @todo #10:20m/DEV Need add hooks for update suit context.
-     *  Suit context should contains Properties Context (CxProperties).
-     *  This need to transfer data between scenarios.
      */
     @Given("^The connection to the database ([^,]+)$")
     public void connect(final String alias) throws SQLException {

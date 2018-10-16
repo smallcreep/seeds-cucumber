@@ -32,30 +32,20 @@ import lombok.ToString;
 /**
  * Database property from context.
  * @since 0.1.1
- * @todo #48:15m/DEV Implement this #property(String) method.
- *  This method was return default value if has not specific value.
- *  Returned values mapping:
- *  "jdbs.driver" = "cucumber.seeds.db.%db_name%.jdbc.driver"
- *  "jdbs.url" = "cucumber.seeds.db.%db_name%.jdbc.url"
- *  "user" = "cucumber.seeds.db.%db_name%.user"
- *  "password" = "cucumber.seeds.db.%db_name%.password"
- * @checkstyle HiddenFieldCheck (500 lines)
  */
-@EqualsAndHashCode(of = {"name", "ctx"})
-@ToString(of = {"name", "ctx"})
+@EqualsAndHashCode(of = {"base", "ctx"})
+@ToString(of = {"base", "ctx"})
 public final class PrDbContext implements Props<String> {
 
     /**
      * Context.
      */
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Context ctx;
 
     /**
      * DataBase name.
      */
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final String name;
+    private final String base;
 
     /**
      * Ctor.
@@ -64,11 +54,28 @@ public final class PrDbContext implements Props<String> {
      */
     PrDbContext(final Context ctx, final String name) {
         this.ctx = ctx;
-        this.name = name;
+        this.base = name;
     }
 
     @Override
     public String property(final String name) {
-        return null;
+        final String value;
+        final String property = String.format(
+            "cucumber.seeds.db.%s.%s",
+            this.base,
+            name
+        );
+        if (this.ctx.contains(property)) {
+            value = (String) this.ctx.value(property);
+        } else {
+            value = (String) this.ctx.value(
+                String.format(
+                    "cucumber.seeds.db.%s",
+                    name
+                )
+            );
+        }
+        return value;
     }
+
 }
