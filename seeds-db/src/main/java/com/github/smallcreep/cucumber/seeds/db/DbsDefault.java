@@ -63,9 +63,9 @@ public final class DbsDefault implements DataBases {
     public DataBase database(final String name) {
         final BoneCPDataSource src = new BoneCPDataSource();
         final Props<String> base = this.props.property(name);
-        src.setDriverClass(base.property("jdbs.driver"));
+        src.setDriverClass(base.property("jdbc.driver"));
         src.setJdbcUrl(
-            base.property("jdbs.url")
+            base.property("jdbc.url")
         );
         src.setUser(base.property("user"));
         src.setPassword(base.property("password"));

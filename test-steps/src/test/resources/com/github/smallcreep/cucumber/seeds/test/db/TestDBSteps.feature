@@ -1,4 +1,4 @@
-@db @inprogress
+@db
 Feature: Test DB steps
 
 Scenario: Test Connection

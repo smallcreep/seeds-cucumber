@@ -58,7 +58,6 @@ SOFTWARE.
       <groupId>com.jolbox</groupId>
       <artifactId>bonecp</artifactId>
       <version>0.8.0.RELEASE</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.cactoos</groupId>
@@ -136,7 +135,7 @@ SOFTWARE.
             <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
               <systemPropertyVariables>
-                <jdbs.url.postgres>jdbc:postgresql://${docker.container.postgres.ip}:5432/testuser</jdbs.url.postgres>
+                <jdbc.url.postgres>jdbc:postgresql://${docker.container.postgres.ip}:5432/testuser</jdbc.url.postgres>
               </systemPropertyVariables>
             </configuration>
           </plugin>

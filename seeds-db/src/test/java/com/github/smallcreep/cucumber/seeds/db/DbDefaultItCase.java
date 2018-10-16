@@ -64,7 +64,7 @@ public final class DbDefaultItCase {
     public void setUp() {
         ((BoneCPDataSource) this.src).setDriverClass("org.postgresql.Driver");
         ((BoneCPDataSource) this.src).setJdbcUrl(
-            System.getProperty("jdbs.url.postgres")
+            System.getProperty("jdbc.url.postgres")
         );
         ((BoneCPDataSource) this.src).setUser("testuser");
         ((BoneCPDataSource) this.src).setPassword("mysecret");

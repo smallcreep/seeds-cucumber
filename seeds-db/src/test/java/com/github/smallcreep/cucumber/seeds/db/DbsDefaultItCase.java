@@ -53,11 +53,11 @@ public final class DbsDefaultItCase {
                         new PrMap<>(
                             new MapOf<String, String>(
                                 new MapEntry<>(
-                                    "jdbs.driver", "org.postgresql.Driver"
+                                    "jdbc.driver", "org.postgresql.Driver"
                                 ),
                                 new MapEntry<>(
-                                    "jdbs.url",
-                                    System.getProperty("jdbs.url.postgres")
+                                    "jdbc.url",
+                                    System.getProperty("jdbc.url.postgres")
                                 ),
                                 new MapEntry<>(
                                     "user", "testuser"
