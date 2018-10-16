@@ -22,55 +22,57 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db;
+package com.github.smallcreep.cucumber.seeds.props;
 
-import com.github.smallcreep.cucumber.seeds.DataBase;
-import com.github.smallcreep.cucumber.seeds.DataBases;
+import com.github.smallcreep.cucumber.seeds.Context;
 import com.github.smallcreep.cucumber.seeds.Props;
 import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.props.PrDbsSuit;
-import com.jcabi.jdbc.JdbcSession;
-import com.jolbox.bonecp.BoneCPDataSource;
+import java.util.Arrays;
 
 /**
- * Default Data Bases.
+ * DataBases Properties from Suit.
  * @since 0.1.1
  */
-public final class DbsDefault implements DataBases {
+public final class PrDbsSuit implements Props<Props<String>> {
 
     /**
-     * DataBase properties.
+     * Name property that contains all databases name.
      */
-    private final Props<Props<String>> props;
+    private static final String DATABASES = "cucumber.seeds.db";
+
+    /**
+     * Suit.
+     */
+    private final Suit suit;
 
     /**
      * Ctor.
      * @param suit Suit
      */
-    public DbsDefault(final Suit suit) {
-        this(new PrDbsSuit(suit));
-    }
-
-    /**
-     * Ctor.
-     * @param props DataBase properties
-     */
-    DbsDefault(final Props<Props<String>> props) {
-        this.props = props;
+    public PrDbsSuit(final Suit suit) {
+        this.suit = suit;
     }
 
     @Override
-    public DataBase database(final String name) {
-        final BoneCPDataSource src = new BoneCPDataSource();
-        final Props<String> base = this.props.property(name);
-        src.setDriverClass(base.property("jdbs.driver"));
-        src.setJdbcUrl(
-            base.property("jdbs.url")
-        );
-        src.setUser(base.property("user"));
-        src.setPassword(base.property("password"));
-        return new DbDefault(
-            new JdbcSession(src)
-        );
+    public Props<String> property(final String name) {
+        final Context ctx = this.suit.context();
+        if (!ctx.contains(PrDbsSuit.DATABASES)) {
+            throw new IllegalArgumentException(
+                "Not found property cucumber.seeds.db"
+            );
+        }
+        if (!Arrays.asList(
+            ((String) ctx.value(PrDbsSuit.DATABASES))
+                .split(",")
+        ).contains(name)) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Not found dbs with name '%s' in property %s",
+                    name,
+                    PrDbsSuit.DATABASES
+                )
+            );
+        }
+        return new PrDbContext(ctx, name);
     }
 }

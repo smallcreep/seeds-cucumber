@@ -52,7 +52,7 @@ public final class CxSimple implements Context {
      * Ctor.
      * @param values Values map
      */
-    CxSimple(final Map<String, Object> values) {
+    public CxSimple(final Map<String, Object> values) {
         this.values = values;
     }
 

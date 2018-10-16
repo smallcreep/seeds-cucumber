@@ -22,55 +22,53 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db;
+package com.github.smallcreep.cucumber.seeds.props;
 
-import com.github.smallcreep.cucumber.seeds.DataBase;
-import com.github.smallcreep.cucumber.seeds.DataBases;
+import com.github.smallcreep.cucumber.seeds.Context;
 import com.github.smallcreep.cucumber.seeds.Props;
-import com.github.smallcreep.cucumber.seeds.Suit;
-import com.github.smallcreep.cucumber.seeds.props.PrDbsSuit;
-import com.jcabi.jdbc.JdbcSession;
-import com.jolbox.bonecp.BoneCPDataSource;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
- * Default Data Bases.
+ * Database property from context.
  * @since 0.1.1
+ * @todo #48:15m/DEV Implement this #property(String) method.
+ *  This method was return default value if has not specific value.
+ *  Returned values mapping:
+ *  "jdbs.driver" = "cucumber.seeds.db.%db_name%.jdbc.driver"
+ *  "jdbs.url" = "cucumber.seeds.db.%db_name%.jdbc.url"
+ *  "user" = "cucumber.seeds.db.%db_name%.user"
+ *  "password" = "cucumber.seeds.db.%db_name%.password"
+ * @checkstyle HiddenFieldCheck (500 lines)
  */
-public final class DbsDefault implements DataBases {
+@EqualsAndHashCode(of = {"name", "ctx"})
+@ToString(of = {"name", "ctx"})
+public final class PrDbContext implements Props<String> {
 
     /**
-     * DataBase properties.
+     * Context.
      */
-    private final Props<Props<String>> props;
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    private final Context ctx;
+
+    /**
+     * DataBase name.
+     */
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    private final String name;
 
     /**
      * Ctor.
-     * @param suit Suit
+     * @param ctx Context
+     * @param name DataBase name
      */
-    public DbsDefault(final Suit suit) {
-        this(new PrDbsSuit(suit));
-    }
-
-    /**
-     * Ctor.
-     * @param props DataBase properties
-     */
-    DbsDefault(final Props<Props<String>> props) {
-        this.props = props;
+    PrDbContext(final Context ctx, final String name) {
+        this.ctx = ctx;
+        this.name = name;
     }
 
     @Override
-    public DataBase database(final String name) {
-        final BoneCPDataSource src = new BoneCPDataSource();
-        final Props<String> base = this.props.property(name);
-        src.setDriverClass(base.property("jdbs.driver"));
-        src.setJdbcUrl(
-            base.property("jdbs.url")
-        );
-        src.setUser(base.property("user"));
-        src.setPassword(base.property("password"));
-        return new DbDefault(
-            new JdbcSession(src)
-        );
+    public String property(final String name) {
+        return null;
     }
 }

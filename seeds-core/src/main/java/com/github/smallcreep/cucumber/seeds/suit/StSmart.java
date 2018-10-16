@@ -69,7 +69,7 @@ public final class StSmart implements Suit {
      * Ctor.
      * @param context Current Suit ctx
      */
-    StSmart(final Context context) {
+    public StSmart(final Context context) {
         this.ctx = context;
         this.scenarios = new HashMap<>();
     }
