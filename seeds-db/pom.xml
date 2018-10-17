@@ -27,14 +27,14 @@ SOFTWARE.
   <parent>
     <groupId>com.github.smallcreep.cucumber</groupId>
     <artifactId>seeds</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.1</version>
   </parent>
   <artifactId>seeds-db</artifactId>
   <dependencies>
     <dependency>
       <groupId>com.github.smallcreep.cucumber</groupId>
       <artifactId>seeds-core</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.1.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
