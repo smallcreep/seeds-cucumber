@@ -21,50 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.smallcreep.cucumber.seeds.db.steps;
 
-import com.github.smallcreep.cucumber.seeds.DataBases;
-import com.github.smallcreep.cucumber.seeds.Suit;
+package com.github.smallcreep.cucumber.seeds.hooks;
+
+import com.github.smallcreep.cucumber.seeds.context.CxSimple;
+import com.github.smallcreep.cucumber.seeds.db.DbsDefault;
 import com.github.smallcreep.cucumber.seeds.suit.StSmart;
-import cucumber.api.java.en.Given;
-import java.sql.SQLException;
+import org.cactoos.map.MapOf;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Steps connection to the DB.
+ * Test Case for {@link HkDataBases}.
  * @since 0.1.1
  */
-public final class StpDefConnection {
+public final class HkDataBasesTest {
 
     /**
-     * Current Suit.
+     * Check that start method added new {@link DbsDefault} to scenario context.
      */
-    private final Suit suit;
-
-    /**
-     * Ctor.
-     */
-    public StpDefConnection() {
-        this(StSmart.instance());
-    }
-
-    /**
-     * Ctor.
-     * @param suit Current Suit
-     */
-    StpDefConnection(final Suit suit) {
-        this.suit = suit;
-    }
-
-    /**
-     * Connect to the database with alias.
-     * @param alias Database alias
-     * @throws SQLException If any error of connection
-     */
-    @Given("^The connection to the ([^,]+) database$")
-    public void connect(final String alias) throws SQLException {
-        ((DataBases) this.suit
-            .scenario()
-            .context()
-            .value("databases")).database(alias).connect();
+    @Test
+    public void checkStartAddedDatabasesToScenario() {
+        final StSmart suit = new StSmart(
+            new CxSimple(
+                new MapOf<String, Object>()
+            )
+        );
+        new HkDataBases(
+            suit
+        ).start();
+        MatcherAssert.assertThat(
+            suit.scenario().context().value("databases"),
+            CoreMatchers.instanceOf(DbsDefault.class)
+        );
     }
 }

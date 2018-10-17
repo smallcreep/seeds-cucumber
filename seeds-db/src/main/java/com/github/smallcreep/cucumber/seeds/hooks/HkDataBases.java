@@ -21,50 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.smallcreep.cucumber.seeds.db.steps;
 
-import com.github.smallcreep.cucumber.seeds.DataBases;
+package com.github.smallcreep.cucumber.seeds.hooks;
+
 import com.github.smallcreep.cucumber.seeds.Suit;
+import com.github.smallcreep.cucumber.seeds.db.DbsDefault;
 import com.github.smallcreep.cucumber.seeds.suit.StSmart;
-import cucumber.api.java.en.Given;
-import java.sql.SQLException;
+import cucumber.api.java.Before;
 
 /**
- * Steps connection to the DB.
+ * Cucumber Hook added Databases before run scenario to scenario context.
  * @since 0.1.1
  */
-public final class StpDefConnection {
+public final class HkDataBases {
 
     /**
-     * Current Suit.
+     * Current suit.
      */
-    private final Suit suit;
+    private Suit suit;
 
     /**
      * Ctor.
      */
-    public StpDefConnection() {
+    public HkDataBases() {
         this(StSmart.instance());
     }
 
     /**
      * Ctor.
-     * @param suit Current Suit
+     * @param suit Current suit
      */
-    StpDefConnection(final Suit suit) {
+    HkDataBases(final Suit suit) {
         this.suit = suit;
     }
 
     /**
-     * Connect to the database with alias.
-     * @param alias Database alias
-     * @throws SQLException If any error of connection
+     * Add databases to scenario context.
+     * @checkstyle MagicNumberCheck (3 lines)
      */
-    @Given("^The connection to the ([^,]+) database$")
-    public void connect(final String alias) throws SQLException {
-        ((DataBases) this.suit
-            .scenario()
-            .context()
-            .value("databases")).database(alias).connect();
+    @Before(order = 10)
+    public void start() {
+        this.suit.scenario().context().add(
+            "databases",
+            new DbsDefault(
+                this.suit
+            )
+        );
     }
 }
