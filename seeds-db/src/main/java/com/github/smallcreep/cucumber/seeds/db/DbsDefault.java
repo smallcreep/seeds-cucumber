@@ -44,6 +44,11 @@ public final class DbsDefault implements DataBases {
     private final Props<Props<String>> props;
 
     /**
+     * Current connected database.
+     */
+    private DataBase current;
+
+    /**
      * Ctor.
      * @param suit Suit
      */
@@ -69,18 +74,14 @@ public final class DbsDefault implements DataBases {
         );
         src.setUser(base.property("user"));
         src.setPassword(base.property("password"));
-        return new DbDefault(
+        this.current = new DbDefault(
             new JdbcSession(src)
         );
+        return this.database();
     }
 
-    // @todo #60:15m/DEV Implement this method.
-    //  Need that method return already connected database by name.
-    //  See method DbsDefault#database(String).
-    //  And throw exception if hasn't connected database.
-    //  After connect to new database this method return this database.
     @Override
     public DataBase database() {
-        return null;
+        return this.current;
     }
 }

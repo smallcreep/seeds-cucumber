@@ -41,6 +41,7 @@ SOFTWARE.
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-jdbc</artifactId>
       <version>0.17.1</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
@@ -52,12 +53,13 @@ SOFTWARE.
       <groupId>postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>9.1-901-1.jdbc4</version>
-      <scope>runtime</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.jolbox</groupId>
       <artifactId>bonecp</artifactId>
       <version>0.8.0.RELEASE</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.cactoos</groupId>
