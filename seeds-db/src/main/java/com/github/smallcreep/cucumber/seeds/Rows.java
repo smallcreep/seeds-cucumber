@@ -25,21 +25,13 @@
 package com.github.smallcreep.cucumber.seeds;
 
 /**
- * Data Bases store.
- * @since 0.1.1
+ * Rows in the table.
+ * @since 0.2.0
  */
-public interface DataBases {
+public interface Rows {
 
     /**
-     * Return database by name or alias.
-     * @param name Name or alias DB
-     * @return DataBase
+     * Add rows to table.
      */
-    DataBase database(String name);
-
-    /**
-     * Get already connected database.
-     * @return DataBase
-     */
-    DataBase database();
+    void add();
 }

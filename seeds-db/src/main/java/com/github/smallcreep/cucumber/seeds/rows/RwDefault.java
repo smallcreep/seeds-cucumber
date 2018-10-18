@@ -22,24 +22,46 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.rows;
+
+import com.github.smallcreep.cucumber.seeds.DataBase;
+import com.github.smallcreep.cucumber.seeds.Rows;
+import cucumber.api.DataTable;
 
 /**
- * Data Bases store.
- * @since 0.1.1
+ * Default implementation {@link Rows}.
+ * @since 0.2.0
  */
-public interface DataBases {
+public final class RwDefault implements Rows {
 
     /**
-     * Return database by name or alias.
-     * @param name Name or alias DB
-     * @return DataBase
+     * Ctor.
+     * @param base Database
+     * @param schema Table Schema
+     * @param name Table name
+     * @param rows Rows
+     * @todo #60:20m/DEV Redesign class constructor.
+     *  For example add to DataBase#table(String, String),
+     *  This method must return table by schema and name.
+     *  And rows must get into constructor only Table and Rows.
+     * @checkstyle ParameterNumberCheck (30 lines)
      */
-    DataBase database(String name);
+    @SuppressWarnings("PMD.UnusedFormalParameter")
+    public RwDefault(
+        final DataBase base,
+        final String schema,
+        final String name,
+        final DataTable rows
+    ) {
+        // Nothing
+    }
 
-    /**
-     * Get already connected database.
-     * @return DataBase
-     */
-    DataBase database();
+    // @todo #60:30/DEV Implement this method.
+    //  This method must add rows to table.
+    //  Need that method generate data by #Random#Integer
+    //  or other placeholders.
+    @Override
+    public void add() {
+        // Nothing
+    }
 }

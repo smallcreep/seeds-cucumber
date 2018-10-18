@@ -26,6 +26,8 @@ package com.github.smallcreep.cucumber.seeds.suit;
 
 import com.github.smallcreep.cucumber.seeds.Scenario;
 import com.github.smallcreep.cucumber.seeds.Suit;
+import com.github.smallcreep.cucumber.seeds.context.CxSimple;
+import org.cactoos.map.MapOf;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -54,10 +56,17 @@ public class StEnvelopeTest {
      */
     @Test
     public void checkScenarioTheSameOrigin() {
+        final StSmart origin = new StSmart(
+            new CxSimple(
+                new MapOf<String, Object>()
+            )
+        );
         MatcherAssert.assertThat(
-            new StCheckEnvelope().scenario(),
+            new StCheckEnvelope(
+                origin
+            ).scenario(),
             CoreMatchers.equalTo(
-                StSmart.instance().scenario()
+                origin.scenario()
             )
         );
     }
@@ -90,7 +99,15 @@ public class StEnvelopeTest {
          * Ctor.
          */
         StCheckEnvelope() {
-            super(StSmart.instance());
+            this(StSmart.instance());
+        }
+
+        /**
+         * Ctor.
+         * @param origin Origin Suit
+         */
+        StCheckEnvelope(final Suit origin) {
+            super(origin);
         }
     }
 }

@@ -73,4 +73,14 @@ public final class DbsDefault implements DataBases {
             new JdbcSession(src)
         );
     }
+
+    // @todo #60:15m/DEV Implement this method.
+    //  Need that method return already connected database by name.
+    //  See method DbsDefault#database(String).
+    //  And throw exception if hasn't connected database.
+    //  After connect to new database this method return this database.
+    @Override
+    public DataBase database() {
+        return null;
+    }
 }

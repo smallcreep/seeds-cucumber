@@ -22,24 +22,9 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
-
 /**
- * Data Bases store.
- * @since 0.1.1
+ * Rows implementations.
+ * @see com.github.smallcreep.cucumber.seeds.Rows
+ * @since 0.2.0
  */
-public interface DataBases {
-
-    /**
-     * Return database by name or alias.
-     * @param name Name or alias DB
-     * @return DataBase
-     */
-    DataBase database(String name);
-
-    /**
-     * Get already connected database.
-     * @return DataBase
-     */
-    DataBase database();
-}
+package com.github.smallcreep.cucumber.seeds.rows;
