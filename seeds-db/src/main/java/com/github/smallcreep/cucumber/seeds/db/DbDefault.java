@@ -25,9 +25,11 @@
 package com.github.smallcreep.cucumber.seeds.db;
 
 import com.github.smallcreep.cucumber.seeds.DataBase;
+import com.github.smallcreep.cucumber.seeds.Sql;
+import com.github.smallcreep.cucumber.seeds.sql.SelectSql;
 import com.jcabi.jdbc.JdbcSession;
+import com.jcabi.jdbc.Outcome;
 import com.jcabi.jdbc.SingleOutcome;
-import java.sql.SQLException;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 
@@ -52,13 +54,22 @@ public final class DbDefault implements DataBase {
     }
 
     @Override
-    public void connect() throws SQLException {
+    public void connect() throws Exception {
         MatcherAssert.assertThat(
             "Connection to DB response not expected",
-            this.session.sql("SELECT 1;").select(
+            this.result(
+                new SelectSql("1"),
                 new SingleOutcome<>(Long.class)
             ),
             CoreMatchers.equalTo(1L)
         );
+    }
+
+    @Override
+    public <T> T result(
+        final Sql sql,
+        final Outcome<T> outcome
+    ) throws Exception {
+        return this.session.sql(sql.query()).select(outcome);
     }
 }

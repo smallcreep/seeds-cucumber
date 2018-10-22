@@ -24,7 +24,7 @@
 
 package com.github.smallcreep.cucumber.seeds;
 
-import java.sql.SQLException;
+import com.jcabi.jdbc.Outcome;
 
 /**
  * Connection to te DataBase.
@@ -34,7 +34,18 @@ public interface DataBase {
 
     /**
      * Check connection to the DataBase.
-     * @throws SQLException If any error of connection
+     * @throws Exception If any error of connection
      */
-    void connect() throws SQLException;
+    void connect() throws Exception;
+
+    /**
+     * Execute SQL query.
+     *
+     * @param sql Sql query
+     * @param outcome The outcome of the operation
+     * @param <T> Type of response
+     * @return The result
+     * @throws Exception If fails
+     */
+    <T> T result(Sql sql, Outcome<T> outcome) throws Exception;
 }

@@ -26,7 +26,6 @@ package com.github.smallcreep.cucumber.seeds.db;
 
 import com.jcabi.jdbc.JdbcSession;
 import com.jolbox.bonecp.BoneCPDataSource;
-import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,16 +71,10 @@ public final class DbDefaultItCase {
 
     /**
      * Check connection correct.
-     * @todo #33:30m/DEV Move this test to integration tests.
-     *  Need startup any Database (ex. Postgres) before run integration test.
-     *  We can start DB in docker, for running docker images we can use
-     *  fabric8io/docker-maven-plugin.
-     *  For more info about this plugin go to the link
-     *  http://dmp.fabric8.io/
-     * @throws SQLException If any error of connection
+     * @throws Exception If any error of connection
      */
     @Test
-    public void checkConnection() throws SQLException {
+    public void checkConnection() throws Exception {
         new DbDefault(
             new JdbcSession(this.src)
         ).connect();

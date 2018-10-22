@@ -26,7 +26,6 @@ package com.github.smallcreep.cucumber.seeds.db;
 
 import com.github.smallcreep.cucumber.seeds.Props;
 import com.github.smallcreep.cucumber.seeds.props.PrMap;
-import java.sql.SQLException;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.junit.Test;
@@ -39,11 +38,11 @@ public final class DbsDefaultItCase {
 
     /**
      * Check correct database created.
-     * @throws SQLException If connect exception
+     * @throws Exception If connect exception
      * @checkstyle NonStaticMethodCheck (50 lines)
      */
     @Test
-    public void checkCorrectDatabaseCreated() throws SQLException {
+    public void checkCorrectDatabaseCreated() throws Exception {
         final String name = "master";
         new DbsDefault(
             new PrMap<>(

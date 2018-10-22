@@ -27,7 +27,6 @@ import com.github.smallcreep.cucumber.seeds.DataBases;
 import com.github.smallcreep.cucumber.seeds.Suit;
 import com.github.smallcreep.cucumber.seeds.suit.StSmart;
 import cucumber.api.java.en.Given;
-import java.sql.SQLException;
 
 /**
  * Steps connection to the DB.
@@ -58,10 +57,10 @@ public final class StpDefConnection {
     /**
      * Connect to the database with alias.
      * @param alias Database alias
-     * @throws SQLException If any error of connection
+     * @throws Exception If any error of connection
      */
     @Given("^The connection to the ([^,]+) database$")
-    public void connect(final String alias) throws SQLException {
+    public void connect(final String alias) throws Exception {
         ((DataBases) this.suit
             .scenario()
             .context()
