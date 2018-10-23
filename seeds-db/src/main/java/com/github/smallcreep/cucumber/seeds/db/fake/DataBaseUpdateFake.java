@@ -22,74 +22,62 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db;
+package com.github.smallcreep.cucumber.seeds.db.fake;
 
 import com.github.smallcreep.cucumber.seeds.DataBase;
 import com.github.smallcreep.cucumber.seeds.Sql;
 import com.github.smallcreep.cucumber.seeds.Table;
-import com.github.smallcreep.cucumber.seeds.sql.SelectSql;
-import com.github.smallcreep.cucumber.seeds.table.TableSimple;
-import com.jcabi.jdbc.JdbcSession;
 import com.jcabi.jdbc.Outcome;
-import com.jcabi.jdbc.SingleOutcome;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
- * Default implementation of {@link DataBase}.
- * Connect method request `SELECT 1;` from database.
- * @since 0.1.1
+ * Fake method update in database.
+ * @since 0.2.0
  */
-public final class DbDefault implements DataBase {
+public final class DataBaseUpdateFake implements DataBase {
 
-    /**
-     * Session.
-     */
-    private final JdbcSession session;
+    private final ResultSet res;
+    private final Statement statement;
 
-    /**
-     * Ctor.
-     * @param session JDBC session
-     */
-    public DbDefault(final JdbcSession session) {
-        this.session = session;
+    public DataBaseUpdateFake(final ResultSet res, final Statement statement) {
+        this.res = res;
+        this.statement = statement;
     }
 
     @Override
     public void connect() throws Exception {
-        MatcherAssert.assertThat(
-            "Connection to DB response not expected",
-            this.result(
-                new SelectSql("1"),
-                new SingleOutcome<>(Long.class)
-            ),
-            CoreMatchers.equalTo(1L)
+        throw new UnsupportedOperationException(
+            "Unsoported #connect() in this fake."
         );
     }
 
     @Override
-    public <T> T result(
-        final Sql sql,
-        final Outcome<T> outcome
-    ) throws Exception {
-        return this.session.sql(sql.query()).select(outcome);
+    public <T> T result(final Sql sql, final Outcome<T> outcome) throws Exception {
+        throw new UnsupportedOperationException(
+            "Unsoported #result() in this fake."
+        );
     }
 
     @Override
-    public <T> T update(
-        final Sql sql,
-        final Outcome<T> outcome
-    ) throws Exception {
-        return this.session.sql(sql.query()).update(outcome);
+    public <E> E update(final Sql sql, final Outcome<E> outcome) throws Exception {
+        return outcome.handle(
+            this.res,
+            this.statement
+        );
     }
 
     @Override
     public Table table(final String name) {
-        return this.table("public", name);
+        throw new UnsupportedOperationException(
+            "Unsoported #table(String) in this fake."
+        );
     }
 
     @Override
     public Table table(final String schema, final String name) {
-        return new TableSimple(schema, name, this);
+        throw new UnsupportedOperationException(
+            "Unsoported #table(String, String) in this fake."
+        );
     }
 }

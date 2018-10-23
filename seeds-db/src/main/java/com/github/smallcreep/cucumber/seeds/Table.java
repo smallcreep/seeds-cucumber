@@ -24,54 +24,21 @@
 
 package com.github.smallcreep.cucumber.seeds;
 
-import com.jcabi.jdbc.Outcome;
+import java.util.Collection;
+import java.util.Map;
+import org.cactoos.Scalar;
 
 /**
- * Connection to te DataBase.
- * @since 0.1.1
+ * Database table.
+ * @since 0.2.0
  */
-public interface DataBase {
+public interface Table extends Scalar<String> {
 
     /**
-     * Check connection to the DataBase.
-     * @throws Exception If any error of connection
+     * Insert new rows to table.
+     * @param rows Rows
+     * @return Ids inserted rows
      */
-    void connect() throws Exception;
+    Collection<Long> insert(Iterable<Map<String, String>> rows) throws Exception;
 
-    /**
-     * Execute SQL query.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
-     */
-    <T> T result(Sql sql, Outcome<T> outcome) throws Exception;
-
-    /**
-     * Execute SQL query update/insert.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
-     */
-    <T> T update(Sql sql, Outcome<T> outcome) throws Exception;
-
-    /**
-     * Get table with default schema.
-     * @param name Table name
-     * @return Table with name and default schema.
-     */
-    Table table(String name);
-
-    /**
-     * Get table.
-     * @param schema Schema name
-     * @param name Table name
-     * @return Table
-     */
-    Table table(String schema, String name);
 }
