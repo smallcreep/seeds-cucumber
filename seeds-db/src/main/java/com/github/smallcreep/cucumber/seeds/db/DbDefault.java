@@ -72,4 +72,12 @@ public final class DbDefault implements DataBase {
     ) throws Exception {
         return this.session.sql(sql.query()).select(outcome);
     }
+
+    @Override
+    public <T> T update(
+        final Sql sql,
+        final Outcome<T> outcome
+    ) throws Exception {
+        return this.session.sql(sql.query()).update(outcome);
+    }
 }
