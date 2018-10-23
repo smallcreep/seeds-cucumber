@@ -48,4 +48,15 @@ public interface DataBase {
      * @throws Exception If fails
      */
     <T> T result(Sql sql, Outcome<T> outcome) throws Exception;
+
+    /**
+     * Execute SQL query update/insert.
+     *
+     * @param sql Sql query
+     * @param outcome The outcome of the operation
+     * @param <T> Type of response
+     * @return The result
+     * @throws Exception If fails
+     */
+    <T> T update(Sql sql, Outcome<T> outcome) throws Exception;
 }
