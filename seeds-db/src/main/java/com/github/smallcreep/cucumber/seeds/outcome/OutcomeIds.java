@@ -22,56 +22,54 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.outcome;
 
 import com.jcabi.jdbc.Outcome;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Collection;
+import java.util.LinkedList;
+import lombok.EqualsAndHashCode;
 
 /**
- * Connection to te DataBase.
- * @since 0.1.1
+ * Outcome inserted primary keys.
+ * @since 0.2.0
  */
-public interface DataBase {
+@EqualsAndHashCode(of = "primary")
+public final class OutcomeIds implements Outcome<Collection<Long>> {
 
     /**
-     * Check connection to the DataBase.
-     * @throws Exception If any error of connection
+     * Column primary keys name.
      */
-    void connect() throws Exception;
+    private final String primary;
 
     /**
-     * Execute SQL query.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
+     * Ctor.
      */
-    <T> T result(Sql sql, Outcome<T> outcome) throws Exception;
+    public OutcomeIds() {
+        this("id");
+    }
 
     /**
-     * Execute SQL query update/insert.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
+     * Ctor.
+     * @param primary Column primary keys name
      */
-    <T> T update(Sql sql, Outcome<T> outcome) throws Exception;
+    public OutcomeIds(final String primary) {
+        this.primary = primary;
+    }
 
-    /**
-     * Get table with default schema.
-     * @param name Table name
-     * @return Table with name and default schema.
-     */
-    Table table(String name);
-
-    /**
-     * Get table.
-     * @param schema Schema name
-     * @param name Table name
-     * @return Table
-     */
-    Table table(String schema, String name);
+    @Override
+    public Collection<Long> handle(
+        final ResultSet rset,
+        final Statement stmt
+    ) throws SQLException {
+        final LinkedList<Long> ids = new LinkedList<>();
+        while (rset.next()) {
+            ids.add(
+                rset.getLong(this.primary)
+            );
+        }
+        return ids;
+    }
 }

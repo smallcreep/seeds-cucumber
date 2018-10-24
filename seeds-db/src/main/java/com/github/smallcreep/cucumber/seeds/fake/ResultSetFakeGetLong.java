@@ -22,56 +22,56 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.fake;
 
-import com.jcabi.jdbc.Outcome;
+import java.sql.ResultSet;
+import java.util.Iterator;
+import java.util.Map;
+import org.cactoos.scalar.ItemAt;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Connection to te DataBase.
- * @since 0.1.1
+ * Fake for {@link ResultSet}, return Long from static iterator.
+ * @since 0.2.0
  */
-public interface DataBase {
+public final class ResultSetFakeGetLong extends ResultSetFake {
 
     /**
-     * Check connection to the DataBase.
-     * @throws Exception If any error of connection
+     * Longs Result.
      */
-    void connect() throws Exception;
+    private final Iterator<Map<String, Long>> res;
 
     /**
-     * Execute SQL query.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
+     * Ctor.
+     * @param result Longs result
      */
-    <T> T result(Sql sql, Outcome<T> outcome) throws Exception;
+    public ResultSetFakeGetLong(final Iterator<Map<String, Long>> result) {
+        super();
+        this.res = result;
+    }
 
-    /**
-     * Execute SQL query update/insert.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
-     */
-    <T> T update(Sql sql, Outcome<T> outcome) throws Exception;
+    @Override
+    public boolean next() {
+        return this.res.hasNext();
+    }
 
-    /**
-     * Get table with default schema.
-     * @param name Table name
-     * @return Table with name and default schema.
-     */
-    Table table(String name);
+    // @checkstyle ParameterNameCheck (15 lines)
+    @Override
+    public long getLong(final int columnIndex) {
+        final Map<String, Long> row = this.res.next();
+        return row.get(
+            new UncheckedScalar<>(
+                new ItemAt<>(
+                    columnIndex,
+                    row.keySet()
+                )
+            ).value()
+        );
+    }
 
-    /**
-     * Get table.
-     * @param schema Schema name
-     * @param name Table name
-     * @return Table
-     */
-    Table table(String schema, String name);
+    // @checkstyle ParameterNameCheck (15 lines)
+    @Override
+    public long getLong(final String columnLabel) {
+        return this.res.next().get(columnLabel);
+    }
 }
