@@ -24,10 +24,13 @@
 
 package com.github.smallcreep.cucumber.seeds.outcome;
 
-import com.github.smallcreep.cucumber.seeds.datasource.H2Source;
 import com.jcabi.jdbc.JdbcSession;
+import com.jcabi.jdbc.StaticSource;
 import java.util.Collection;
+import java.util.Properties;
 import javax.sql.DataSource;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import org.h2.Driver;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -44,8 +47,11 @@ public final class OutcomeIdsTest {
      */
     @Test
     public void retrievesInsertedPrimaryKey() throws Exception {
-        final DataSource source = new H2Source(
-            "retrievesInsertedPrimaryKey"
+        final DataSource source = new StaticSource(
+            new Driver().connect(
+                "jdbc:h2:mem:retrievesInsertedPrimaryKey;DB_CLOSE_DELAY=-1",
+                new Properties()
+            )
         );
         final JdbcSession session = new JdbcSession(source);
         session
@@ -60,8 +66,7 @@ public final class OutcomeIdsTest {
             .execute()
             .set(2)
             .set("Ivan Ivanov")
-            .execute()
-            .commit();
+            .execute();
         final Collection<Long> ids = session
             .sql("SELECT id, name FROM foo")
             .select(new OutcomeIds());
@@ -74,4 +79,12 @@ public final class OutcomeIdsTest {
         );
     }
 
+    /**
+     * Check {@link OutcomeIds#equals(Object)} and
+     * {@link OutcomeIds#hashCode()}.
+     */
+    @Test
+    public void checkEqualsAndHashCode() {
+        EqualsVerifier.forClass(OutcomeIds.class).verify();
+    }
 }

@@ -24,21 +24,30 @@
 
 package com.github.smallcreep.cucumber.seeds.fake;
 
+import java.sql.ResultSet;
 import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.scalar.ItemAt;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- *
+ * Fake for {@link ResultSet}, return Long from static iterator.
  * @since 0.2.0
  */
 public final class ResultSetFakeGetLong extends ResultSetFake {
 
+    /**
+     * Longs Result.
+     */
     private final Iterator<Map<String, Long>> res;
 
-    public ResultSetFakeGetLong(final Iterator<Map<String, Long>> res) {
-        this.res = res;
+    /**
+     * Ctor.
+     * @param result Longs result
+     */
+    public ResultSetFakeGetLong(final Iterator<Map<String, Long>> result) {
+        super();
+        this.res = result;
     }
 
     @Override
@@ -46,6 +55,7 @@ public final class ResultSetFakeGetLong extends ResultSetFake {
         return this.res.hasNext();
     }
 
+    // @checkstyle ParameterNameCheck (15 lines)
     @Override
     public long getLong(final int columnIndex) {
         final Map<String, Long> row = this.res.next();
@@ -59,6 +69,7 @@ public final class ResultSetFakeGetLong extends ResultSetFake {
         );
     }
 
+    // @checkstyle ParameterNameCheck (15 lines)
     @Override
     public long getLong(final String columnLabel) {
         return this.res.next().get(columnLabel);

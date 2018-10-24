@@ -45,6 +45,7 @@ import org.junit.Test;
 /**
  * Test Case for {@link TableSimple}.
  * @since 0.2.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
 public final class TableSimpleTest {
 
@@ -56,8 +57,8 @@ public final class TableSimpleTest {
     public void returnTableName() throws Exception {
         MatcherAssert.assertThat(
             new TableSimple(
-                "public",
-                "test",
+                "schema",
+                "returnTableName",
                 new DbDefault(
                     new JdbcSession(
                         new StaticSource(
@@ -69,7 +70,7 @@ public final class TableSimpleTest {
                     )
                 )
             ).value(),
-            CoreMatchers.equalTo("public.test")
+            CoreMatchers.equalTo("schema.returnTableName")
         );
     }
 
@@ -79,7 +80,7 @@ public final class TableSimpleTest {
      */
     @Test
     public void returnInsertedRows() throws Exception {
-        final DataBase db2 = new DataBaseUpdateFake(
+        final DataBase base = new DataBaseUpdateFake(
             new ResultSetFakeGetLong(
                 new IteratorOf<Map<String, Long>>(
                     new MapOf<String, Long>(
@@ -97,21 +98,22 @@ public final class TableSimpleTest {
             new StatementFake() {
             }
         );
+        final String first = "first";
         MatcherAssert.assertThat(
             new TableSimple(
                 "public",
-                "test",
-                db2
+                "returnInsertedRows",
+                base
             ).insert(
                 new IterableOf<Map<String, String>>(
                     new MapOf<String, String>(
                         new MapEntry<>(
-                            "first", "1"
+                            first, "1"
                         )
                     ),
                     new MapOf<String, String>(
                         new MapEntry<>(
-                            "first", "2"
+                            first, "2"
                         ),
                         new MapEntry<>(
                             "second", "2"
@@ -121,7 +123,7 @@ public final class TableSimpleTest {
             ),
             CoreMatchers.hasItems(
                 1L,
-                2l
+                2L
             )
         );
     }

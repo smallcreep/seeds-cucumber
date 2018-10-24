@@ -26,233 +26,328 @@ package com.github.smallcreep.cucumber.seeds.fake;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 
 /**
  * Fake Statement throws {@link UnsupportedOperationException} for all methods.
  * @since 0.2.0
+ * @checkstyle DesignForExtensionCheck (1000 lines)
+ * @checkstyle ParameterNameCheck (1000 lines)
  */
+@SuppressWarnings(
+    {
+        "PMD.AvoidDuplicateLiterals",
+        "PMD.TooManyMethods"
+    }
+)
 public abstract class StatementFake implements Statement {
 
     @Override
-    public ResultSet executeQuery(final String sql) throws SQLException {
-        return null;
+    public ResultSet executeQuery(final String sql) {
+        throw new UnsupportedOperationException(
+            "unsupported method #executeQuery()"
+        );
     }
 
     @Override
-    public int executeUpdate(final String sql) throws SQLException {
-        return 0;
+    public int executeUpdate(final String sql) {
+        throw new UnsupportedOperationException(
+            "unsupported method #executeUpdate()"
+        );
     }
 
     @Override
-    public void close() throws SQLException {
-
+    public void close() {
+        throw new UnsupportedOperationException(
+            "unsupported method #close()"
+        );
     }
 
     @Override
-    public int getMaxFieldSize() throws SQLException {
-        return 0;
+    public int getMaxFieldSize() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getMaxFieldSize()"
+        );
     }
 
     @Override
-    public void setMaxFieldSize(final int max) throws SQLException {
-
+    public void setMaxFieldSize(final int max) {
+        throw new UnsupportedOperationException(
+            "unsupported method #setMaxFieldSize()"
+        );
     }
 
     @Override
-    public int getMaxRows() throws SQLException {
-        return 0;
+    public int getMaxRows() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getMaxRows()"
+        );
     }
 
     @Override
-    public void setMaxRows(final int max) throws SQLException {
-
+    public void setMaxRows(final int max) {
+        throw new UnsupportedOperationException(
+            "unsupported method #setMaxRows()"
+        );
     }
 
     @Override
-    public void setEscapeProcessing(final boolean enable) throws SQLException {
-
+    public void setEscapeProcessing(final boolean enable) {
+        throw new UnsupportedOperationException(
+            "unsupported method #setEscapeProcessing()"
+        );
     }
 
     @Override
-    public int getQueryTimeout() throws SQLException {
-        return 0;
+    public int getQueryTimeout() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getQueryTimeout()"
+        );
     }
 
     @Override
-    public void setQueryTimeout(final int seconds) throws SQLException {
-
+    public void setQueryTimeout(final int seconds) {
+        throw new UnsupportedOperationException(
+            "unsupported method #setQueryTimeout()"
+        );
     }
 
     @Override
-    public void cancel() throws SQLException {
-
+    public void cancel() {
+        throw new UnsupportedOperationException(
+            "unsupported method #cancel()"
+        );
     }
 
     @Override
-    public SQLWarning getWarnings() throws SQLException {
-        return null;
+    public SQLWarning getWarnings() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getWarnings()"
+        );
     }
 
     @Override
-    public void clearWarnings() throws SQLException {
-
+    public void clearWarnings() {
+        throw new UnsupportedOperationException(
+            "unsupported method #clearWarnings()"
+        );
     }
 
     @Override
-    public void setCursorName(final String name) throws SQLException {
-
+    public void setCursorName(final String name) {
+        throw new UnsupportedOperationException(
+            "unsupported method #setCursorName()"
+        );
     }
 
     @Override
-    public boolean execute(final String sql) throws SQLException {
-        return false;
+    public boolean execute(final String sql) {
+        throw new UnsupportedOperationException(
+            "unsupported method #execute()"
+        );
     }
 
     @Override
-    public ResultSet getResultSet() throws SQLException {
-        return null;
+    public ResultSet getResultSet() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getResultSet()"
+        );
     }
 
     @Override
-    public int getUpdateCount() throws SQLException {
-        return 0;
+    public int getUpdateCount() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getUpdateCount()"
+        );
     }
 
     @Override
-    public boolean getMoreResults() throws SQLException {
-        return false;
+    public boolean getMoreResults() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getMoreResults()"
+        );
     }
 
     @Override
-    public void setFetchDirection(final int direction) throws SQLException {
-
+    public void setFetchDirection(final int direction) {
+        throw new UnsupportedOperationException(
+            "unsupported method #setFetchDirection()"
+        );
     }
 
     @Override
-    public int getFetchDirection() throws SQLException {
-        return 0;
+    public int getFetchDirection() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getFetchDirection()"
+        );
     }
 
     @Override
-    public void setFetchSize(final int rows) throws SQLException {
-
+    public void setFetchSize(final int rows) {
+        throw new UnsupportedOperationException(
+            "unsupported method #setFetchSize()"
+        );
     }
 
     @Override
-    public int getFetchSize() throws SQLException {
-        return 0;
+    public int getFetchSize() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getFetchSize()"
+        );
     }
 
     @Override
-    public int getResultSetConcurrency() throws SQLException {
-        return 0;
+    public int getResultSetConcurrency() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getResultSetConcurrency()"
+        );
     }
 
     @Override
-    public int getResultSetType() throws SQLException {
-        return 0;
+    public int getResultSetType() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getResultSetType()"
+        );
     }
 
     @Override
-    public void addBatch(final String sql) throws SQLException {
-
+    public void addBatch(final String sql) {
+        throw new UnsupportedOperationException(
+            "unsupported method #addBatch()"
+        );
     }
 
     @Override
-    public void clearBatch() throws SQLException {
-
+    public void clearBatch() {
+        throw new UnsupportedOperationException(
+            "unsupported method #clearBatch()"
+        );
     }
 
     @Override
-    public int[] executeBatch() throws SQLException {
-        return new int[0];
+    public int[] executeBatch() {
+        throw new UnsupportedOperationException(
+            "unsupported method #executeBatch()"
+        );
     }
 
     @Override
-    public Connection getConnection() throws SQLException {
-        return null;
+    public Connection getConnection() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getConnection()"
+        );
     }
 
     @Override
-    public boolean getMoreResults(final int current) throws SQLException {
-        return false;
+    public boolean getMoreResults(final int current) {
+        throw new UnsupportedOperationException(
+            "unsupported method #getMoreResults()"
+        );
     }
 
     @Override
-    public ResultSet getGeneratedKeys() throws SQLException {
-        return null;
+    public ResultSet getGeneratedKeys() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getGeneratedKeys()"
+        );
     }
 
     @Override
-    public int executeUpdate(final String sql, final int autoGeneratedKeys) throws SQLException {
-        return 0;
+    public int executeUpdate(final String sql, final int autoGeneratedKeys) {
+        throw new UnsupportedOperationException(
+            "unsupported method #executeUpdate()"
+        );
     }
 
     @Override
-    public int executeUpdate(final String sql, final int[] columnIndexes) throws SQLException {
-        return 0;
+    public int executeUpdate(final String sql, final int[] columnIndexes) {
+        throw new UnsupportedOperationException(
+            "unsupported method #executeUpdate()"
+        );
     }
 
     @Override
-    public int executeUpdate(final String sql, final String[] columnNames) throws SQLException {
-        return 0;
+    public int executeUpdate(final String sql, final String[] columnNames) {
+        throw new UnsupportedOperationException(
+            "unsupported method #executeUpdate()"
+        );
     }
 
     @Override
-    public boolean execute(final String sql, final int autoGeneratedKeys) throws SQLException {
-        return false;
+    public boolean execute(final String sql, final int autoGeneratedKeys) {
+        throw new UnsupportedOperationException(
+            "unsupported method #execute()"
+        );
     }
 
     @Override
-    public boolean execute(final String sql, final int[] columnIndexes) throws SQLException {
-        return false;
+    public boolean execute(final String sql, final int[] columnIndexes) {
+        throw new UnsupportedOperationException(
+            "unsupported method #execute()"
+        );
     }
 
     @Override
-    public boolean execute(final String sql, final String[] columnNames) throws SQLException {
-        return false;
+    public boolean execute(final String sql, final String[] columnNames) {
+        throw new UnsupportedOperationException(
+            "unsupported method #execute()"
+        );
     }
 
     @Override
-    public int getResultSetHoldability() throws SQLException {
-        return 0;
+    public int getResultSetHoldability() {
+        throw new UnsupportedOperationException(
+            "unsupported method #getResultSetHoldability()"
+        );
     }
 
     @Override
-    public boolean isClosed() throws SQLException {
-        return false;
+    public boolean isClosed() {
+        throw new UnsupportedOperationException(
+            "unsupported method #isClosed()"
+        );
     }
 
     @Override
-    public void setPoolable(final boolean poolable) throws SQLException {
-
+    public void setPoolable(final boolean poolable) {
+        throw new UnsupportedOperationException(
+            "unsupported method #setPoolable()"
+        );
     }
 
     @Override
-    public boolean isPoolable() throws SQLException {
-        return false;
+    public boolean isPoolable() {
+        throw new UnsupportedOperationException(
+            "unsupported method #isPoolable()"
+        );
     }
 
     @Override
-    public void closeOnCompletion() throws SQLException {
-
+    public void closeOnCompletion() {
+        throw new UnsupportedOperationException(
+            "unsupported method #closeOnCompletion()"
+        );
     }
 
     @Override
-    public boolean isCloseOnCompletion() throws SQLException {
-        return false;
+    public boolean isCloseOnCompletion() {
+        throw new UnsupportedOperationException(
+            "unsupported method #isCloseOnCompletion()"
+        );
     }
 
     @Override
-    public <T> T unwrap(final Class<T> iface) throws SQLException {
-        return null;
+    public <T> T unwrap(final Class<T> iface) {
+        throw new UnsupportedOperationException(
+            "unsupported method #unwrap()"
+        );
     }
 
     @Override
-    public boolean isWrapperFor(final Class<?> iface) throws SQLException {
-        return false;
+    public boolean isWrapperFor(final Class<?> iface) {
+        throw new UnsupportedOperationException(
+            "unsupported method #isWrapperFor()"
+        );
     }
 }

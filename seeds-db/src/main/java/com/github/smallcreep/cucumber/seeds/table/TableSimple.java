@@ -28,8 +28,8 @@ import com.github.smallcreep.cucumber.seeds.DataBase;
 import com.github.smallcreep.cucumber.seeds.Table;
 import com.github.smallcreep.cucumber.seeds.outcome.OutcomeIds;
 import com.github.smallcreep.cucumber.seeds.sql.InsertSql;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.cactoos.Text;
@@ -55,14 +55,20 @@ public final class TableSimple implements Table {
      * Ctor.
      * @param schema Database schema
      * @param name Table name
+     * @param base Database
      */
-    public TableSimple(final String schema, String name, final DataBase base) {
+    public TableSimple(
+        final String schema,
+        final String name,
+        final DataBase base
+    ) {
         this(new FormattedText("%s.%s", schema, name), base);
     }
 
     /**
      * Ctor.
      * @param name Table name
+     * @param base Database
      */
     public TableSimple(final Text name, final DataBase base) {
         this.name = name;
@@ -77,7 +83,7 @@ public final class TableSimple implements Table {
     @Override
     public Collection<Long> insert(final Iterable<Map<String, String>> rows)
         throws Exception {
-        final List<String> heads = new ArrayList<>();
+        final List<String> heads = new LinkedList<>();
         rows.forEach(
             row -> row.keySet().forEach(
                 column -> {

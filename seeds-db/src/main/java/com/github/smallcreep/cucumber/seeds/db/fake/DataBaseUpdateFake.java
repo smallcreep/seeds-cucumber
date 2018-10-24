@@ -37,30 +37,45 @@ import java.sql.Statement;
  */
 public final class DataBaseUpdateFake implements DataBase {
 
+    /**
+     * ResultSet for update.
+     */
     private final ResultSet res;
+
+    /**
+     * Statement for update.
+     */
     private final Statement statement;
 
+    /**
+     * Ctor.
+     * @param res ResultSet
+     * @param statement Statement
+     */
     public DataBaseUpdateFake(final ResultSet res, final Statement statement) {
         this.res = res;
         this.statement = statement;
     }
 
     @Override
-    public void connect() throws Exception {
+    public void connect() {
         throw new UnsupportedOperationException(
             "Unsoported #connect() in this fake."
         );
     }
 
     @Override
-    public <T> T result(final Sql sql, final Outcome<T> outcome) throws Exception {
+    public <T> T result(final Sql sql, final Outcome<T> outcome) {
         throw new UnsupportedOperationException(
             "Unsoported #result() in this fake."
         );
     }
 
     @Override
-    public <E> E update(final Sql sql, final Outcome<E> outcome) throws Exception {
+    public <E> E update(
+        final Sql sql,
+        final Outcome<E> outcome
+    ) throws Exception {
         return outcome.handle(
             this.res,
             this.statement

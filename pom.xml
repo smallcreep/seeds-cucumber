@@ -147,6 +147,10 @@ SOFTWARE.
             <artifactId>qulice-maven-plugin</artifactId>
             <version>0.18.2</version>
             <configuration>
+              <excludes>
+                <ecxlude>checkstyle:/src/test/java/com/github/smallcreep/cucumber/seeds/fake/ResultSetFakeTest.java</ecxlude>
+                <ecxlude>checkstyle:/src/main/java/com/github/smallcreep/cucumber/seeds/fake/ResultSetFake.java</ecxlude>
+              </excludes>
             </configuration>
           </plugin>
           <plugin>
