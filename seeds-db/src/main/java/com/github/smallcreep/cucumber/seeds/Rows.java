@@ -32,6 +32,7 @@ public interface Rows {
 
     /**
      * Add rows to table.
+     * @throws Exception if Fails
      */
-    void add();
+    void add() throws Exception;
 }
