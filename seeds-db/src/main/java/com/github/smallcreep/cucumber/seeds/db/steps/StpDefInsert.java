@@ -62,20 +62,23 @@ public final class StpDefInsert {
      * @param schema Table schema
      * @param table Table name
      * @param rows Table rows
+     * @throws Exception if fails
      */
     @Given("^There is row in the table ([^\\.]+)\\.([^\\.]+):$")
     public void insert(
         final String schema,
         final String table,
         final DataTable rows
-    ) {
+    ) throws Exception {
         new RwDefault(
-        ((DataBases) this.suit
-            .scenario()
-            .context()
-            .value("databases")).database(),
-            schema,
-            table,
+            (
+                (DataBases) this.suit
+                    .scenario()
+                    .context()
+                    .value("databases")
+            )
+                .database()
+                .table(schema, table),
             rows
         ).add();
     }

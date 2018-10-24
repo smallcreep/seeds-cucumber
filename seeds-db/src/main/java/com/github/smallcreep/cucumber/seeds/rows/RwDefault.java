@@ -24,8 +24,8 @@
 
 package com.github.smallcreep.cucumber.seeds.rows;
 
-import com.github.smallcreep.cucumber.seeds.DataBase;
 import com.github.smallcreep.cucumber.seeds.Rows;
+import com.github.smallcreep.cucumber.seeds.Table;
 import cucumber.api.DataTable;
 
 /**
@@ -35,33 +35,49 @@ import cucumber.api.DataTable;
 public final class RwDefault implements Rows {
 
     /**
-     * Ctor.
-     * @param base Database
-     * @param schema Table Schema
-     * @param name Table name
-     * @param rows Rows
-     * @todo #60:20m/DEV Redesign class constructor.
-     *  For example add to DataBase#table(String, String),
-     *  This method must return table by schema and name.
-     *  And rows must get into constructor only Table and Rows.
-     * @checkstyle ParameterNumberCheck (30 lines)
+     * Database Table.
      */
-    @SuppressWarnings("PMD.UnusedFormalParameter")
+    private final Table table;
+
+    /**
+     * Rows.
+     */
+    private final DataTable rows;
+
+    /**
+     * Ctor.
+     * @param table Database Table
+     * @param rows Rows
+     */
     public RwDefault(
-        final DataBase base,
-        final String schema,
-        final String name,
+        final Table table,
         final DataTable rows
     ) {
-        // Nothing
+        this.table = table;
+        this.rows = rows;
     }
 
-    // @todo #60:30/DEV Implement this method.
-    //  This method must add rows to table.
-    //  Need that method generate data by #Random#Integer
-    //  or other placeholders.
+    // @todo #63:30/TEST Add integration test to this method.
+    //  For example this test must insert to exist database table.
+    //  To create table can use liquibase, see for example usage
+    //  https://www.yegor256.com/2014/07/20/liquibase-in-maven.html
+    // @todo #63:30/DEV Add change values from placeholders.
+    //  We need use placeholders for example #Random#Integer.
+    //  This placeholder should replace before insert.
+    //  Placeholders to implementation:
+    //  #Random#Integer - random integer;
+    //  #Random#String - random string;
+    //  #Timestamp#Now - current timestamp by default in
+    //  format YYYY/MM/DD hh:mm:ss
+    //  #Random#String#End(endString) - random string with string in the end,
+    //  can send another placeholder as parameter;
+    //  #Random#String(length) - random string length from parameter;
+    //  #Encryption#Md5() - encrypt string to md5 hash,
+    //  can send another placeholder as parameter;
     @Override
-    public void add() {
-        // Nothing
+    public void add() throws Exception {
+        this.table.insert(
+            this.rows.asMaps(String.class, String.class)
+        );
     }
 }
