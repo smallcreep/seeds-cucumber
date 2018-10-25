@@ -26,9 +26,14 @@ package com.github.smallcreep.cucumber.seeds.generator.surrogate;
 
 import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
 import com.github.smallcreep.cucumber.seeds.generator.Surrogate;
+import com.github.smallcreep.cucumber.seeds.generator.placeholders.PlaceholderRandomInt;
+import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Scalar;
+import org.cactoos.func.UncheckedFunc;
+import org.cactoos.iterable.IterableOf;
 import org.cactoos.map.MapEnvelope;
+import org.cactoos.map.MapOf;
 
 /**
  * Simple implementation of surrogate.
@@ -39,18 +44,47 @@ public final class SurrogateSimple
 
     /**
      * Ctor.
-     * @param placeholders Placeholders
      * @param origin Origin Map
-     * @todo #87:15m/DEV Implement this class.
-     *  This class should replace all placeholders.
-     *  This class doesn't change key, but change values from origin map.
-     *  Values should replaced by regexp.
      */
-    @SuppressWarnings("PMD.UnusedFormalParameter")
+    public SurrogateSimple(final Scalar<Map<String, String>> origin) {
+        this(origin, new PlaceholderRandomInt());
+    }
+
+    /**
+     * Ctor.
+     * @param origin Origin Map
+     * @param placeholders Placeholders
+     */
     public SurrogateSimple(
-        final Iterable<Placeholder> placeholders,
-        final Scalar<Map<String, String>> origin
+        final Scalar<Map<String, String>> origin,
+        final Placeholder... placeholders
     ) {
-        super(origin);
+        this(origin, new IterableOf<>(placeholders));
+    }
+
+    /**
+     * Ctor.
+     * @param origin Origin Map
+     * @param placeholders Placeholders
+     */
+    public SurrogateSimple(
+        final Scalar<Map<String, String>> origin,
+        final Iterable<Placeholder> placeholders
+    ) {
+        super(
+            () -> new MapOf<>(
+                Entry::getKey, entry -> {
+                String value = null;
+                final Iterator<Placeholder> places = placeholders.iterator();
+                while (value == null && places.hasNext()) {
+                    value = new UncheckedFunc<>(
+                        places.next()
+                    ).apply(entry.getValue());
+                }
+                return value;
+            },
+                origin.value().entrySet()
+            )
+        );
     }
 }
