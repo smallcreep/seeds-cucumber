@@ -82,10 +82,10 @@ SOFTWARE.
     </site>
   </distributionManagement>
   <modules>
-    <module>seeds-db</module>
-    <module>test-steps</module>
     <module>seeds-core</module>
     <module>seeds-generator</module>
+    <module>seeds-db</module>
+    <module>test-steps</module>
   </modules>
   <dependencies>
     <dependency>
