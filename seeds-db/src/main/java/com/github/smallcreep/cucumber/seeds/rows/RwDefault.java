@@ -26,7 +26,9 @@ package com.github.smallcreep.cucumber.seeds.rows;
 
 import com.github.smallcreep.cucumber.seeds.Rows;
 import com.github.smallcreep.cucumber.seeds.Table;
+import com.github.smallcreep.cucumber.seeds.generator.surrogate.SurrogateSimple;
 import cucumber.api.DataTable;
+import org.cactoos.iterable.Mapped;
 
 /**
  * Default implementation {@link Rows}.
@@ -61,23 +63,13 @@ public final class RwDefault implements Rows {
     //  For example this test must insert to exist database table.
     //  To create table can use liquibase, see for example usage
     //  https://www.yegor256.com/2014/07/20/liquibase-in-maven.html
-    // @todo #63:30/DEV Add change values from placeholders.
-    //  We need use placeholders for example #Random#Integer.
-    //  This placeholder should replace before insert.
-    //  Placeholders to implementation:
-    //  #Random#Integer - random integer;
-    //  #Random#String - random string;
-    //  #Timestamp#Now - current timestamp by default in
-    //  format YYYY/MM/DD hh:mm:ss
-    //  #Random#String#End(endString) - random string with string in the end,
-    //  can send another placeholder as parameter;
-    //  #Random#String(length) - random string length from parameter;
-    //  #Encryption#Md5() - encrypt string to md5 hash,
-    //  can send another placeholder as parameter;
     @Override
     public void add() throws Exception {
         this.table.insert(
-            this.rows.asMaps(String.class, String.class)
+            new Mapped<>(
+                input -> new SurrogateSimple(() -> input),
+                this.rows.asMaps(String.class, String.class)
+            )
         );
     }
 }

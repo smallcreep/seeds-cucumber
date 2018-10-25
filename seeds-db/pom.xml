@@ -35,7 +35,11 @@ SOFTWARE.
       <groupId>com.github.smallcreep.cucumber</groupId>
       <artifactId>seeds-core</artifactId>
       <version>0.0.1-SNAPSHOT</version>
-      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.smallcreep.cucumber</groupId>
+      <artifactId>seeds-generator</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
