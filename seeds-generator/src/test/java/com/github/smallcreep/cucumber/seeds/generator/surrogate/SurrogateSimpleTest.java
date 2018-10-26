@@ -25,6 +25,7 @@
 package com.github.smallcreep.cucumber.seeds.generator.surrogate;
 
 import com.github.smallcreep.cucumber.seeds.generator.placeholders.PlaceholderSimple;
+import com.jcabi.matchers.RegexMatchers;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.hamcrest.CoreMatchers;
@@ -119,6 +120,37 @@ public final class SurrogateSimpleTest {
             CoreMatchers.allOf(
                 CoreMatchers.startsWith("Start"),
                 CoreMatchers.endsWith("End")
+            )
+        );
+    }
+
+    /**
+     * Surrogate can replace all placeholders in string.
+     */
+    @Test
+    public void replaceAllPlaceholder() {
+        final String key = "replaceAllPlaceholder";
+        MatcherAssert.assertThat(
+            new SurrogateSimple(
+                () -> new MapOf<String, String>(
+                    new MapEntry<String, String>(
+                        key,
+                        String.format(
+                            "%s; %s; %s;",
+                            "timestamp = #Timestamp#Now",
+                            "integer = #Random#Integer",
+                            "string = #Random#String"
+                        )
+                    )
+                )
+            ).get(key),
+            RegexMatchers.matchesPattern(
+                String.format(
+                    "^timestamp = %s; integer = %s; string = %s;$",
+                    "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d+",
+                    "-?\\d+",
+                    "(?!#Random#String).+"
+                )
             )
         );
     }

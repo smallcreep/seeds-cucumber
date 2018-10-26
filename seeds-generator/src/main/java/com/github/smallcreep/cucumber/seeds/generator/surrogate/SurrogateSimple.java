@@ -28,8 +28,9 @@ import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
 import com.github.smallcreep.cucumber.seeds.generator.Surrogate;
 import com.github.smallcreep.cucumber.seeds.generator.placeholders.PlaceholderRandomInt;
 import com.github.smallcreep.cucumber.seeds.generator.placeholders.PlaceholderRandomString;
-import java.util.Iterator;
+import com.github.smallcreep.cucumber.seeds.generator.placeholders.PlaceholderTimestampNow;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.Scalar;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.iterable.IterableOf;
@@ -51,7 +52,8 @@ public final class SurrogateSimple
         this(
             origin,
             new PlaceholderRandomInt(),
-            new PlaceholderRandomString()
+            new PlaceholderRandomString(),
+            new PlaceholderTimestampNow()
         );
     }
 
@@ -79,14 +81,17 @@ public final class SurrogateSimple
         super(
             () -> new MapOf<>(
                 Entry::getKey, entry -> {
-                String value = null;
-                final Iterator<Placeholder> places = placeholders.iterator();
-                while (value == null && places.hasNext()) {
-                    value = new UncheckedFunc<>(
-                        places.next()
-                    ).apply(entry.getValue());
-                }
-                return value;
+                final AtomicReference<String> value = new AtomicReference<>(
+                    entry.getValue()
+                );
+                placeholders.forEach(
+                    placeholder -> value.set(
+                        new UncheckedFunc<>(
+                            placeholder
+                        ).apply(value.get())
+                    )
+                );
+                return value.get();
             },
                 origin.value().entrySet()
             )

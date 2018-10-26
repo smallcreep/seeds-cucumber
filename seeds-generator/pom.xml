@@ -42,5 +42,11 @@ SOFTWARE.
       <version>2.0.4</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.jcabi</groupId>
+      <artifactId>jcabi-matchers</artifactId>
+      <version>1.4</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
