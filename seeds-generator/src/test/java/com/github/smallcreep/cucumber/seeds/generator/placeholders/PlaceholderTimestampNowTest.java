@@ -24,30 +24,36 @@
 
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
-import org.cactoos.text.RandomText;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import org.exparity.hamcrest.date.LocalDateTimeMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Placeholder return random string.
+ * Test Case for {@link PlaceholderTimestampNow}.
  * @since 0.2.0
  */
-public final class PlaceholderRandomString extends PlaceholderEnvelope {
+public final class PlaceholderTimestampNowTest {
 
     /**
-     * Ctor.
+     * PlaceholderTimestampNow can replace to now timestamp with format
+     * "yyyy-MM-dd HH:mm:ss.fffffffff".
+     * @throws Exception if fails
+     * @checkstyle MagicNumberCheck (15 lines)
      */
-    public PlaceholderRandomString() {
-        this("#Random#String");
-    }
-
-    /**
-     * Ctor.
-     * @param regexp Regexp
-     */
-    public PlaceholderRandomString(final String regexp) {
-        super(
-            new PlaceholderRegexp(
-                input -> new RandomText().asString(),
-                regexp
+    @Test
+    public void replacedTimestampNow() throws Exception {
+        MatcherAssert.assertThat(
+            Timestamp.valueOf(
+                new PlaceholderTimestampNow()
+                    .apply("#Timestamp#Now")
+            ).toLocalDateTime(),
+            LocalDateTimeMatchers.within(
+                5,
+                ChronoUnit.SECONDS,
+                LocalDateTime.now()
             )
         );
     }

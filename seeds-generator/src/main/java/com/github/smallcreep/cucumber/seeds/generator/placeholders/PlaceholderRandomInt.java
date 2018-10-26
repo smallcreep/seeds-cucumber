@@ -24,7 +24,6 @@
 
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
-import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
 import java.util.Random;
 
 /**
@@ -50,7 +49,7 @@ public final class PlaceholderRandomInt extends PlaceholderEnvelope {
      * @param regexp Regexp
      */
     public PlaceholderRandomInt(final String regexp) {
-        this(
+        super(
             new PlaceholderRegexp(
                 input -> Integer.toString(
                     PlaceholderRandomInt.RANDOM.nextInt()
@@ -58,13 +57,5 @@ public final class PlaceholderRandomInt extends PlaceholderEnvelope {
                 regexp
             )
         );
-    }
-
-    /**
-     * Ctor.
-     * @param placeholder Placeholder
-     */
-    private PlaceholderRandomInt(final Placeholder placeholder) {
-        super(placeholder);
     }
 }
