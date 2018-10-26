@@ -87,16 +87,39 @@ public final class SurrogateSimpleTest {
     @Test
     public void notReplacePlaceholder() {
         final String key = "notReplacePlaceholder";
+        final String value = "#NotExistingPlaceholder";
         MatcherAssert.assertThat(
             new SurrogateSimple(
                 () -> new MapOf<String, String>(
                     new MapEntry<String, String>(
                         key,
-                        "#NotExistingPlaceholder"
+                        value
                     )
                 )
             ).get(key),
-            CoreMatchers.equalTo(null)
+            CoreMatchers.equalTo(value)
+        );
+    }
+
+    /**
+     * Placeholders must rewrite only self string.
+     */
+    @Test
+    public void replaceSelfString() {
+        final String key = "replaceSelfString";
+        MatcherAssert.assertThat(
+            new SurrogateSimple(
+                () -> new MapOf<String, String>(
+                    new MapEntry<String, String>(
+                        key,
+                        "Start#Random#IntegerEnd"
+                    )
+                )
+            ).get(key),
+            CoreMatchers.allOf(
+                CoreMatchers.startsWith("Start"),
+                CoreMatchers.endsWith("End")
+            )
         );
     }
 }

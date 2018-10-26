@@ -47,7 +47,7 @@ public final class PlaceholderRegexpTest {
                 new PlaceholderSimple(
                     res
                 ),
-                ".*"
+                ".+"
             ).apply("any words"),
             CoreMatchers.equalTo(res)
         );
@@ -60,14 +60,32 @@ public final class PlaceholderRegexpTest {
      */
     @Test
     public void returnNullIfInputNotMatchesRegexp() throws Exception {
+        final String input = "not match words";
         MatcherAssert.assertThat(
             new PlaceholderRegexp(
                 new PlaceholderSimple(
                     "returnNullIfInputNotMatchesRegexp"
                 ),
                 "1"
-            ).apply("not match words"),
-            CoreMatchers.equalTo(null)
+            ).apply(input),
+            CoreMatchers.equalTo(input)
+        );
+    }
+
+    /**
+     * Placeholders must rewrite only self string.
+     * @throws Exception if Fails
+     */
+    @Test
+    public void replaceSelfString() throws Exception {
+        MatcherAssert.assertThat(
+            new PlaceholderRegexp(
+                new PlaceholderSimple(
+                    "123"
+                ),
+                "#Random#Integer"
+            ).apply("Start#Random#IntegerEnd"),
+            CoreMatchers.equalTo("Start123End")
         );
     }
 }

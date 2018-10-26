@@ -25,6 +25,10 @@
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
 import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.cactoos.text.ReplacedText;
+import org.cactoos.text.TextOf;
 
 /**
  * Regexp placeholder.
@@ -55,10 +59,14 @@ final class PlaceholderRegexp implements Placeholder {
     @Override
     public String apply(final String input) throws Exception {
         final String result;
-        if (input.matches(this.regexp)) {
-            result = this.origin.apply(input);
+        if (input.matches(String.format(".*?(%s).*?", this.regexp))) {
+            result = new ReplacedText(
+                new TextOf(input),
+                () -> Pattern.compile(this.regexp),
+                matcher -> Matcher.quoteReplacement(this.origin.apply(input))
+            ).asString();
         } else {
-            result = null;
+            result = input;
         }
         return result;
     }
