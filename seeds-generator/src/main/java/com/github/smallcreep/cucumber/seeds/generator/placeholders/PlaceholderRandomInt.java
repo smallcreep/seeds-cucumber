@@ -47,7 +47,7 @@ public final class PlaceholderRandomInt implements Placeholder {
      * Ctor.
      */
     public PlaceholderRandomInt() {
-        this("#Random#Int");
+        this("#Random#Integer");
     }
 
     /**

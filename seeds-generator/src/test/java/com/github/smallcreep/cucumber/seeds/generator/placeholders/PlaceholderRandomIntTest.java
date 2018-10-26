@@ -36,14 +36,14 @@ import org.junit.Test;
 public final class PlaceholderRandomIntTest {
 
     /**
-     * PlaceholderRandomInt should replace placeholder "#Random#Int" to
+     * PlaceholderRandomInt should replace placeholder "#Random#Integer" to
      * random int.
      * @throws Exception if fails
      */
     @Test
     public void replacePlaceholderToRandomInt() throws Exception {
         final Placeholder placeholder = new PlaceholderRandomInt();
-        final String input = "#Random#Int";
+        final String input = "#Random#Integer";
         final String first = placeholder.apply(input);
         final String second = placeholder.apply(input);
         MatcherAssert.assertThat(

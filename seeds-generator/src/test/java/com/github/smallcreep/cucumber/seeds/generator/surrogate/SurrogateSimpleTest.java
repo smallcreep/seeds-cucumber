@@ -49,7 +49,7 @@ public final class SurrogateSimpleTest {
                     () -> new MapOf<String, String>(
                         new MapEntry<String, String>(
                             key,
-                            "#Random#Int"
+                            "#Random#Integer"
                         )
                     )
                 ).get(key)
