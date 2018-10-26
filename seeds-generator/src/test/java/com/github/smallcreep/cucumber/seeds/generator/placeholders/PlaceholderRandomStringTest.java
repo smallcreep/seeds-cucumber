@@ -25,46 +25,39 @@
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
 import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
-import java.util.Random;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Placeholder return random integer.
+ * Test Case for {@link PlaceholderRandomString}.
  * @since 0.2.0
  */
-public final class PlaceholderRandomInt extends PlaceholderEnvelope {
+public final class PlaceholderRandomStringTest {
 
     /**
-     * Random.
+     * PlaceholderRandomString can replace #Random#String placeholder.
+     * @throws Exception if fails
      */
-    private static final Random RANDOM = new Random();
-
-    /**
-     * Ctor.
-     */
-    public PlaceholderRandomInt() {
-        this("#Random#Integer");
-    }
-
-    /**
-     * Ctor.
-     * @param regexp Regexp
-     */
-    public PlaceholderRandomInt(final String regexp) {
-        this(
-            new PlaceholderRegexp(
-                input -> Integer.toString(
-                    PlaceholderRandomInt.RANDOM.nextInt()
-                ),
-                regexp
+    @Test
+    public void replacePlaceholderToRandomString() throws Exception {
+        final Placeholder placeholder = new PlaceholderRandomString();
+        final String input = "#Random#String";
+        final String first = placeholder.apply(input);
+        final String second = placeholder.apply(input);
+        MatcherAssert.assertThat(
+            first,
+            CoreMatchers.not(
+                CoreMatchers.equalTo(second)
             )
         );
-    }
-
-    /**
-     * Ctor.
-     * @param placeholder Placeholder
-     */
-    private PlaceholderRandomInt(final Placeholder placeholder) {
-        super(placeholder);
+        MatcherAssert.assertThat(
+            first,
+            CoreMatchers.instanceOf(String.class)
+        );
+        MatcherAssert.assertThat(
+            second,
+            CoreMatchers.instanceOf(String.class)
+        );
     }
 }

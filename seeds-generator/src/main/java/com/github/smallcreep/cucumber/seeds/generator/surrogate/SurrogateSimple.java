@@ -27,6 +27,7 @@ package com.github.smallcreep.cucumber.seeds.generator.surrogate;
 import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
 import com.github.smallcreep.cucumber.seeds.generator.Surrogate;
 import com.github.smallcreep.cucumber.seeds.generator.placeholders.PlaceholderRandomInt;
+import com.github.smallcreep.cucumber.seeds.generator.placeholders.PlaceholderRandomString;
 import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Scalar;
@@ -47,7 +48,11 @@ public final class SurrogateSimple
      * @param origin Origin Map
      */
     public SurrogateSimple(final Scalar<Map<String, String>> origin) {
-        this(origin, new PlaceholderRandomInt());
+        this(
+            origin,
+            new PlaceholderRandomInt(),
+            new PlaceholderRandomString()
+        );
     }
 
     /**
