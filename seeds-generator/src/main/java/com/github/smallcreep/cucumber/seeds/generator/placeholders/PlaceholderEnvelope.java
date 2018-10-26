@@ -25,46 +25,28 @@
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
 import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
-import java.util.Random;
 
 /**
- * Placeholder return random integer.
+ * Envelope for Placeholder.
  * @since 0.2.0
  */
-public final class PlaceholderRandomInt extends PlaceholderEnvelope {
+public abstract class PlaceholderEnvelope implements Placeholder {
 
     /**
-     * Random.
+     * Origin Placeholder.
      */
-    private static final Random RANDOM = new Random();
+    private final Placeholder origin;
 
     /**
      * Ctor.
+     * @param placeholder Origin Placeholder
      */
-    public PlaceholderRandomInt() {
-        this("#Random#Integer");
+    public PlaceholderEnvelope(final Placeholder placeholder) {
+        this.origin = placeholder;
     }
 
-    /**
-     * Ctor.
-     * @param regexp Regexp
-     */
-    public PlaceholderRandomInt(final String regexp) {
-        this(
-            new PlaceholderRegexp(
-                input -> Integer.toString(
-                    PlaceholderRandomInt.RANDOM.nextInt()
-                ),
-                regexp
-            )
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param placeholder Placeholder
-     */
-    private PlaceholderRandomInt(final Placeholder placeholder) {
-        super(placeholder);
+    @Override
+    public final String apply(final String input) throws Exception {
+        return this.origin.apply(input);
     }
 }

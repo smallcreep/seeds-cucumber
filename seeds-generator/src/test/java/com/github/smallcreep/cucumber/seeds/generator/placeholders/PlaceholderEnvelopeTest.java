@@ -24,47 +24,31 @@
 
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
-import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
-import java.util.Random;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Placeholder return random integer.
+ * Test Case for {@link PlaceholderEnvelope}.
  * @since 0.2.0
  */
-public final class PlaceholderRandomInt extends PlaceholderEnvelope {
+public final class PlaceholderEnvelopeTest {
 
     /**
-     * Random.
+     * PlaceholderEnvelope can execute enveloped placeholder.
+     * @throws Exception if fails
      */
-    private static final Random RANDOM = new Random();
-
-    /**
-     * Ctor.
-     */
-    public PlaceholderRandomInt() {
-        this("#Random#Integer");
-    }
-
-    /**
-     * Ctor.
-     * @param regexp Regexp
-     */
-    public PlaceholderRandomInt(final String regexp) {
-        this(
-            new PlaceholderRegexp(
-                input -> Integer.toString(
-                    PlaceholderRandomInt.RANDOM.nextInt()
-                ),
-                regexp
-            )
+    @Test
+    public void executeEnvelopePlaceholder() throws Exception {
+        final String res = "executeEnvelopePlaceholder";
+        MatcherAssert.assertThat(
+            new PlaceholderEnvelope(
+                new PlaceholderSimple(
+                    res
+                )
+            ) {
+            }.apply("test string"),
+            CoreMatchers.equalTo(res)
         );
-    }
-
-    /**
-     * Ctor.
-     * @param placeholder Placeholder
-     */
-    private PlaceholderRandomInt(final Placeholder placeholder) {
-        super(placeholder);
     }
 }
