@@ -24,29 +24,30 @@
 
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
-import org.cactoos.text.RandomText;
+import java.sql.Timestamp;
 
 /**
- * Placeholder return random string.
+ * Replace #Timestamp#Now placeholder to timestamp with format
+ * "yyyy-MM-dd HH:mm:ss.fffffffff".
  * @since 0.2.0
  */
-public final class PlaceholderRandomString extends PlaceholderEnvelope {
+public final class PlaceholderTimestampNow extends PlaceholderEnvelope {
 
     /**
      * Ctor.
      */
-    public PlaceholderRandomString() {
-        this("#Random#String");
+    public PlaceholderTimestampNow() {
+        this("#Timestamp#Now");
     }
 
     /**
      * Ctor.
      * @param regexp Regexp
      */
-    public PlaceholderRandomString(final String regexp) {
+    public PlaceholderTimestampNow(final String regexp) {
         super(
             new PlaceholderRegexp(
-                input -> new RandomText().asString(),
+                input -> new Timestamp(System.currentTimeMillis()).toString(),
                 regexp
             )
         );
