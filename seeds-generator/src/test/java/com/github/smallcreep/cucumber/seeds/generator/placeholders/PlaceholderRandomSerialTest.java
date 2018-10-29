@@ -27,23 +27,24 @@ package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link PlaceholderRandomInt}.
+ * Test Case for {@link PlaceholderRandomSerial}.
  * @since 0.2.0
  */
-public final class PlaceholderRandomIntTest {
+public final class PlaceholderRandomSerialTest {
 
     /**
-     * PlaceholderRandomInt should replace placeholder "#Random#Integer" to
-     * random int.
+     * PlaceholderRandomSerial should replace placeholder "#Random#Serial" to
+     * random serial from 1 to 2147483647.
      * @throws Exception if fails
      */
     @Test
-    public void replacePlaceholderToRandomInt() throws Exception {
-        final Placeholder placeholder = new PlaceholderRandomInt();
-        final String input = "#Random#Integer";
+    public void replacePlaceholderToRandomSerial() throws Exception {
+        final Placeholder placeholder = new PlaceholderRandomSerial();
+        final String input = "#Random#Serial";
         final String first = placeholder.apply(input);
         final String second = placeholder.apply(input);
         MatcherAssert.assertThat(
@@ -60,5 +61,26 @@ public final class PlaceholderRandomIntTest {
             Integer.valueOf(second),
             CoreMatchers.instanceOf(Integer.class)
         );
+    }
+
+    /**
+     * Check returned value less than or equal 2147483647
+     * and more than or equal 1.
+     * @throws Exception if fails
+     * @checkstyle MagicNumberCheck (13 lines)
+     */
+    @Test
+    public void lessAndMore() throws Exception {
+        final String input = "lessAndMore";
+        final Placeholder placeholder = new PlaceholderRandomSerial(input);
+        for (int index = 0; index < 1000; index = index + 1) {
+            MatcherAssert.assertThat(
+                Integer.valueOf(placeholder.apply(input)),
+                Matchers.allOf(
+                    Matchers.lessThanOrEqualTo(2147483647),
+                    Matchers.greaterThanOrEqualTo(1)
+                )
+            );
+        }
     }
 }

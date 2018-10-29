@@ -24,41 +24,39 @@
 
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
-import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import java.util.Random;
 
 /**
- * Test Case for {@link PlaceholderRandomInt}.
+ * Placeholder return random serial 4 bytes from 1 to 2147483647.
  * @since 0.2.0
  */
-public final class PlaceholderRandomIntTest {
+public final class PlaceholderRandomSerial extends PlaceholderEnvelope {
 
     /**
-     * PlaceholderRandomInt should replace placeholder "#Random#Integer" to
-     * random int.
-     * @throws Exception if fails
+     * Random.
      */
-    @Test
-    public void replacePlaceholderToRandomInt() throws Exception {
-        final Placeholder placeholder = new PlaceholderRandomInt();
-        final String input = "#Random#Integer";
-        final String first = placeholder.apply(input);
-        final String second = placeholder.apply(input);
-        MatcherAssert.assertThat(
-            first,
-            CoreMatchers.not(
-                CoreMatchers.equalTo(second)
+    private static final Random RANDOM = new Random();
+
+    /**
+     * Ctor.
+     */
+    public PlaceholderRandomSerial() {
+        this("#Random#Serial");
+    }
+
+    /**
+     * Ctor.
+     * @param regexp Regexp
+     * @checkstyle MagicNumberCheck (10 lines)
+     */
+    public PlaceholderRandomSerial(final String regexp) {
+        super(
+            new PlaceholderRegexp(
+                input -> Integer.toString(
+                    PlaceholderRandomSerial.RANDOM.nextInt(2147483647) + 1
+                ),
+                regexp
             )
-        );
-        MatcherAssert.assertThat(
-            Integer.valueOf(first),
-            CoreMatchers.instanceOf(Integer.class)
-        );
-        MatcherAssert.assertThat(
-            Integer.valueOf(second),
-            CoreMatchers.instanceOf(Integer.class)
         );
     }
 }
