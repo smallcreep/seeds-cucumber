@@ -45,8 +45,8 @@ public final class SurrogateSimpleTest {
         final String key = "replacePlaceholders";
         MatcherAssert.assertThat(
             Integer.valueOf(
-                new SurrogateSimple(
-                    () -> new MapOf<String, String>(
+                new SurrogateSimple().apply(
+                    new MapOf<String, String>(
                         new MapEntry<String, String>(
                             key,
                             "#Random#Integer"
@@ -67,14 +67,15 @@ public final class SurrogateSimpleTest {
         final String value = "specific";
         MatcherAssert.assertThat(
             new SurrogateSimple(
-                () -> new MapOf<String, String>(
+                new PlaceholderSimple(
+                    value
+                )
+            ).apply(
+                new MapOf<String, String>(
                     new MapEntry<String, String>(
                         key,
                         "#AnyPlaceholder"
                     )
-                ),
-                new PlaceholderSimple(
-                    value
                 )
             ).get(key),
             CoreMatchers.equalTo(value)

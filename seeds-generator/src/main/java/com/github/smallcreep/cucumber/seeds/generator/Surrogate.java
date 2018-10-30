@@ -25,11 +25,13 @@
 package com.github.smallcreep.cucumber.seeds.generator;
 
 import java.util.Map;
+import org.cactoos.Func;
 
 /**
  * Surrogate replace placeholders to real value.
  * @since 0.2.0
  */
-public interface Surrogate extends Map<String, String> {
+public interface Surrogate
+    extends Func<Map<String, String>, Map<String, String>> {
 
 }

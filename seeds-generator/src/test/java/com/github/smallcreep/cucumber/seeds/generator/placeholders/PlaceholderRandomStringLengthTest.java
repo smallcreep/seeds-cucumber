@@ -22,50 +22,46 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.generator.surrogate;
+package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
-import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
-import com.github.smallcreep.cucumber.seeds.generator.Surrogate;
-import com.github.smallcreep.cucumber.seeds.generator.placeholders.PlaceholdersAll;
-import java.util.Map;
-import org.cactoos.map.MapOf;
+import com.jcabi.matchers.RegexMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
 
 /**
- * Simple implementation of surrogate.
+ * Test Case for {@link PlaceholderRandomStringLength}.
  * @since 0.2.0
  */
-public final class SurrogateSimple implements Surrogate {
+public final class PlaceholderRandomStringLengthTest {
 
     /**
-     * Placeholder.
+     * Check.
+     * @throws Exception if fails
      */
-    private final Placeholder placeholder;
-
-    /**
-     * Ctor.
-     */
-    public SurrogateSimple() {
-        this(
-            new PlaceholdersAll()
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param placeholder Placeholder
-     */
-    public SurrogateSimple(
-        final Placeholder placeholder
-    ) {
-        this.placeholder = placeholder;
-    }
-
-    @Override
-    public Map<String, String> apply(final Map<String, String> input) {
-        return new MapOf<>(
-            Map.Entry::getKey,
-            entry -> this.placeholder.apply(entry.getValue()),
-            input.entrySet()
+    @Test
+    public void apply() throws Exception {
+        MatcherAssert.assertThat(
+            new PlaceholderRandomStringLength(
+                new PlaceholderRegexp(
+                    new PlaceholderSimple("5"),
+                    "#Random#Serial"
+                )
+            ).apply(
+                String.format(
+                    "%s; %s; %s;",
+                    "1 = #Random#String(10)",
+                    "2 = #Random#String(1)",
+                    "3 = #Random#String(#Random#Serial)"
+                )
+            ),
+            RegexMatchers.matchesPattern(
+                String.format(
+                    "^1 = %s; 2 = %s; 3 = %s;$",
+                    "(?!#Random#String).{10}",
+                    "(?!#Random#String).{1}",
+                    "(?!#Random#String).{5}"
+                )
+            )
         );
     }
 }
