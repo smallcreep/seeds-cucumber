@@ -22,49 +22,65 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.generator.surrogate;
+package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
 import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
-import com.github.smallcreep.cucumber.seeds.generator.Surrogate;
-import com.github.smallcreep.cucumber.seeds.generator.placeholders.PlaceholdersAll;
-import java.util.Map;
-import org.cactoos.Scalar;
-import org.cactoos.map.MapEnvelope;
-import org.cactoos.map.MapOf;
+import java.util.concurrent.atomic.AtomicReference;
+import org.cactoos.func.UncheckedFunc;
+import org.cactoos.iterable.IterableOf;
 
 /**
- * Simple implementation of surrogate.
+ * All placeholders, apply all iterable Placeholders.
  * @since 0.2.0
  */
-public final class SurrogateSimple
-    extends MapEnvelope<String, String> implements Surrogate {
+public final class PlaceholdersAll implements Placeholder {
+
+    /**
+     * Placeholders.
+     */
+    private final Iterable<Placeholder> placeholders;
 
     /**
      * Ctor.
-     * @param origin Origin Map
      */
-    public SurrogateSimple(final Scalar<Map<String, String>> origin) {
+    public PlaceholdersAll() {
         this(
-            origin,
-            new PlaceholdersAll()
+            new PlaceholderRandomInt(),
+            new PlaceholderRandomString(),
+            new PlaceholderTimestampNow()
         );
     }
 
     /**
      * Ctor.
-     * @param origin Origin Map
-     * @param placeholder Placeholders
+     * @param placeholders Placeholders
      */
-    public SurrogateSimple(
-        final Scalar<Map<String, String>> origin,
-        final Placeholder placeholder
+    public PlaceholdersAll(
+        final Placeholder... placeholders
     ) {
-        super(
-            () -> new MapOf<>(
-                Entry::getKey,
-                entry -> placeholder.apply(entry.getValue()),
-                origin.value().entrySet()
+        this(new IterableOf<>(placeholders));
+    }
+
+    /**
+     * Ctor.
+     * @param placeholders Placeholders
+     */
+    public PlaceholdersAll(final Iterable<Placeholder> placeholders) {
+        this.placeholders = placeholders;
+    }
+
+    @Override
+    public String apply(final String input) {
+        final AtomicReference<String> value = new AtomicReference<>(
+            input
+        );
+        this.placeholders.forEach(
+            placeholder -> value.set(
+                new UncheckedFunc<>(
+                    placeholder
+                ).apply(value.get())
             )
         );
+        return value.get();
     }
 }
