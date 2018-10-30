@@ -24,52 +24,48 @@
 
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
-import com.jcabi.matchers.RegexMatchers;
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test Case for {@link PlaceholderRandomStringLength}.
+ * Test Case for {@link PlaceholderEncryptionMd5}.
  * @since 0.2.0
  */
-public final class PlaceholderRandomStringLengthTest {
+public final class PlaceholderEncryptionMd5Test {
 
     /**
-     * PlaceholderRandomStringLength can generate random string fixed length
-     * with another placeholder as parameter.
+     * PlaceholderEncryptionMd5 can generate md5 hash from string.
      * @throws Exception if fails
+     * @checkstyle MethodNameCheck (5 lines)
      */
     @Test
-    public void generateRandomStringWithAnotherPlaceholders() throws Exception {
+    public void generateMd5Hash() throws Exception {
         MatcherAssert.assertThat(
-            new PlaceholderRandomStringLength(
+            new PlaceholderEncryptionMd5(
                 new PlaceholderRegexp(
-                    new PlaceholderSimple("5"),
-                    "#Random#Serial"
+                    new PlaceholderSimple("123"),
+                    "#Random#String"
                 )
             ).apply(
-                "#Random#String(#Random#Serial)"
+                "#Encryption#Md5(#Random#String)"
             ),
-            RegexMatchers.matchesPattern(
-                "^(?!#Random#String).{5}$"
-            )
+            CoreMatchers.equalTo("202cb962ac59075b964b07152d234b70")
         );
     }
 
     /**
-     * PlaceholderRandomStringLength can generate random string fixed length.
+     * PlaceholderEncryptionMd5 can generate md5 hash from sent string.
      * @throws Exception if fails
+     * @checkstyle MethodNameCheck (5 lines)
      */
     @Test
-    public void generateRandomString() throws Exception {
+    public void generateMd5HashNotRandomString() throws Exception {
         MatcherAssert.assertThat(
-            new PlaceholderRandomStringLength(
-            ).apply(
-                "1 = #Random#String(10); 2 = #Random#String(1);"
+            new PlaceholderEncryptionMd5().apply(
+                "#Encryption#Md5(234)"
             ),
-            RegexMatchers.matchesPattern(
-                "^1 = (?!#Random#String).{10}; 2 = (?!#Random#String).{1};$"
-            )
+            CoreMatchers.equalTo("289dff07669d7a23de0ef88d2f7129e7")
         );
     }
 }
