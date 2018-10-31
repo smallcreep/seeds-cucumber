@@ -28,7 +28,7 @@ import com.github.smallcreep.cucumber.seeds.Rows;
 import com.github.smallcreep.cucumber.seeds.Table;
 import com.github.smallcreep.cucumber.seeds.generator.Surrogate;
 import com.github.smallcreep.cucumber.seeds.generator.surrogate.SurrogateSimple;
-import cucumber.api.DataTable;
+import java.util.Map;
 import org.cactoos.iterable.Mapped;
 
 /**
@@ -45,7 +45,7 @@ public final class RwDefault implements Rows {
     /**
      * Rows.
      */
-    private final DataTable rows;
+    private final Iterable<Map<String, String>> rows;
 
     /**
      * Surrogate.
@@ -59,7 +59,7 @@ public final class RwDefault implements Rows {
      */
     public RwDefault(
         final Table table,
-        final DataTable rows
+        final Iterable<Map<String, String>> rows
     ) {
         this(table, rows, new SurrogateSimple());
     }
@@ -72,7 +72,7 @@ public final class RwDefault implements Rows {
      */
     RwDefault(
         final Table table,
-        final DataTable rows,
+        final Iterable<Map<String, String>> rows,
         final Surrogate surrogate
     ) {
         this.table = table;
@@ -89,7 +89,7 @@ public final class RwDefault implements Rows {
         this.table.insert(
             new Mapped<>(
                 this.surrogate,
-                this.rows.asMaps(String.class, String.class)
+                this.rows
             )
         );
     }

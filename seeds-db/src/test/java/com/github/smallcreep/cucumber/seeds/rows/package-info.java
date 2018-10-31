@@ -22,26 +22,8 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db;
-
-import com.github.smallcreep.cucumber.seeds.Connect;
-import com.jcabi.jdbc.JdbcSession;
-import org.junit.Test;
-
 /**
- * Test Case for {@link DbDefault}.
- * @since 0.1.1
+ * Test Cases for Rows.
+ * @since 0.2.0
  */
-public final class DbDefaultItCase extends Connect {
-
-    /**
-     * Check connection correct.
-     * @throws Exception If any error of connection
-     */
-    @Test
-    public void checkConnection() throws Exception {
-        new DbDefault(
-            new JdbcSession(this.source())
-        ).connect();
-    }
-}
+package com.github.smallcreep.cucumber.seeds.rows;

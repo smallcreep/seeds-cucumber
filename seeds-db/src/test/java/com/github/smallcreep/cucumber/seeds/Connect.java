@@ -22,26 +22,56 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db;
+package com.github.smallcreep.cucumber.seeds;
 
-import com.github.smallcreep.cucumber.seeds.Connect;
-import com.jcabi.jdbc.JdbcSession;
-import org.junit.Test;
+import com.jolbox.bonecp.BoneCPDataSource;
+import javax.sql.DataSource;
+import org.junit.Before;
 
 /**
- * Test Case for {@link DbDefault}.
- * @since 0.1.1
+ * Connect for integration tests.
+ * @since 0.2.0
  */
-public final class DbDefaultItCase extends Connect {
+public class Connect {
 
     /**
-     * Check connection correct.
-     * @throws Exception If any error of connection
+     * Data Source.
      */
-    @Test
-    public void checkConnection() throws Exception {
-        new DbDefault(
-            new JdbcSession(this.source())
-        ).connect();
+    private final DataSource src;
+
+    /**
+     * Ctor.
+     */
+    public Connect() {
+        this(new BoneCPDataSource());
+    }
+
+    /**
+     * Ctor.
+     * @param src Data Source
+     */
+    private Connect(final DataSource src) {
+        this.src = src;
+    }
+
+    /**
+     * SetUp Data Source.
+     */
+    @Before
+    public final void setUp() {
+        ((BoneCPDataSource) this.src).setDriverClass("org.postgresql.Driver");
+        ((BoneCPDataSource) this.src).setJdbcUrl(
+            System.getProperty("jdbc.url.postgres")
+        );
+        ((BoneCPDataSource) this.src).setUser("testuser");
+        ((BoneCPDataSource) this.src).setPassword("mysecret");
+    }
+
+    /**
+     * Get source.
+     * @return Source
+     */
+    public final DataSource source() {
+        return this.src;
     }
 }
