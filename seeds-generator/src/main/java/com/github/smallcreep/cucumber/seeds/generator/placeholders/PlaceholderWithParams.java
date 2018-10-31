@@ -67,19 +67,6 @@ public abstract class PlaceholderWithParams implements Placeholder {
      * Ctor.
      * @param origin Origin function for placeholder
      * @param regexp Regexp
-     * @throws Exception if fails
-     */
-    public PlaceholderWithParams(
-        final BiFunc<String, String, String> origin,
-        final String regexp
-    ) throws Exception {
-        this(origin, regexp, new PlaceholdersAll());
-    }
-
-    /**
-     * Ctor.
-     * @param origin Origin function for placeholder
-     * @param regexp Regexp
      * @param placeholder Placeholder
      * @throws Exception if fails
      */

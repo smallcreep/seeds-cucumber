@@ -47,20 +47,6 @@ public final class PlaceholderEncryptionMd5 extends PlaceholderWithParams {
 
     /**
      * Ctor.
-     * @param regexp Regexp
-     * @throws Exception if fails
-     */
-    public PlaceholderEncryptionMd5(
-        final String regexp
-    ) throws Exception {
-        this(
-            regexp,
-            new PlaceholdersAll()
-        );
-    }
-
-    /**
-     * Ctor.
      * @param placeholder Placeholder
      * @throws Exception if fails
      */
