@@ -25,12 +25,8 @@
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
 import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.cactoos.Text;
 import org.cactoos.io.InputOf;
 import org.cactoos.io.Md5DigestOf;
-import org.cactoos.text.FormattedText;
 import org.cactoos.text.HexOf;
 import org.cactoos.text.TextOf;
 
@@ -38,114 +34,67 @@ import org.cactoos.text.TextOf;
  * Placeholder return md5 hash from string.
  * @since 0.2.0
  */
-public final class PlaceholderEncryptionMd5 implements Placeholder {
-
-    /**
-     * Function string.
-     */
-    private static final String FUNCTION = "%s\\(%s\\)";
-
-    /**
-     * Placeholder.
-     */
-    private final Placeholder placeholder;
-
-    /**
-     * Pattern.
-     */
-    private final Pattern pattern;
-
-    /**
-     * Regexp.
-     */
-    private final Text regexp;
+public final class PlaceholderEncryptionMd5 extends PlaceholderWithParams {
 
     /**
      * Ctor.
      * @throws Exception if fails
      */
-    public PlaceholderEncryptionMd5() throws Exception {
+    public PlaceholderEncryptionMd5()
+        throws Exception {
         this(new PlaceholdersAll());
     }
 
     /**
      * Ctor.
-     * @param placeholder Placeholder
-     * @throws Exception if fails
-     */
-    public PlaceholderEncryptionMd5(final Placeholder placeholder)
-        throws Exception {
-        this(placeholder, "#Encryption#Md5");
-    }
-
-    /**
-     * Ctor.
-     * @param placeholder Placeholder
      * @param regexp Regexp
      * @throws Exception if fails
      */
     public PlaceholderEncryptionMd5(
-        final Placeholder placeholder,
         final String regexp
     ) throws Exception {
         this(
-            placeholder,
-            Pattern.compile(
-                new FormattedText(
-                    PlaceholderEncryptionMd5.FUNCTION,
-                    regexp,
-                    "([^)]*)"
-                ).asString()
-            ),
-            new FormattedText(
-                PlaceholderEncryptionMd5.FUNCTION,
-                regexp,
-                "%s"
-            )
+            regexp,
+            new PlaceholdersAll()
         );
     }
 
     /**
      * Ctor.
      * @param placeholder Placeholder
-     * @param pattern Pattern
-     * @param regexp Regexp
+     * @throws Exception if fails
      */
-    private PlaceholderEncryptionMd5(
-        final Placeholder placeholder,
-        final Pattern pattern,
-        final Text regexp
-    ) {
-        this.pattern = pattern;
-        this.regexp = regexp;
-        this.placeholder = placeholder;
+    public PlaceholderEncryptionMd5(
+        final Placeholder placeholder
+    ) throws Exception {
+        this(
+            "#Encryption#Md5",
+            placeholder
+        );
     }
 
-    // @todo #94:15m/DEV Move the same code with PlaceholderEncryptionMd5
-    //  and PlaceholderRandomStringLength. Method apply has many duplicate
-    //  codes. Move this code to new class.
-    @Override
-    public String apply(final String input) throws Exception {
-        String result = input;
-        Matcher matcher = this.pattern.matcher(result);
-        while (matcher.find()) {
-            final String group = matcher.group(1);
-            result = new PlaceholderRegexp(
-                temp -> new HexOf(
-                    new Md5DigestOf(
-                        new InputOf(
-                            new TextOf(
-                                this.placeholder.apply(
-                                    group
-                                )
-                            )
+    /**
+     * Ctor.
+     * @param regexp Regexp
+     * @param placeholder Placeholder
+     * @throws Exception if fails
+     */
+    private PlaceholderEncryptionMd5(
+        final String regexp,
+        final Placeholder placeholder
+    ) throws Exception {
+        super(
+            (final String first, final String second) -> new HexOf(
+                new Md5DigestOf(
+                    new InputOf(
+                        new TextOf(
+                            second
                         )
                     )
-                ).asString(),
-                String.format(this.regexp.asString(), group)
-            ).apply(result);
-            matcher = this.pattern.matcher(result);
-        }
-        return result;
+                )
+            ).asString(),
+            regexp,
+            placeholder
+        );
     }
 }

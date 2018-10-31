@@ -25,117 +25,69 @@
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
 import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import org.cactoos.Text;
-import org.cactoos.text.FormattedText;
 import org.cactoos.text.RandomText;
 
 /**
  * Placeholder return random string with fixed length.
  * @since 0.2.0
  */
-public final class PlaceholderRandomStringLength implements Placeholder {
-
-    /**
-     * Function string.
-     */
-    private static final String FUNCTION = "%s\\(%s\\)";
-
-    /**
-     * Placeholder.
-     */
-    private final Placeholder placeholder;
-
-    /**
-     * Pattern.
-     */
-    private final Pattern pattern;
-
-    /**
-     * Regexp.
-     */
-    private final Text regexp;
+public final class PlaceholderRandomStringLength extends PlaceholderWithParams {
 
     /**
      * Ctor.
      * @throws Exception if fails
      */
-    public PlaceholderRandomStringLength() throws Exception {
+    public PlaceholderRandomStringLength()
+        throws Exception {
         this(new PlaceholdersAll());
     }
 
     /**
      * Ctor.
-     * @param placeholder Placeholder
-     * @throws Exception if fails
-     */
-    public PlaceholderRandomStringLength(final Placeholder placeholder)
-        throws Exception {
-        this(placeholder, "#Random#String");
-    }
-
-    /**
-     * Ctor.
-     * @param placeholder Placeholder
      * @param regexp Regexp
      * @throws Exception if fails
      */
     public PlaceholderRandomStringLength(
-        final Placeholder placeholder,
         final String regexp
     ) throws Exception {
         this(
-            placeholder,
-            Pattern.compile(
-                new FormattedText(
-                    PlaceholderRandomStringLength.FUNCTION,
-                    regexp,
-                    "([^)]*)"
-                ).asString()
-            ),
-            new FormattedText(
-                PlaceholderRandomStringLength.FUNCTION,
-                regexp,
-                "%s"
-            )
+            regexp,
+            new PlaceholdersAll()
         );
     }
 
     /**
      * Ctor.
      * @param placeholder Placeholder
-     * @param pattern Pattern
-     * @param regexp Regexp
+     * @throws Exception if fails
      */
-    private PlaceholderRandomStringLength(
-        final Placeholder placeholder,
-        final Pattern pattern,
-        final Text regexp
-    ) {
-        this.pattern = pattern;
-        this.regexp = regexp;
-        this.placeholder = placeholder;
+    public PlaceholderRandomStringLength(
+        final Placeholder placeholder
+    ) throws Exception {
+        this(
+            "#Random#String",
+            placeholder
+        );
     }
 
-    @Override
-    public String apply(final String input) throws Exception {
-        String result = input;
-        Matcher matcher = this.pattern.matcher(result);
-        while (matcher.find()) {
-            final String group = matcher.group(1);
-            result = new PlaceholderRegexp(
-                temp -> new RandomText(
-                    Integer.valueOf(
-                        this.placeholder.apply(
-                            group
-                        )
-                    )
-                ).asString(),
-                String.format(this.regexp.asString(), group)
-            ).apply(result);
-            matcher = this.pattern.matcher(result);
-        }
-        return result;
+    /**
+     * Ctor.
+     * @param regexp Regexp
+     * @param placeholder Placeholder
+     * @throws Exception if fails
+     */
+    private PlaceholderRandomStringLength(
+        final String regexp,
+        final Placeholder placeholder
+    ) throws Exception {
+        super(
+            (final String first, final String second) -> new RandomText(
+                Integer.valueOf(
+                    second
+                )
+            ).asString(),
+            regexp,
+            placeholder
+        );
     }
 }
