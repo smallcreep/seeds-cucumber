@@ -120,6 +120,13 @@ SOFTWARE.
             </configuration>
             <executions>
               <execution>
+                <id>stop-old-container</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>stop</goal>
+                </goals>
+              </execution>
+              <execution>
                 <id>start</id>
                 <phase>pre-integration-test</phase>
                 <goals>
