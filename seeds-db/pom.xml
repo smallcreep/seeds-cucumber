@@ -160,7 +160,7 @@ SOFTWARE.
                 ${basedir}/src/main/liquibase/master.xml
               </changeLogFile>
               <driver>org.postgresql.Driver</driver>
-              <url>jdbc:postgresql://172.17.0.2:5432/testuser</url>
+              <url>jdbc:postgresql://${docker.container.postgres.ip}:5432/testuser</url>
               <username>testuser</username>
               <password>mysecret</password>
               <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
@@ -171,7 +171,7 @@ SOFTWARE.
             <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
               <systemPropertyVariables>
-                <jdbc.url.postgres>jdbc:postgresql://172.17.0.2:5432/testuser</jdbc.url.postgres>
+                <jdbc.url.postgres>jdbc:postgresql://${docker.container.postgres.ip}:5432/testuser</jdbc.url.postgres>
               </systemPropertyVariables>
             </configuration>
           </plugin>

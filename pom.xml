@@ -27,7 +27,7 @@ SOFTWARE.
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.49.2</version>
+    <version>0.49.3</version>
   </parent>
   <groupId>com.github.smallcreep.cucumber</groupId>
   <artifactId>seeds</artifactId>
