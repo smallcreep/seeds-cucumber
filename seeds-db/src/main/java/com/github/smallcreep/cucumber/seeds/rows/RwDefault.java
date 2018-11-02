@@ -80,10 +80,6 @@ public final class RwDefault implements Rows {
         this.surrogate = surrogate;
     }
 
-    // @todo #63:30/TEST Add integration test to this method.
-    //  For example this test must insert to exist database table.
-    //  To create table can use liquibase, see for example usage
-    //  https://www.yegor256.com/2014/07/20/liquibase-in-maven.html
     @Override
     public void add() throws Exception {
         this.table.insert(
