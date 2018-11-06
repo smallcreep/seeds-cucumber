@@ -27,6 +27,7 @@ package com.github.smallcreep.cucumber.seeds.table;
 import com.github.smallcreep.cucumber.seeds.db.DbDefault;
 import com.jcabi.jdbc.JdbcSession;
 import com.jolbox.bonecp.BoneCPDataSource;
+import java.util.Arrays;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
@@ -101,10 +102,12 @@ public final class TableFakeInsertTest {
     @Test
     public void saveInsertedRows() {
         final Iterable<Map<String, String>> rows = new IterableOf<>(
-            new MapOf<String, String>(
-                new MapEntry<String, String>(
-                    "key2",
-                    "value2"
+            Arrays.asList(
+                new MapOf<String, String>(
+                    new MapEntry<String, String>(
+                        "key2",
+                        "value2"
+                    )
                 )
             )
         );
