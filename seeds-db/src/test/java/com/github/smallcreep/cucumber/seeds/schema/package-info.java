@@ -22,48 +22,8 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db.fake;
-
-import com.github.smallcreep.cucumber.seeds.Sql;
-import com.jcabi.jdbc.Outcome;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 /**
- * Fake method update in database.
+ * Tests for Schema implementations.
  * @since 0.2.0
  */
-public final class DataBaseUpdateFake extends DataBaseFake {
-
-    /**
-     * ResultSet for update.
-     */
-    private final ResultSet res;
-
-    /**
-     * Statement for update.
-     */
-    private final Statement statement;
-
-    /**
-     * Ctor.
-     * @param res ResultSet
-     * @param statement Statement
-     */
-    public DataBaseUpdateFake(final ResultSet res, final Statement statement) {
-        super();
-        this.res = res;
-        this.statement = statement;
-    }
-
-    @Override
-    public <E> E update(
-        final Sql sql,
-        final Outcome<E> outcome
-    ) throws Exception {
-        return outcome.handle(
-            this.res,
-            this.statement
-        );
-    }
-}
+package com.github.smallcreep.cucumber.seeds.schema;

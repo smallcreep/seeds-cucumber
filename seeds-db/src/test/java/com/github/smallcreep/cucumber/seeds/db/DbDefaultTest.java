@@ -22,48 +22,35 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db.fake;
+package com.github.smallcreep.cucumber.seeds.db;
 
-import com.github.smallcreep.cucumber.seeds.Sql;
-import com.jcabi.jdbc.Outcome;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import com.github.smallcreep.cucumber.seeds.schema.SchemaSimple;
+import com.jcabi.jdbc.JdbcSession;
+import com.jolbox.bonecp.BoneCPDataSource;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Fake method update in database.
+ * Test Case for {@link DbDefault}.
  * @since 0.2.0
  */
-public final class DataBaseUpdateFake extends DataBaseFake {
+public final class DbDefaultTest {
 
     /**
-     * ResultSet for update.
+     * DbDefault can return SchemaSimple.
      */
-    private final ResultSet res;
-
-    /**
-     * Statement for update.
-     */
-    private final Statement statement;
-
-    /**
-     * Ctor.
-     * @param res ResultSet
-     * @param statement Statement
-     */
-    public DataBaseUpdateFake(final ResultSet res, final Statement statement) {
-        super();
-        this.res = res;
-        this.statement = statement;
-    }
-
-    @Override
-    public <E> E update(
-        final Sql sql,
-        final Outcome<E> outcome
-    ) throws Exception {
-        return outcome.handle(
-            this.res,
-            this.statement
+    @Test
+    public void returnSchemaSimple() {
+        MatcherAssert.assertThat(
+            new DbDefault(
+                new JdbcSession(
+                    new BoneCPDataSource()
+                )
+            ).schema("returnSchemaSimple"),
+            Matchers.instanceOf(
+                SchemaSimple.class
+            )
         );
     }
 }

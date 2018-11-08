@@ -22,48 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db.fake;
+package com.github.smallcreep.cucumber.seeds.schema;
 
-import com.github.smallcreep.cucumber.seeds.Sql;
-import com.jcabi.jdbc.Outcome;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseFake;
+import org.hamcrest.MatcherAssert;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
- * Fake method update in database.
+ * Test Case for {@link SchemaSimple}.
  * @since 0.2.0
  */
-public final class DataBaseUpdateFake extends DataBaseFake {
+public final class SchemaSimpleTest {
 
     /**
-     * ResultSet for update.
+     * SchemaSimple can return table.
      */
-    private final ResultSet res;
-
-    /**
-     * Statement for update.
-     */
-    private final Statement statement;
-
-    /**
-     * Ctor.
-     * @param res ResultSet
-     * @param statement Statement
-     */
-    public DataBaseUpdateFake(final ResultSet res, final Statement statement) {
-        super();
-        this.res = res;
-        this.statement = statement;
-    }
-
-    @Override
-    public <E> E update(
-        final Sql sql,
-        final Outcome<E> outcome
-    ) throws Exception {
-        return outcome.handle(
-            this.res,
-            this.statement
+    @Test
+    public void checkReturnTable() {
+        MatcherAssert.assertThat(
+            new SchemaSimple(
+                "checkReturnTable",
+                new DataBaseFake() {
+                }
+            ).table("table_name"),
+            new ScalarHasValue<String>(
+                "checkReturnTable.table_name"
+            )
         );
     }
 }
