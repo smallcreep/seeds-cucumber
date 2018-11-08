@@ -62,7 +62,7 @@ public final class RwDefaultItCase extends Connect {
         new RwDefault(
             new DbDefault(
                 new JdbcSession(this.source())
-            ).table("public", "test"),
+            ).schema("public").table("test"),
             new IterableOf<Map<String, String>>(
                 new MapOf<String, String>(
                     new MapEntry<>(

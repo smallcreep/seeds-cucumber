@@ -24,46 +24,16 @@
 
 package com.github.smallcreep.cucumber.seeds;
 
-import com.jcabi.jdbc.Outcome;
-
 /**
- * Connection to te DataBase.
- * @since 0.1.1
+ * Database Schema.
+ * @since 0.2.0
  */
-public interface DataBase {
+public interface Schema {
 
     /**
-     * Check connection to the DataBase.
-     * @throws Exception If any error of connection
+     * Get table.
+     * @param table Table name
+     * @return Table
      */
-    void connect() throws Exception;
-
-    /**
-     * Execute SQL query.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
-     */
-    <T> T result(Sql sql, Outcome<T> outcome) throws Exception;
-
-    /**
-     * Execute SQL query update/insert.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
-     */
-    <T> T update(Sql sql, Outcome<T> outcome) throws Exception;
-
-    /**
-     * Get schema by name.
-     * @param schema Schema name
-     * @return Schema
-     */
-    Schema schema(String schema);
+    Table table(String table);
 }

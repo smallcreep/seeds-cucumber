@@ -78,7 +78,8 @@ public final class StpDefInsert {
                     .value("databases")
             )
                 .database()
-                .table(schema, table),
+                .schema(schema)
+                .table(table),
             rows.asMaps(String.class, String.class)
         ).add();
     }

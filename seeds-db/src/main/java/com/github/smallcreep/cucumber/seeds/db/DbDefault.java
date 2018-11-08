@@ -25,10 +25,10 @@
 package com.github.smallcreep.cucumber.seeds.db;
 
 import com.github.smallcreep.cucumber.seeds.DataBase;
+import com.github.smallcreep.cucumber.seeds.Schema;
 import com.github.smallcreep.cucumber.seeds.Sql;
-import com.github.smallcreep.cucumber.seeds.Table;
+import com.github.smallcreep.cucumber.seeds.schema.SchemaSimple;
 import com.github.smallcreep.cucumber.seeds.sql.SelectSql;
-import com.github.smallcreep.cucumber.seeds.table.TableSimple;
 import com.jcabi.jdbc.JdbcSession;
 import com.jcabi.jdbc.Outcome;
 import com.jcabi.jdbc.SingleOutcome;
@@ -84,12 +84,7 @@ public final class DbDefault implements DataBase {
     }
 
     @Override
-    public Table table(final String name) {
-        return this.table("public", name);
-    }
-
-    @Override
-    public Table table(final String schema, final String name) {
-        return new TableSimple(schema, name, this);
+    public Schema schema(final String schema) {
+        return new SchemaSimple(schema, this);
     }
 }

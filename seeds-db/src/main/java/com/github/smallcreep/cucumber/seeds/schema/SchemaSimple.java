@@ -22,48 +22,41 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.schema;
 
-import com.jcabi.jdbc.Outcome;
+import com.github.smallcreep.cucumber.seeds.DataBase;
+import com.github.smallcreep.cucumber.seeds.Schema;
+import com.github.smallcreep.cucumber.seeds.Table;
+import com.github.smallcreep.cucumber.seeds.table.TableSimple;
 
 /**
- * Connection to te DataBase.
- * @since 0.1.1
+ * Simple implementation schema.
+ * @since 0.2.0
  */
-public interface DataBase {
+public final class SchemaSimple implements Schema {
 
     /**
-     * Check connection to the DataBase.
-     * @throws Exception If any error of connection
+     * Schema name.
      */
-    void connect() throws Exception;
+    private final String name;
 
     /**
-     * Execute SQL query.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
+     * DataBase.
      */
-    <T> T result(Sql sql, Outcome<T> outcome) throws Exception;
+    private final DataBase base;
 
     /**
-     * Execute SQL query update/insert.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
+     * Ctor.
+     * @param name Schema name
+     * @param base DataBase
      */
-    <T> T update(Sql sql, Outcome<T> outcome) throws Exception;
+    public SchemaSimple(final String name, final DataBase base) {
+        this.name = name;
+        this.base = base;
+    }
 
-    /**
-     * Get schema by name.
-     * @param schema Schema name
-     * @return Schema
-     */
-    Schema schema(String schema);
+    @Override
+    public Table table(final String table) {
+        return new TableSimple(this.name, table, this.base);
+    }
 }

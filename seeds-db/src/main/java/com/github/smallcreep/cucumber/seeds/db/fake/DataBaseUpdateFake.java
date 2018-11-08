@@ -25,8 +25,8 @@
 package com.github.smallcreep.cucumber.seeds.db.fake;
 
 import com.github.smallcreep.cucumber.seeds.DataBase;
+import com.github.smallcreep.cucumber.seeds.Schema;
 import com.github.smallcreep.cucumber.seeds.Sql;
-import com.github.smallcreep.cucumber.seeds.Table;
 import com.jcabi.jdbc.Outcome;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -60,14 +60,14 @@ public final class DataBaseUpdateFake implements DataBase {
     @Override
     public void connect() {
         throw new UnsupportedOperationException(
-            "Unsoported #connect() in this fake."
+            "Unsupported #connect() in this fake."
         );
     }
 
     @Override
     public <T> T result(final Sql sql, final Outcome<T> outcome) {
         throw new UnsupportedOperationException(
-            "Unsoported #result() in this fake."
+            "Unsupported #result() in this fake."
         );
     }
 
@@ -83,16 +83,9 @@ public final class DataBaseUpdateFake implements DataBase {
     }
 
     @Override
-    public Table table(final String name) {
+    public Schema schema(final String schema) {
         throw new UnsupportedOperationException(
-            "Unsoported #table(String) in this fake."
-        );
-    }
-
-    @Override
-    public Table table(final String schema, final String name) {
-        throw new UnsupportedOperationException(
-            "Unsoported #table(String, String) in this fake."
+            "Unsupported #schema(String) in this fake."
         );
     }
 }
