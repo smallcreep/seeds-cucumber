@@ -22,19 +22,36 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.misc;
+
+import java.io.File;
+import org.cactoos.Func;
 
 /**
- * Database Schema.
+ * Return file url from xml document with relation xml document.
  * @since 0.2.0
  */
-public interface Schema {
+public final class FileFromXml implements Func<String, String> {
 
     /**
-     * Get table.
-     * @param table Table name
-     * @return Table
-     * @throws Exception if fails
+     * Origin xml file.
      */
-    Table table(String table) throws Exception;
+    private final File origin;
+
+    /**
+     * Ctor.
+     * @param origin Origin xml file
+     */
+    public FileFromXml(final File origin) {
+        this.origin = origin;
+    }
+
+    @Override
+    public String apply(final String input) throws Exception {
+        return String.format(
+            "%s/%s",
+            this.origin.getParent(),
+            input
+        );
+    }
 }

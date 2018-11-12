@@ -22,19 +22,8 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
-
 /**
- * Database Schema.
+ * Misc functionality.
  * @since 0.2.0
  */
-public interface Schema {
-
-    /**
-     * Get table.
-     * @param table Table name
-     * @return Table
-     * @throws Exception if fails
-     */
-    Table table(String table) throws Exception;
-}
+package com.github.smallcreep.cucumber.seeds.misc;

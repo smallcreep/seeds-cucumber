@@ -22,19 +22,30 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.misc;
+
+import java.io.File;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Database Schema.
+ * Test Case for {@link FileFromXml}.
  * @since 0.2.0
  */
-public interface Schema {
+public final class FileFromXmlTest {
 
     /**
-     * Get table.
-     * @param table Table name
-     * @return Table
+     * FileFromXml can return file relative from origin file.
      * @throws Exception if fails
      */
-    Table table(String table) throws Exception;
+    @Test
+    public void checkReturnFilePath() throws Exception {
+        MatcherAssert.assertThat(
+            new FileFromXml(
+                new File("/path/to/file/file.xml")
+            ).apply("checkReturnFilePath.xml"),
+            Matchers.equalTo("/path/to/file/checkReturnFilePath.xml")
+        );
+    }
 }

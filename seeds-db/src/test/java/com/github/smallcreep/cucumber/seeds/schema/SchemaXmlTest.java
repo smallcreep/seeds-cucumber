@@ -22,19 +22,48 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.schema;
+
+import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseFake;
+import com.github.smallcreep.cucumber.seeds.table.TableXml;
+import java.io.File;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
- * Database Schema.
+ * Test Case for {@link SchemaXml}.
  * @since 0.2.0
  */
-public interface Schema {
+public final class SchemaXmlTest {
 
     /**
-     * Get table.
-     * @param table Table name
-     * @return Table
+     * SchemaXml return TableXml.
      * @throws Exception if fails
      */
-    Table table(String table) throws Exception;
+    @Test
+    public void checkSchemaReturnTableXml() throws Exception {
+        MatcherAssert.assertThat(
+            new SchemaXml(
+                new SchemaSimple(
+                    "schema",
+                    new DataBaseFake() {
+                    }
+                ),
+                new File(
+                    Thread.currentThread()
+                        .getContextClassLoader()
+                        .getResource("schema.xml")
+                        .toURI()
+                )
+            ).table("checkSchemaReturnTableXml"),
+            Matchers.allOf(
+                new ScalarHasValue<>(
+                    "schema.checkSchemaReturnTableXml"
+                ),
+                Matchers.instanceOf(TableXml.class)
+            )
+        );
+    }
 }
