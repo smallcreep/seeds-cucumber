@@ -102,6 +102,9 @@ public final class SchemaXml implements Schema {
         this.file = file;
     }
 
+    // @todo #122:15m DEV change xpath for finding table.
+    //  table name should be a value in tag table not a parameter.
+    //  Need change xpath and test data.
     @Override
     public Table table(final String table) throws Exception {
         return new TableXml(

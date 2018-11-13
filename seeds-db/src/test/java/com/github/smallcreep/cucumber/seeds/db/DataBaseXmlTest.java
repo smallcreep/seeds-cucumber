@@ -24,7 +24,16 @@
 
 package com.github.smallcreep.cucumber.seeds.db;
 
+import com.github.smallcreep.cucumber.seeds.Schema;
+import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseFake;
+import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseSchemaFake;
+import com.github.smallcreep.cucumber.seeds.schema.SchemaSimple;
+import com.github.smallcreep.cucumber.seeds.schema.SchemaXml;
+import java.io.File;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
  * Test Case for {@link DataBaseXml}.
@@ -32,7 +41,38 @@ import org.junit.Test;
  */
 public final class DataBaseXmlTest {
 
+    /**
+     * DataBaseXml return SchemaXml.
+     * @throws Exception if fails
+     */
     @Test
-    public void name() {
+    public void checkDatabaseReturnSchemaXml() throws Exception {
+        final String name = "schema";
+        final Schema schema = new DataBaseXml(
+            new DataBaseSchemaFake(
+                new SchemaSimple(
+                    name,
+                    new DataBaseFake() {
+                    }
+                )
+            ),
+            new File(
+                Thread
+                    .currentThread()
+                    .getContextClassLoader()
+                    .getResource("base.xml")
+                    .toURI()
+            )
+        ).schema(name);
+        MatcherAssert.assertThat(
+            schema,
+            Matchers.instanceOf(SchemaXml.class)
+        );
+        MatcherAssert.assertThat(
+            schema.table("checkSchemaReturnTableXml"),
+            new ScalarHasValue<>(
+                "schema.checkSchemaReturnTableXml"
+            )
+        );
     }
 }

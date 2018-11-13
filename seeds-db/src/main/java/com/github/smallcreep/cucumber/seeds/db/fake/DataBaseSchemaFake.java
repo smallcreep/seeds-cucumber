@@ -22,49 +22,32 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.db.fake;
 
-import com.jcabi.jdbc.Outcome;
+import com.github.smallcreep.cucumber.seeds.Schema;
 
 /**
- * Connection to te DataBase.
- * @since 0.1.1
+ * Fake Database always return fake from ctor.
+ * @since 0.2.0
  */
-public interface DataBase {
+public final class DataBaseSchemaFake extends DataBaseFake {
 
     /**
-     * Check connection to the DataBase.
-     * @throws Exception If any error of connection
+     * Schema.
      */
-    void connect() throws Exception;
+    private final Schema fake;
 
     /**
-     * Execute SQL query.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
+     * Ctor.
+     * @param schema Schema.
      */
-    <T> T result(Sql sql, Outcome<T> outcome) throws Exception;
+    public DataBaseSchemaFake(final Schema schema) {
+        super();
+        this.fake = schema;
+    }
 
-    /**
-     * Execute SQL query update/insert.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
-     */
-    <T> T update(Sql sql, Outcome<T> outcome) throws Exception;
-
-    /**
-     * Get schema by name.
-     * @param schema Schema name
-     * @return Schema
-     * @throws Exception If fails
-     */
-    Schema schema(String schema) throws Exception;
+    @Override
+    public Schema schema(final String schema) {
+        return this.fake;
+    }
 }

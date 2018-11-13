@@ -25,10 +25,15 @@
 package com.github.smallcreep.cucumber.seeds.db;
 
 import com.github.smallcreep.cucumber.seeds.DataBase;
+import com.github.smallcreep.cucumber.seeds.Schema;
 import com.github.smallcreep.cucumber.seeds.Sql;
-import com.github.smallcreep.cucumber.seeds.Table;
+import com.github.smallcreep.cucumber.seeds.misc.FileFromXml;
+import com.github.smallcreep.cucumber.seeds.schema.SchemaXml;
 import com.jcabi.jdbc.Outcome;
 import com.jcabi.xml.XMLDocument;
+import java.io.File;
+import java.io.IOException;
+import org.cactoos.Func;
 
 /**
  * DataBase XML read schema from xml file.
@@ -36,13 +41,68 @@ import com.jcabi.xml.XMLDocument;
  */
 public final class DataBaseXml implements DataBase {
 
+    /**
+     * Origin database.
+     */
     private final DataBase origin;
 
+    /**
+     * XML Document.
+     */
     private final XMLDocument document;
 
-    public DataBaseXml(final DataBase origin, final XMLDocument document) {
-        this.origin = origin;
+    /**
+     * Function get file from xml file.
+     */
+    private final Func<String, String> file;
+
+    /**
+     * Ctor.
+     * @param base Origin database
+     * @param file Database file
+     * @throws IOException if fails
+     */
+    public DataBaseXml(final DataBase base, final File file)
+        throws IOException {
+        this(
+            base,
+            new XMLDocument(file),
+            file
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param base Origin database
+     * @param document XML Document
+     * @param file Database file
+     */
+    private DataBaseXml(
+        final DataBase base,
+        final XMLDocument document,
+        final File file
+    ) {
+        this(
+            base,
+            document,
+            new FileFromXml(file)
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param base Origin database
+     * @param document XML Document
+     * @param file Database file
+     */
+    private DataBaseXml(
+        final DataBase base,
+        final XMLDocument document,
+        final Func<String, String> file
+    ) {
+        this.origin = base;
         this.document = document;
+        this.file = file;
     }
 
     @Override
@@ -51,22 +111,31 @@ public final class DataBaseXml implements DataBase {
     }
 
     @Override
-    public <T> T result(final Sql sql, final Outcome<T> outcome) throws Exception {
+    public <T> T result(final Sql sql, final Outcome<T> outcome)
+        throws Exception {
         return this.origin.result(sql, outcome);
     }
 
     @Override
-    public <T> T update(final Sql sql, final Outcome<T> outcome) throws Exception {
+    public <T> T update(final Sql sql, final Outcome<T> outcome)
+        throws Exception {
         return this.origin.update(sql, outcome);
     }
 
     @Override
-    public Table table(final String name) {
-        return this.origin.table(name);
-    }
-
-    @Override
-    public Table table(final String schema, final String name) {
-        return this.origin.table(schema, name);
+    public Schema schema(final String schema) throws Exception {
+        return new SchemaXml(
+            this.origin.schema(schema),
+            new File(
+                this.file.apply(
+                    this.document.xpath(
+                        String.format(
+                            "//schemas/schema[text()='%s']/@file",
+                            schema
+                        )
+                    ).get(0)
+                )
+            )
+        );
     }
 }

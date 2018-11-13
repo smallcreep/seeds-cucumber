@@ -22,49 +22,35 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.db.fake;
 
-import com.jcabi.jdbc.Outcome;
+import com.github.smallcreep.cucumber.seeds.schema.SchemaSimple;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Connection to te DataBase.
- * @since 0.1.1
+ * Test Case for {@link DataBaseSchemaFake}.
+ * @since 0.2.0
  */
-public interface DataBase {
+public final class DataBaseSchemaFakeTest {
 
     /**
-     * Check connection to the DataBase.
-     * @throws Exception If any error of connection
+     * DataBaseSchemaFake can return Schema from constructor.
      */
-    void connect() throws Exception;
-
-    /**
-     * Execute SQL query.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
-     */
-    <T> T result(Sql sql, Outcome<T> outcome) throws Exception;
-
-    /**
-     * Execute SQL query update/insert.
-     *
-     * @param sql Sql query
-     * @param outcome The outcome of the operation
-     * @param <T> Type of response
-     * @return The result
-     * @throws Exception If fails
-     */
-    <T> T update(Sql sql, Outcome<T> outcome) throws Exception;
-
-    /**
-     * Get schema by name.
-     * @param schema Schema name
-     * @return Schema
-     * @throws Exception If fails
-     */
-    Schema schema(String schema) throws Exception;
+    @Test
+    public void checkDataBaseFakeSchemaReturnSameSchema() {
+        final String name = "schema";
+        final SchemaSimple schema = new SchemaSimple(
+            name,
+            new DataBaseFake() {
+            }
+        );
+        MatcherAssert.assertThat(
+            new DataBaseSchemaFake(
+                schema
+            ).schema(name),
+            Matchers.equalTo(schema)
+        );
+    }
 }
