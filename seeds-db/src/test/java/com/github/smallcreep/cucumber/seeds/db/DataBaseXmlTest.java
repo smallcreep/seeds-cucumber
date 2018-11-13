@@ -29,10 +29,15 @@ import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseFake;
 import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseSchemaFake;
 import com.github.smallcreep.cucumber.seeds.schema.SchemaSimple;
 import com.github.smallcreep.cucumber.seeds.schema.SchemaXml;
+import com.github.smallcreep.cucumber.seeds.sql.SimpleSql;
+import com.jcabi.jdbc.Outcome;
 import java.io.File;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -40,6 +45,32 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @since 0.2.0
  */
 public final class DataBaseXmlTest {
+
+    /**
+     * A rule for handling an exception.
+     */
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
+    /**
+     * Xml file.
+     */
+    private File file;
+
+    /**
+     * SetUp method, create xml file.
+     * @throws Exception if fails
+     */
+    @Before
+    public void setUp() throws Exception {
+        this.file = new File(
+            Thread
+                .currentThread()
+                .getContextClassLoader()
+                .getResource("base.xml")
+                .toURI()
+        );
+    }
 
     /**
      * DataBaseXml return SchemaXml.
@@ -56,13 +87,7 @@ public final class DataBaseXmlTest {
                     }
                 )
             ),
-            new File(
-                Thread
-                    .currentThread()
-                    .getContextClassLoader()
-                    .getResource("base.xml")
-                    .toURI()
-            )
+            this.file
         ).schema(name);
         MatcherAssert.assertThat(
             schema,
@@ -73,6 +98,57 @@ public final class DataBaseXmlTest {
             new ScalarHasValue<>(
                 "schema.checkSchemaReturnTableXml"
             )
+        );
+    }
+
+    /**
+     * Check DataBaseXml run connect from origin Database.
+     * @throws Exception if fails
+     */
+    @Test
+    public void databaseXmlRunConnectFromOrigin() throws Exception {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage("Unsupported #connect() in this fake.");
+        new DataBaseXml(
+            new DataBaseFake() {
+            },
+            this.file
+        ).connect();
+    }
+
+    /**
+     * Check DataBaseXml run result from origin Database.
+     * @throws Exception if fails
+     */
+    @Test
+    public void databaseXmlRunResultFromOrigin() throws Exception {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage("Unsupported #result() in this fake.");
+        new DataBaseXml(
+            new DataBaseFake() {
+            },
+            this.file
+        ).result(
+            new SimpleSql("resultThrowException"),
+            Outcome.VOID
+        );
+    }
+
+    /**
+     * Check DataBaseXml run update from origin Database.
+     * @throws Exception if fails
+     */
+    @Test
+    public void databaseXmlRunUpdateFromOrigin() throws Exception {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage("Unsupported #update() in this fake.");
+        new DataBaseXml(
+            new DataBaseFake() {
+            },
+            this.file
+        ).update(
+            new SimpleSql("updateThrowException"),
+            Outcome.VOID
         );
     }
 }
