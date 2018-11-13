@@ -22,27 +22,29 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.schema;
+package com.github.smallcreep.cucumber.seeds.db;
 
+import com.github.smallcreep.cucumber.seeds.DataBase;
 import com.github.smallcreep.cucumber.seeds.Schema;
-import com.github.smallcreep.cucumber.seeds.Table;
+import com.github.smallcreep.cucumber.seeds.Sql;
 import com.github.smallcreep.cucumber.seeds.misc.FileFromXml;
-import com.github.smallcreep.cucumber.seeds.table.TableXml;
+import com.github.smallcreep.cucumber.seeds.schema.SchemaXml;
+import com.jcabi.jdbc.Outcome;
 import com.jcabi.xml.XMLDocument;
 import java.io.File;
 import java.io.IOException;
 import org.cactoos.Func;
 
 /**
- * XML Schema, read config from xml.
+ * DataBase XML read schema from xml file.
  * @since 0.2.0
  */
-public final class SchemaXml implements Schema {
+public final class DataBaseXml implements DataBase {
 
     /**
-     * Origin schema.
+     * Origin database.
      */
-    private final Schema origin;
+    private final DataBase origin;
 
     /**
      * XML Document.
@@ -56,13 +58,14 @@ public final class SchemaXml implements Schema {
 
     /**
      * Ctor.
-     * @param origin Origin schema
-     * @param file Schema file
+     * @param base Origin database
+     * @param file Database file
      * @throws IOException if fails
      */
-    public SchemaXml(final Schema origin, final File file) throws IOException {
+    public DataBaseXml(final DataBase base, final File file)
+        throws IOException {
         this(
-            origin,
+            base,
             new XMLDocument(file),
             file
         );
@@ -70,17 +73,17 @@ public final class SchemaXml implements Schema {
 
     /**
      * Ctor.
-     * @param schema Origin schema
+     * @param base Origin database
      * @param document XML Document
-     * @param file Schema file
+     * @param file Database file
      */
-    private SchemaXml(
-        final Schema schema,
+    private DataBaseXml(
+        final DataBase base,
         final XMLDocument document,
         final File file
     ) {
         this(
-            schema,
+            base,
             document,
             new FileFromXml(file)
         );
@@ -88,37 +91,49 @@ public final class SchemaXml implements Schema {
 
     /**
      * Ctor.
-     * @param schema Origin schema
+     * @param base Origin database
      * @param document XML Document
-     * @param file Function get file from xml file
+     * @param file Database file
      */
-    private SchemaXml(
-        final Schema schema,
+    private DataBaseXml(
+        final DataBase base,
         final XMLDocument document,
         final Func<String, String> file
     ) {
-        this.origin = schema;
+        this.origin = base;
         this.document = document;
         this.file = file;
     }
 
-    // @todo #122:15m DEV change xpath for finding table.
-    //  table name should be a value in tag table not a parameter.
-    //  Need change xpath and test data.
     @Override
-    public Table table(final String table) throws Exception {
-        return new TableXml(
-            this.origin.table(table),
-            new XMLDocument(
-                new File(
-                    this.file.apply(
-                        this.document.xpath(
-                            String.format(
-                                "//tables/table[@name='%s']/@file",
-                                table
-                            )
-                        ).get(0)
-                    )
+    public void connect() throws Exception {
+        this.origin.connect();
+    }
+
+    @Override
+    public <T> T result(final Sql sql, final Outcome<T> outcome)
+        throws Exception {
+        return this.origin.result(sql, outcome);
+    }
+
+    @Override
+    public <T> T update(final Sql sql, final Outcome<T> outcome)
+        throws Exception {
+        return this.origin.update(sql, outcome);
+    }
+
+    @Override
+    public Schema schema(final String schema) throws Exception {
+        return new SchemaXml(
+            this.origin.schema(schema),
+            new File(
+                this.file.apply(
+                    this.document.xpath(
+                        String.format(
+                            "//schemas/schema[text()='%s']/@file",
+                            schema
+                        )
+                    ).get(0)
                 )
             )
         );
