@@ -24,6 +24,6 @@ SOFTWARE.
 -->
 <schema>
   <tables>
-    <table name="checkSchemaReturnTableXml" file="./checkSchemaReturnTableXML.xml"/>
+    <table file="./checkSchemaReturnTableXML.xml">checkSchemaReturnTableXml</table>
   </tables>
 </schema>
