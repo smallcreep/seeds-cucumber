@@ -88,7 +88,7 @@ public final class TableXmlTest {
             new XMLDocument(
                 String.format(
                     "<columns>%s</columns>",
-                    "<column name=\"first\" type=\"Varchar\"></column>"
+                    "<column type=\"Varchar\">first</column>"
                 )
             )
         ).insert(
