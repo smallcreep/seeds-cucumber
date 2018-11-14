@@ -24,56 +24,23 @@
 
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
-import com.github.smallcreep.cucumber.seeds.generator.Placeholder;
-import org.cactoos.text.RandomText;
-
 /**
- * Placeholder return random string with fixed length.
+ * All placeholders, apply all iterable Placeholders.
  * @since 0.2.0
  */
-public final class PlaceholderRandomStringLength extends PlaceholderWithParams {
+public final class PlaceholdersWithoutFunctions extends PlaceholderEnvelope {
 
     /**
      * Ctor.
-     * @throws Exception if fails
      */
-    public PlaceholderRandomStringLength()
-        throws Exception {
-        this(new PlaceholdersWithoutFunctions());
-    }
-
-    /**
-     * Ctor.
-     * @param placeholder Placeholder
-     * @throws Exception if fails
-     */
-    public PlaceholderRandomStringLength(
-        final Placeholder placeholder
-    ) throws Exception {
-        this(
-            "#Random#String",
-            placeholder
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param regexp Regexp
-     * @param placeholder Placeholder
-     * @throws Exception if fails
-     */
-    private PlaceholderRandomStringLength(
-        final String regexp,
-        final Placeholder placeholder
-    ) throws Exception {
+    public PlaceholdersWithoutFunctions() {
         super(
-            (final String first, final String second) -> new RandomText(
-                Integer.valueOf(
-                    second
-                )
-            ).asString(),
-            regexp,
-            placeholder
+            new PlaceholdersAll(
+                new PlaceholderRandomInt(),
+                new PlaceholderRandomString(),
+                new PlaceholderTimestampNow(),
+                new PlaceholderRandomSerial()
+            )
         );
     }
 }

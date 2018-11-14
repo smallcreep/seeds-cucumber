@@ -27,91 +27,30 @@ package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 import com.jcabi.matchers.RegexMatchers;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.JoinedText;
-import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 /**
- * Test Case for {@link PlaceholdersAll}.
+ * Test Case for {@link PlaceholdersWithoutFunctions}.
  * @since 0.2.0
  */
-public final class PlaceholdersAllTest {
+public final class PlaceholdersWithoutFunctionsTest {
 
     /**
-     * PlaceholdersAll can replace placeholders.
-     * @throws Exception if fails
-     */
-    @Test
-    public void replacePlaceholders() throws Exception {
-        MatcherAssert.assertThat(
-            Integer.valueOf(
-                new PlaceholdersAll().apply("#Random#Integer")
-            ),
-            CoreMatchers.instanceOf(Integer.class)
-        );
-    }
-
-    /**
-     * PlaceholdersAll can replace placeholders check specific placeholder.
-     */
-    @Test
-    public void replaceSpecificPlaceholder() {
-        final String value = "specific";
-        MatcherAssert.assertThat(
-            new PlaceholdersAll(
-                new PlaceholderSimple(
-                    value
-                )
-            ).apply("#AnyPlaceholder"),
-            CoreMatchers.equalTo(value)
-        );
-    }
-
-    /**
-     * PlaceholdersAll can't replace placeholders if placeholder not exists.
-     * @throws Exception if fails
-     */
-    @Test
-    public void notReplacePlaceholder() throws Exception {
-        final String value = "#NotExistingPlaceholder";
-        MatcherAssert.assertThat(
-            new PlaceholdersAll().apply(value),
-            CoreMatchers.equalTo(value)
-        );
-    }
-
-    /**
-     * Placeholders must rewrite only self string.
-     * @throws Exception if fails
-     */
-    @Test
-    public void replaceSelfString() throws Exception {
-        MatcherAssert.assertThat(
-            new PlaceholdersAll().apply("Start#Random#IntegerEnd"),
-            CoreMatchers.allOf(
-                CoreMatchers.startsWith("Start"),
-                CoreMatchers.endsWith("End")
-            )
-        );
-    }
-
-    /**
-     * PlaceholdersAll can replace all placeholders in string.
+     * PlaceholdersWithoutFunctions can replace placeholders without parameters.
      * @throws Exception if fails
      */
     @Test
     public void replaceAllPlaceholder() throws Exception {
         MatcherAssert.assertThat(
-            new PlaceholdersAll(
+            new PlaceholdersWithoutFunctions(
             ).apply(
                 new JoinedText(
                     "; ",
                     "timestamp = #Timestamp#Now",
                     "integer = #Random#Integer",
                     "string = #Random#String",
-                    "string length = #Random#String(10)",
-                    "serial = #Random#Serial",
-                    "md5 = #Encryption#Md5(234)"
+                    "string length = #Random#String(10)"
                 ).asString()
             ),
             RegexMatchers.matchesPattern(
@@ -126,9 +65,7 @@ public final class PlaceholdersAllTest {
                         ).asString(),
                         "integer = -?\\d+",
                         "string = (?!#Random#String).+",
-                        "string length = .*{10}",
-                        "serial = [1-9]{1}\\d*",
-                        "md5 = 289dff07669d7a23de0ef88d2f7129e7"
+                        "string length = (?!#Random#String).+\\(10\\)"
                     ).asString()
                 ).asString()
             )

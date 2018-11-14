@@ -32,6 +32,7 @@ import org.cactoos.iterable.IterableOf;
 /**
  * All placeholders, apply all iterable Placeholders.
  * @since 0.2.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
 public final class PlaceholdersAll implements Placeholder {
 
@@ -42,12 +43,16 @@ public final class PlaceholdersAll implements Placeholder {
 
     /**
      * Ctor.
+     * @throws Exception if fails
      */
-    public PlaceholdersAll() {
+    public PlaceholdersAll() throws Exception {
         this(
             new PlaceholderRandomInt(),
+            new PlaceholderRandomStringLength(),
             new PlaceholderRandomString(),
-            new PlaceholderTimestampNow()
+            new PlaceholderTimestampNow(),
+            new PlaceholderEncryptionMd5(),
+            new PlaceholderRandomSerial()
         );
     }
 
