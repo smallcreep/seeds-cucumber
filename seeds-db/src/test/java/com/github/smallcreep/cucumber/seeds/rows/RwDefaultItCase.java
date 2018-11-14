@@ -53,9 +53,10 @@ public final class RwDefaultItCase extends Connect {
      * @todo #101:15m/TEST Add assertion to correct inserted values after
      *  implemented method insert into table(#117) and added info of inserted
      *  rows to properties(#116).
-     * @todo #142:20m/DEV Placeholders with parameters may brake regexp.
-     *  For example #Encryption#Md5(').*) need escape string before replace.
-     *  Need change PlaceholderWithParams. This is very big problem.
+     * @todo #147:15m/DEV Add escaping to single quotes in sql, because
+     *  generated sql not valid. For example Varchar column with value
+     *  'not'escaped value' threw org.postgresql.util.PSQLException:
+     *  Unterminated identifier started at position.
      * @checkstyle LocalFinalVariableNameCheck (10 lines)
      */
     @Ignore("Wait todo")

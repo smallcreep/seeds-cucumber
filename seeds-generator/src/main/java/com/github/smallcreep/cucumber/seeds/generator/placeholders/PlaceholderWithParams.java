@@ -99,7 +99,7 @@ public abstract class PlaceholderWithParams implements Placeholder {
             final String group = matcher.group(1);
             result = new PlaceholderRegexp(
                 temp -> this.origin.apply(temp, this.placeholder.apply(group)),
-                String.format(this.regexp.asString(), group)
+                String.format(this.regexp.asString(), Pattern.quote(group))
             ).apply(result);
             matcher = this.pattern.matcher(result);
         }
