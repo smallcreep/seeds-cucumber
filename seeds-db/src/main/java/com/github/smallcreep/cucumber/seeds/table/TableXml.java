@@ -42,6 +42,7 @@ import org.cactoos.text.FormattedText;
 /**
  * Envelope Table, add to values correct wrap use XML document for type.
  * @since 0.2.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
 public final class TableXml implements Table {
 

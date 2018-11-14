@@ -28,6 +28,7 @@ import com.github.smallcreep.cucumber.seeds.db.DbDefault;
 import com.jcabi.jdbc.JdbcSession;
 import com.jcabi.xml.XMLDocument;
 import com.jolbox.bonecp.BoneCPDataSource;
+import java.io.UncheckedIOException;
 import java.util.Collection;
 import java.util.Map;
 import org.cactoos.collection.CollectionOf;
@@ -36,7 +37,9 @@ import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.llorllale.cactoos.matchers.ScalarHasValue;
 
 /**
@@ -45,6 +48,12 @@ import org.llorllale.cactoos.matchers.ScalarHasValue;
  * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
 public final class TableXmlTest {
+
+    /**
+     * A rule for handling an exception.
+     */
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
 
     /**
      * Check TableXml can return envelope table name.
@@ -86,10 +95,7 @@ public final class TableXmlTest {
         new TableXml(
             fake,
             new XMLDocument(
-                String.format(
-                    "<columns>%s</columns>",
-                    "<column type=\"Varchar\">first</column>"
-                )
+                this.columns("<column type=\"Varchar\">first</column>")
             )
         ).insert(
             new IterableOf<Map<String, String>>(
@@ -131,7 +137,7 @@ public final class TableXmlTest {
                     )
                 ),
                 new XMLDocument(
-                    "<columns></columns>"
+                    this.columns("")
                 )
             ).insert(
                 new IterableOf<Map<String, String>>()
@@ -139,6 +145,55 @@ public final class TableXmlTest {
             Matchers.equalTo(
                 results
             )
+        );
+    }
+
+    /**
+     * Check TableXml throw UncheckedIOException if type column not found.
+     * @throws Exception if fails
+     */
+    @Test
+    public void throwExceptionIfTypeColumnNotFound() throws Exception {
+        this.exception.expect(UncheckedIOException.class);
+        this.exception.expectMessage("Not found type 'Not exists'");
+        final TableFakeInsert fake = new TableFakeInsert(
+            new CollectionOf<Long>(),
+            new TableSimple(
+                "throwException",
+                "ColumnNotFound",
+                new DbDefault(
+                    new JdbcSession(new BoneCPDataSource())
+                )
+            )
+        );
+        final String key = "column";
+        new TableXml(
+            fake,
+            new XMLDocument(
+                this.columns("<column type=\"Not exists\">column</column>")
+            )
+        ).insert(
+            new IterableOf<Map<String, String>>(
+                new MapOf<String, String>(
+                    new MapEntry<>(
+                        key,
+                        "val"
+                    )
+                )
+            )
+        );
+        fake.rows().iterator().next().get(key);
+    }
+
+    /**
+     * Get columns in xml document with wrap columns section.
+     * @param columns Columns
+     * @return Wrapped columns
+     */
+    private String columns(final String columns) {
+        return String.format(
+            "<columns>%s</columns>",
+            columns
         );
     }
 }
