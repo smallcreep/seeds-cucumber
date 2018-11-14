@@ -25,8 +25,10 @@
 package com.github.smallcreep.cucumber.seeds.rows;
 
 import com.github.smallcreep.cucumber.seeds.Connect;
+import com.github.smallcreep.cucumber.seeds.db.DataBaseXml;
 import com.github.smallcreep.cucumber.seeds.db.DbDefault;
 import com.jcabi.jdbc.JdbcSession;
+import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
@@ -41,6 +43,7 @@ import org.junit.Test;
 /**
  * Test Case for {@link RwDefault}.
  * @since 0.2.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
 public final class RwDefaultItCase extends Connect {
 
@@ -50,6 +53,18 @@ public final class RwDefaultItCase extends Connect {
      * @todo #101:15m/TEST Add assertion to correct inserted values after
      *  implemented method insert into table(#117) and added info of inserted
      *  rows to properties(#116).
+     * @todo #133:15m/DEV Add type Serial to sql value. Serial is pseudo-type.
+     *  for more information read this docs
+     *  http://www.postgresqltutorial.com/postgresql-tutorial/postgresql-serial/
+     *  This is the same Integer types.
+     * @todo #133:15m/DEV Add type Text to sql value.
+     *  The text data type can store a string with unlimited length.
+     *  for more information read this docs
+     *  http://www.postgresqltutorial.com/postgresql-char-varchar-text/
+     * @todo #133:15m/DEV Add type Bytea to sql value.
+     *  The bytea data type allows storage of binary strings.
+     *  for more information read this docs
+     *  https://www.postgresql.org/docs/9.6/datatype-binary.html
      * @checkstyle LocalFinalVariableNameCheck (10 lines)
      */
     @Ignore("Wait todo")
@@ -60,8 +75,17 @@ public final class RwDefaultItCase extends Connect {
         final String value = "value";
         final String md5 = "md5";
         new RwDefault(
-            new DbDefault(
-                new JdbcSession(this.source())
+            new DataBaseXml(
+                new DbDefault(
+                    new JdbcSession(this.source())
+                ),
+                new File(
+                    Thread
+                        .currentThread()
+                        .getContextClassLoader()
+                        .getResource("RwDefaultItCase/base.xml")
+                        .toURI()
+                )
             ).schema("public").table("test"),
             new IterableOf<Map<String, String>>(
                 new MapOf<String, String>(
