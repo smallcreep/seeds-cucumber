@@ -24,21 +24,26 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
-import org.cactoos.text.FormattedText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Varchar sql value.
+ * Test Case for {@link Serial}.
  * @since 0.2.0
  */
-public final class Varchar extends SqlValueEnvelope {
+public final class SerialTest {
 
     /**
-     * Ctor.
+     * Serial return input without modification.
+     * @throws Exception if fails
      */
-    public Varchar() {
-        super(
-            input -> new FormattedText("CAST('%s' as varchar)", input)
-                .asString()
+    @Test
+    public void returnInputWithoutModification() throws Exception {
+        final String input = "returnInputWithoutModification";
+        MatcherAssert.assertThat(
+            new Serial().apply(input),
+            Matchers.equalTo(input)
         );
     }
 }

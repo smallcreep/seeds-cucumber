@@ -53,10 +53,6 @@ public final class RwDefaultItCase extends Connect {
      * @todo #101:15m/TEST Add assertion to correct inserted values after
      *  implemented method insert into table(#117) and added info of inserted
      *  rows to properties(#116).
-     * @todo #133:15m/DEV Add type Serial to sql value. Serial is pseudo-type.
-     *  for more information read this docs
-     *  http://www.postgresqltutorial.com/postgresql-tutorial/postgresql-serial/
-     *  This is the same Integer types.
      * @todo #133:15m/DEV Add type Text to sql value.
      *  The text data type can store a string with unlimited length.
      *  for more information read this docs

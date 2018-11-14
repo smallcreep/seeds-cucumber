@@ -24,21 +24,29 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
-import org.cactoos.text.FormattedText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Varchar sql value.
+ * Test Case for {@link SqlValueEnvelope}.
  * @since 0.2.0
  */
-public final class Varchar extends SqlValueEnvelope {
+public final class SqlValueEnvelopeTest {
 
     /**
-     * Ctor.
+     * Check SqlValueEnvelope return value from origin apply.
+     * @throws Exception if fails
      */
-    public Varchar() {
-        super(
-            input -> new FormattedText("CAST('%s' as varchar)", input)
-                .asString()
+    @Test
+    public void sqlValueEnvelopeReturnValueFromOriginApply() throws Exception {
+        final String output = "test";
+        MatcherAssert.assertThat(
+            new SqlValueEnvelope(
+                input -> output
+            ) {
+            }.apply("sqlValueEnvelopeReturnValueFromOriginApply"),
+            Matchers.equalTo(output)
         );
     }
 }
