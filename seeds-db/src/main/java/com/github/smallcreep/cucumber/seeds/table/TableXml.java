@@ -31,15 +31,18 @@ import com.github.smallcreep.cucumber.seeds.sqlvalue.Serial;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Text;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Varchar;
 import com.jcabi.xml.XML;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
+import org.cactoos.text.FormattedText;
 
 /**
  * Envelope Table, add to values correct wrap use XML document for type.
  * @since 0.2.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
 public final class TableXml implements Table {
 
@@ -104,15 +107,6 @@ public final class TableXml implements Table {
         this.values = values;
     }
 
-    // @todo #133:15m/DEV add correct exception if not found in this.value
-    //  value, because now threw java.lang.NullPointerException with next
-    //  stacktrace:
-    //  at com.github.smallcreep.cucumber.seeds.table.TableXml
-    //  .lambda$null$0(TableXml.java:107)
-    //  at org.cactoos.map.MapOf.lambda$new$0(MapOf.java:83)
-    //  at org.cactoos.func.UncheckedFunc.lambda$apply$0(UncheckedFunc.java:56)
-    //  at org.cactoos.scalar.CheckedScalar.value(CheckedScalar.java:76)
-    //  at org.cactoos.scalar.IoCheckedScalar.value(IoCheckedScalar.java:63)
     @Override
     public Collection<Long> insert(
         final Iterable<Map<String, String>> rows
@@ -121,14 +115,25 @@ public final class TableXml implements Table {
             new Mapped<Map<String, String>, Map<String, String>>(
                 input -> new MapOf<String, String>(
                     Map.Entry::getKey,
-                    entry -> this.values.get(
-                        this.schema.xpath(
+                    entry -> {
+                        final String key = this.schema.xpath(
                             String.format(
                                 "//column[text()='%s']/@type",
                                 entry.getKey()
                             )
-                        ).get(0)
-                    ).apply(entry.getValue()),
+                        ).get(0);
+                        if (this.values.containsKey(key)) {
+                            return this.values.get(
+                                key
+                            ).apply(entry.getValue());
+                        }
+                        throw new IOException(
+                            new FormattedText(
+                                "Not found type '%s'",
+                                key
+                            ).asString()
+                        );
+                    },
                     input.entrySet()
                 ),
                 rows
