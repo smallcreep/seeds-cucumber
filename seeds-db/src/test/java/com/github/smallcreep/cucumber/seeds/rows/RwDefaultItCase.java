@@ -53,10 +53,6 @@ public final class RwDefaultItCase extends Connect {
      * @todo #101:15m/TEST Add assertion to correct inserted values after
      *  implemented method insert into table(#117) and added info of inserted
      *  rows to properties(#116).
-     * @todo #133:15m/DEV Add type Bytea to sql value.
-     *  The bytea data type allows storage of binary strings.
-     *  for more information read this docs
-     *  https://www.postgresql.org/docs/9.6/datatype-binary.html
      * @checkstyle LocalFinalVariableNameCheck (10 lines)
      */
     @Ignore("Wait todo")
