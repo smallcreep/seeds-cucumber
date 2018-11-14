@@ -22,23 +22,8 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.sqlvalue;
-
-import org.cactoos.text.FormattedText;
-
 /**
- * Varchar sql value.
+ * Test cases for SqlValue.
  * @since 0.2.0
  */
-public final class Varchar extends SqlValueEnvelope {
-
-    /**
-     * Ctor.
-     */
-    public Varchar() {
-        super(
-            input -> new FormattedText("CAST('%s' as varchar)", input)
-                .asString()
-        );
-    }
-}
+package com.github.smallcreep.cucumber.seeds.sqlvalue;

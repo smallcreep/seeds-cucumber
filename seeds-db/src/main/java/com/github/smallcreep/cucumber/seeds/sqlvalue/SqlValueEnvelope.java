@@ -24,21 +24,29 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
-import org.cactoos.text.FormattedText;
+import com.github.smallcreep.cucumber.seeds.SqlValue;
 
 /**
- * Varchar sql value.
+ * Sql value envelope.
  * @since 0.2.0
  */
-public final class Varchar extends SqlValueEnvelope {
+public abstract class SqlValueEnvelope implements SqlValue {
+
+    /**
+     * Origin sql value.
+     */
+    private final SqlValue value;
 
     /**
      * Ctor.
+     * @param value Origin sql value
      */
-    public Varchar() {
-        super(
-            input -> new FormattedText("CAST('%s' as varchar)", input)
-                .asString()
-        );
+    public SqlValueEnvelope(final SqlValue value) {
+        this.value = value;
+    }
+
+    @Override
+    public final String apply(final String input) throws Exception {
+        return this.value.apply(input);
     }
 }

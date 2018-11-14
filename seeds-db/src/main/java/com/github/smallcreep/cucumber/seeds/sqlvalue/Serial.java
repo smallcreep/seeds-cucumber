@@ -24,21 +24,18 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
-import org.cactoos.text.FormattedText;
-
 /**
- * Varchar sql value.
+ * Serial sql value.
  * @since 0.2.0
  */
-public final class Varchar extends SqlValueEnvelope {
+public final class Serial extends SqlValueEnvelope {
 
     /**
      * Ctor.
      */
-    public Varchar() {
+    public Serial() {
         super(
-            input -> new FormattedText("CAST('%s' as varchar)", input)
-                .asString()
+            input -> input
         );
     }
 }

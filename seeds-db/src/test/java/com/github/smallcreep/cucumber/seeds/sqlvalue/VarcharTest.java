@@ -24,21 +24,27 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
-import org.cactoos.text.FormattedText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Varchar sql value.
+ * Test Case for {@link Varchar}.
  * @since 0.2.0
  */
-public final class Varchar extends SqlValueEnvelope {
+public final class VarcharTest {
 
     /**
-     * Ctor.
+     * Varchar can return value envelope with cast to varchar.
+     * @throws Exception if fails
      */
-    public Varchar() {
-        super(
-            input -> new FormattedText("CAST('%s' as varchar)", input)
-                .asString()
+    @Test
+    public void returnValueEnvelopeWitchCastToVarchar() throws Exception {
+        MatcherAssert.assertThat(
+            new Varchar().apply("returnValueEnvelopeWitchCastToVarchar"),
+            Matchers.equalTo(
+                "CAST('returnValueEnvelopeWitchCastToVarchar' as varchar)"
+            )
         );
     }
 }
