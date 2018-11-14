@@ -26,7 +26,9 @@ package com.github.smallcreep.cucumber.seeds.table;
 
 import com.github.smallcreep.cucumber.seeds.SqlValue;
 import com.github.smallcreep.cucumber.seeds.Table;
+import com.github.smallcreep.cucumber.seeds.sqlvalue.Bytea;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Serial;
+import com.github.smallcreep.cucumber.seeds.sqlvalue.Text;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Varchar;
 import com.jcabi.xml.XML;
 import java.util.Collection;
@@ -73,6 +75,14 @@ public final class TableXml implements Table {
                 new MapEntry<>(
                     "Serial",
                     new Serial()
+                ),
+                new MapEntry<>(
+                    "Text",
+                    new Text()
+                ),
+                new MapEntry<>(
+                    "Bytea",
+                    new Bytea()
                 )
             )
         );
