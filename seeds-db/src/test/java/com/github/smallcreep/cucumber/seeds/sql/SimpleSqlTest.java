@@ -36,7 +36,7 @@ import org.junit.Test;
 public final class SimpleSqlTest {
 
     /**
-     * Check sql query return tha same String.
+     * Check sql query return tha same SqlString.
      * @throws Exception if fails
      */
     @Test
@@ -51,7 +51,7 @@ public final class SimpleSqlTest {
     }
 
     /**
-     * Check sql query return tha same String from scalar.
+     * Check sql query return tha same SqlString from scalar.
      * @throws Exception if fails
      */
     @Test

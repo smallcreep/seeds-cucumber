@@ -22,52 +22,29 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.sql;
+package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
-import com.github.smallcreep.cucumber.seeds.Sql;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
+import com.github.smallcreep.cucumber.seeds.SqlValue;
+import org.cactoos.text.FormattedText;
 
 /**
- * Simple sql query from SqlString.
+ * Envelope sql value with casting to any value.
  * @since 0.2.0
  */
-public final class SimpleSql implements Sql {
-
-    /**
-     * Sql query.
-     */
-    private final Text qry;
+public abstract class SqlValueCastEnvelope extends SqlValueEnvelope {
 
     /**
      * Ctor.
-     * @param query Sql query
+     * @param type Type to casting
+     * @param value SqlValue modification
      */
-    public SimpleSql(final Scalar<String> query) {
-        this(
-            (Text) () -> query.value()
+    public SqlValueCastEnvelope(final String type, final SqlValue value) {
+        super(
+            input -> new FormattedText(
+                "CAST(%s as %s)",
+                value.apply(input),
+                type
+            ).asString()
         );
-    }
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final String query) {
-        this(new TextOf(query));
-    }
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final Text query) {
-        this.qry = query;
-    }
-
-    @Override
-    public String query() throws Exception {
-        return this.qry.asString();
     }
 }

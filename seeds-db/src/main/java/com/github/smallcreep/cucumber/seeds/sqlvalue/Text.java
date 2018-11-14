@@ -22,52 +22,21 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.sql;
-
-import com.github.smallcreep.cucumber.seeds.Sql;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
+package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
 /**
- * Simple sql query from SqlString.
+ * Text sql value.
  * @since 0.2.0
  */
-public final class SimpleSql implements Sql {
-
-    /**
-     * Sql query.
-     */
-    private final Text qry;
+public final class Text extends SqlValueCastEnvelope {
 
     /**
      * Ctor.
-     * @param query Sql query
      */
-    public SimpleSql(final Scalar<String> query) {
-        this(
-            (Text) () -> query.value()
+    public Text() {
+        super(
+            "text",
+            new SqlString()
         );
-    }
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final String query) {
-        this(new TextOf(query));
-    }
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final Text query) {
-        this.qry = query;
-    }
-
-    @Override
-    public String query() throws Exception {
-        return this.qry.asString();
     }
 }
