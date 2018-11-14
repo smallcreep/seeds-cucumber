@@ -53,6 +53,9 @@ public final class RwDefaultItCase extends Connect {
      * @todo #101:15m/TEST Add assertion to correct inserted values after
      *  implemented method insert into table(#117) and added info of inserted
      *  rows to properties(#116).
+     * @todo #142:20m/DEV Placeholders with parameters may brake regexp.
+     *  For example #Encryption#Md5(').*) need escape string before replace.
+     *  Need change PlaceholderWithParams. This is very big problem.
      * @checkstyle LocalFinalVariableNameCheck (10 lines)
      */
     @Ignore("Wait todo")
@@ -84,13 +87,13 @@ public final class RwDefaultItCase extends Connect {
                         id, "#Random#Serial"
                     ),
                     new MapEntry<>(
-                        title, "#Random#SqlString#Timestamp#Now"
+                        title, "#Random#String#Timestamp#Now"
                     ),
                     new MapEntry<>(
-                        value, "#Random#SqlString(10)"
+                        value, "#Random#String(10)"
                     ),
                     new MapEntry<>(
-                        md5, "#Encryption#Md5(#Random#SqlString)"
+                        md5, "#Encryption#Md5(#Random#String)"
                     )
                 )
             )

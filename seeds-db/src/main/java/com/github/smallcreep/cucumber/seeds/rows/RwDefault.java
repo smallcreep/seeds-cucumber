@@ -28,6 +28,7 @@ import com.github.smallcreep.cucumber.seeds.Rows;
 import com.github.smallcreep.cucumber.seeds.Table;
 import com.github.smallcreep.cucumber.seeds.generator.Surrogate;
 import com.github.smallcreep.cucumber.seeds.generator.surrogate.SurrogateSimple;
+import com.github.smallcreep.cucumber.seeds.storage.StorageWithoutIids;
 import java.util.Map;
 import org.cactoos.iterable.Mapped;
 
@@ -84,9 +85,11 @@ public final class RwDefault implements Rows {
     @Override
     public void add() throws Exception {
         this.table.insert(
-            new Mapped<>(
-                this.surrogate,
-                this.rows
+            new StorageWithoutIids(
+                new Mapped<>(
+                    this.surrogate,
+                    this.rows
+                )
             )
         );
     }

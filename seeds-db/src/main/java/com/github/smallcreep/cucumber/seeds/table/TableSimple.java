@@ -87,7 +87,7 @@ public final class TableSimple implements Table {
         rows.forEach(
             row -> row.keySet().forEach(
                 column -> {
-                    if (heads.contains(column)) {
+                    if (!heads.contains(column)) {
                         heads.add(column);
                     }
                 }
