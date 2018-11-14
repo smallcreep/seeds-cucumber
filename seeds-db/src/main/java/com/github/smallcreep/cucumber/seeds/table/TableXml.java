@@ -89,6 +89,15 @@ public final class TableXml implements Table {
         this.values = values;
     }
 
+    // @todo #133:15m/DEV add correct exception if not found in this.value
+    //  value, because now threw java.lang.NullPointerException with next
+    //  stacktrace:
+    //  at com.github.smallcreep.cucumber.seeds.table.TableXml
+    //  .lambda$null$0(TableXml.java:107)
+    //  at org.cactoos.map.MapOf.lambda$new$0(MapOf.java:83)
+    //  at org.cactoos.func.UncheckedFunc.lambda$apply$0(UncheckedFunc.java:56)
+    //  at org.cactoos.scalar.CheckedScalar.value(CheckedScalar.java:76)
+    //  at org.cactoos.scalar.IoCheckedScalar.value(IoCheckedScalar.java:63)
     @Override
     public Collection<Long> insert(
         final Iterable<Map<String, String>> rows
