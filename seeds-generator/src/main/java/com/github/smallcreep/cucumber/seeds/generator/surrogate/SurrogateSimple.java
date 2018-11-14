@@ -43,8 +43,9 @@ public final class SurrogateSimple implements Surrogate {
 
     /**
      * Ctor.
+     * @throws Exception if fails
      */
-    public SurrogateSimple() {
+    public SurrogateSimple() throws Exception {
         this(
             new PlaceholdersAll()
         );

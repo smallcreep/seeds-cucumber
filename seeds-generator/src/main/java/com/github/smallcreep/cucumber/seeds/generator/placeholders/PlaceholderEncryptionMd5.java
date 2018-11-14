@@ -42,7 +42,7 @@ public final class PlaceholderEncryptionMd5 extends PlaceholderWithParams {
      */
     public PlaceholderEncryptionMd5()
         throws Exception {
-        this(new PlaceholdersAll());
+        this(new PlaceholdersWithoutFunctions());
     }
 
     /**

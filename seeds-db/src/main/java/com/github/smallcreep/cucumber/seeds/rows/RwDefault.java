@@ -56,11 +56,12 @@ public final class RwDefault implements Rows {
      * Ctor.
      * @param table Database Table
      * @param rows Rows
+     * @throws Exception if fails
      */
     public RwDefault(
         final Table table,
         final Iterable<Map<String, String>> rows
-    ) {
+    ) throws Exception {
         this(table, rows, new SurrogateSimple());
     }
 

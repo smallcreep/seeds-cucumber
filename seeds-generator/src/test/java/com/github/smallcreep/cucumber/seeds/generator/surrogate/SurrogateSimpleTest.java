@@ -39,9 +39,10 @@ public final class SurrogateSimpleTest {
 
     /**
      * SurrogateSimple can replace placeholders.
+     * @throws Exception if fails
      */
     @Test
-    public void replacePlaceholders() {
+    public void replacePlaceholders() throws Exception {
         final String key = "replacePlaceholders";
         MatcherAssert.assertThat(
             Integer.valueOf(
