@@ -22,52 +22,29 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.sql;
+package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
-import com.github.smallcreep.cucumber.seeds.Sql;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Simple sql query from SqlString.
+ * Test Case for {@link SqlString}.
  * @since 0.2.0
  */
-public final class SimpleSql implements Sql {
+public final class SqlStringTest {
 
     /**
-     * Sql query.
+     * SqlString can return value envelope to single quotes.
+     * @throws Exception if fails
      */
-    private final Text qry;
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final Scalar<String> query) {
-        this(
-            (Text) () -> query.value()
+    @Test
+    public void returnValueEnvelopeToSingleQuotes() throws Exception {
+        MatcherAssert.assertThat(
+            new SqlString().apply("returnValueEnvelopeToSingleQuotes"),
+            Matchers.equalTo(
+                "'returnValueEnvelopeToSingleQuotes'"
+            )
         );
-    }
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final String query) {
-        this(new TextOf(query));
-    }
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final Text query) {
-        this.qry = query;
-    }
-
-    @Override
-    public String query() throws Exception {
-        return this.qry.asString();
     }
 }

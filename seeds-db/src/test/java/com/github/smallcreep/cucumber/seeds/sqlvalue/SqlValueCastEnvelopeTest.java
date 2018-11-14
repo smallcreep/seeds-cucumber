@@ -22,52 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.sql;
+package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
-import com.github.smallcreep.cucumber.seeds.Sql;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
-import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Simple sql query from SqlString.
+ * Test Case for {@link SqlValueCastEnvelope}.
  * @since 0.2.0
  */
-public final class SimpleSql implements Sql {
+public final class SqlValueCastEnvelopeTest {
 
     /**
-     * Sql query.
+     * SqlValueCastEnvelope can return value envelope with cast to type.
+     * @throws Exception if fails
      */
-    private final Text qry;
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final Scalar<String> query) {
-        this(
-            (Text) () -> query.value()
+    @Test
+    public void returnValueEnvelopeWitchCastToType() throws Exception {
+        MatcherAssert.assertThat(
+            new SqlValueCastEnvelope(
+                "test_type",
+                new SqlString()
+            ) {
+            }.apply("returnValueEnvelopeWitchCastToType"),
+            Matchers.equalTo(
+                "CAST('returnValueEnvelopeWitchCastToType' as test_type)"
+            )
         );
-    }
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final String query) {
-        this(new TextOf(query));
-    }
-
-    /**
-     * Ctor.
-     * @param query Sql query
-     */
-    public SimpleSql(final Text query) {
-        this.qry = query;
-    }
-
-    @Override
-    public String query() throws Exception {
-        return this.qry.asString();
     }
 }

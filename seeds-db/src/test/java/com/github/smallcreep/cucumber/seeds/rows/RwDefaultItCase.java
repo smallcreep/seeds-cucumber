@@ -53,10 +53,6 @@ public final class RwDefaultItCase extends Connect {
      * @todo #101:15m/TEST Add assertion to correct inserted values after
      *  implemented method insert into table(#117) and added info of inserted
      *  rows to properties(#116).
-     * @todo #133:15m/DEV Add type Text to sql value.
-     *  The text data type can store a string with unlimited length.
-     *  for more information read this docs
-     *  http://www.postgresqltutorial.com/postgresql-char-varchar-text/
      * @todo #133:15m/DEV Add type Bytea to sql value.
      *  The bytea data type allows storage of binary strings.
      *  for more information read this docs
@@ -92,13 +88,13 @@ public final class RwDefaultItCase extends Connect {
                         id, "#Random#Serial"
                     ),
                     new MapEntry<>(
-                        title, "#Random#String#Timestamp#Now"
+                        title, "#Random#SqlString#Timestamp#Now"
                     ),
                     new MapEntry<>(
-                        value, "#Random#String(10)"
+                        value, "#Random#SqlString(10)"
                     ),
                     new MapEntry<>(
-                        md5, "#Encryption#Md5(#Random#String)"
+                        md5, "#Encryption#Md5(#Random#SqlString)"
                     )
                 )
             )
