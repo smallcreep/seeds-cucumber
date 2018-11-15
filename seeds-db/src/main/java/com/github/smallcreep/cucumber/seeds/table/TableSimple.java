@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.cactoos.Text;
+import org.cactoos.iterable.StickyIterable;
 import org.cactoos.text.FormattedText;
 
 /**
@@ -83,8 +84,11 @@ public final class TableSimple implements Table {
     @Override
     public Collection<Long> insert(final Iterable<Map<String, String>> rows)
         throws Exception {
+        final Iterable<Map<String, String>> sticky = new StickyIterable<>(
+            rows
+        );
         final List<String> heads = new LinkedList<>();
-        rows.forEach(
+        sticky.forEach(
             row -> row.keySet().forEach(
                 column -> {
                     if (!heads.contains(column)) {
@@ -96,7 +100,7 @@ public final class TableSimple implements Table {
         return this.base.update(
             new InsertSql(
                 heads,
-                rows,
+                sticky,
                 this.value()
             ),
             new OutcomeIds()

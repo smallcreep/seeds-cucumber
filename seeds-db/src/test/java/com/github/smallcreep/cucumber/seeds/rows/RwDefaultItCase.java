@@ -31,6 +31,7 @@ import com.github.smallcreep.cucumber.seeds.db.DbDefault;
 import com.jcabi.jdbc.JdbcSession;
 import java.io.File;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import org.cactoos.iterable.IterableOf;
@@ -51,9 +52,6 @@ public final class RwDefaultItCase extends Connect {
     /**
      * RwDefault can insert new rows to table.
      * @throws Exception if fails
-     * @todo #101:15m/TEST Add assertion to correct inserted values after
-     *  implemented method insert into table(#117) and added info of inserted
-     *  rows to properties(#116).
      * @checkstyle LocalFinalVariableNameCheck (10 lines)
      */
     @Test
@@ -62,7 +60,7 @@ public final class RwDefaultItCase extends Connect {
         final String title = "title";
         final String value = "value";
         final String md5 = "md5";
-        final CxSimple context = new CxSimple();
+        final Map<String, Object> values = new HashMap<>();
         new RwDefault(
             new DataBaseXml(
                 new DbDefault(
@@ -95,7 +93,7 @@ public final class RwDefaultItCase extends Connect {
                     )
                 )
             ),
-            context,
+            new CxSimple(values),
             "public.test"
         ).add();
         final Collection<Map<String, String>> select = new JdbcSession(
@@ -129,6 +127,38 @@ public final class RwDefaultItCase extends Connect {
         MatcherAssert.assertThat(
             select,
             Matchers.hasSize(1)
+        );
+        final Map<String, String> row = select.iterator().next();
+        MatcherAssert.assertThat(
+            values,
+            Matchers.allOf(
+                Matchers.hasEntry(
+                    Matchers.equalTo("#Storage#public.test#iid=1(iid)"),
+                    Matchers.equalTo("1")
+                ),
+                Matchers.hasEntry(
+                    Matchers.equalTo("#Storage#public.test#iid=1(id)"),
+                    Matchers.equalTo(row.get(id))
+                ),
+                Matchers.hasEntry(
+                    Matchers.equalTo(
+                        "#Storage#public.test#iid=1(title)"
+                    ),
+                    Matchers.equalTo(row.get(title))
+                ),
+                Matchers.hasEntry(
+                    Matchers.equalTo(
+                        "#Storage#public.test#iid=1(value)"
+                    ),
+                    Matchers.equalTo(row.get(value))
+                ),
+                Matchers.hasEntry(
+                    Matchers.equalTo(
+                        "#Storage#public.test#iid=1(md5)"
+                    ),
+                    Matchers.equalTo(row.get(md5))
+                )
+            )
         );
     }
 }
