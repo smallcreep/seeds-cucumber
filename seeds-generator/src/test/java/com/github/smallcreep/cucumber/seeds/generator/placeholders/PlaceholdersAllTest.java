@@ -111,7 +111,7 @@ public final class PlaceholdersAllTest {
                     "string = #Random#String",
                     "string length = #Random#String(10)",
                     "serial = #Random#Serial",
-                    "md5 = #Encryption#Md5(234)"
+                    "md5 = #Encryption#Md5(#Random#String)"
                 ).asString()
             ),
             RegexMatchers.matchesPattern(
@@ -128,7 +128,7 @@ public final class PlaceholdersAllTest {
                         "string = (?!#Random#String).+",
                         "string length = .*{10}",
                         "serial = [1-9]{1}\\d*",
-                        "md5 = 289dff07669d7a23de0ef88d2f7129e7"
+                        "md5 = [0-9abcdef]{32}"
                     ).asString()
                 ).asString()
             )

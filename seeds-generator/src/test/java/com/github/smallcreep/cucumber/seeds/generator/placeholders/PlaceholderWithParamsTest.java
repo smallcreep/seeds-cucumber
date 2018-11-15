@@ -55,4 +55,30 @@ public final class PlaceholderWithParamsTest {
             CoreMatchers.equalTo(expected)
         );
     }
+
+    /**
+     * PlaceholderWithParams can wrap close round brackets.
+     * @throws Exception if fails
+     */
+    @Test
+    public void checkPlaceholderWrapCloseRoundBrackets() throws Exception {
+        MatcherAssert.assertThat(
+            new PlaceholderWithParams(
+                (first, second) -> String.format("start %s end", second),
+                "#Func2",
+                new PlaceholdersAll(
+                    new PlaceholderRegexp(
+                        new PlaceholderSimple(
+                            "close)bracket"
+                        ),
+                        "#Random#String"
+                    )
+                )
+            ) {
+            }.apply(
+                "#Func2(#Random#String)"
+            ),
+            CoreMatchers.equalTo("start close)bracket end")
+        );
+    }
 }

@@ -38,7 +38,6 @@ import org.cactoos.map.MapOf;
 import org.cactoos.text.JoinedText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -54,12 +53,8 @@ public final class RwDefaultItCase extends Connect {
      * @todo #101:15m/TEST Add assertion to correct inserted values after
      *  implemented method insert into table(#117) and added info of inserted
      *  rows to properties(#116).
-     * @todo #149:15m/DEV Placeholders with parameters not correct replaced.
-     *  If text in parameter have close bracket then string after this bracket
-     *  not use in function. This is big problem.
      * @checkstyle LocalFinalVariableNameCheck (10 lines)
      */
-    @Ignore("Wait todo")
     @Test
     public void checkInsertNewRow() throws Exception {
         final String id = "id";
