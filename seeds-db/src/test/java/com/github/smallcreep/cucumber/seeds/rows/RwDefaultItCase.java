@@ -35,6 +35,7 @@ import java.util.Map;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
+import org.cactoos.text.JoinedText;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Ignore;
@@ -53,10 +54,9 @@ public final class RwDefaultItCase extends Connect {
      * @todo #101:15m/TEST Add assertion to correct inserted values after
      *  implemented method insert into table(#117) and added info of inserted
      *  rows to properties(#116).
-     * @todo #147:15m/DEV Add escaping to single quotes in sql, because
-     *  generated sql not valid. For example Varchar column with value
-     *  'not'escaped value' threw org.postgresql.util.PSQLException:
-     *  Unterminated identifier started at position.
+     * @todo #149:15m/DEV Placeholders with parameters not correct replaced.
+     *  If text in parameter have close bracket then string after this bracket
+     *  not use in function. This is big problem.
      * @checkstyle LocalFinalVariableNameCheck (10 lines)
      */
     @Ignore("Wait todo")
@@ -101,30 +101,32 @@ public final class RwDefaultItCase extends Connect {
         ).add();
         final Collection<Map<String, String>> select = new JdbcSession(
             this.source()
-        )
-            .sql(
-                "SELECT id, title, value, encode(md5, 'hex') FROM public.test"
-            )
-            .select(
-                (rset, statement) -> {
-                    final Collection<Map<String, String>> result =
-                        new LinkedList<>();
-                    while (rset.next()) {
-                        result.add(
-                            new MapOf<String, String>(
-                                new MapEntry<>(
-                                    id,
-                                    String.valueOf(rset.getInt(id))
-                                ),
-                                new MapEntry<>(title, rset.getString(title)),
-                                new MapEntry<>(value, rset.getString(value)),
-                                new MapEntry<>(md5, rset.getString(md5))
-                            )
-                        );
-                    }
-                    return result;
+        ).sql(
+            new JoinedText(
+                " ",
+                "SELECT id, title, value, encode(md5, 'hex') as md5",
+                "FROM public.test"
+            ).asString()
+        ).select(
+            (rset, statement) -> {
+                final Collection<Map<String, String>> result =
+                    new LinkedList<>();
+                while (rset.next()) {
+                    result.add(
+                        new MapOf<String, String>(
+                            new MapEntry<>(
+                                id,
+                                String.valueOf(rset.getInt(id))
+                            ),
+                            new MapEntry<>(title, rset.getString(title)),
+                            new MapEntry<>(value, rset.getString(value)),
+                            new MapEntry<>(md5, rset.getString(md5))
+                        )
+                    );
                 }
-            );
+                return result;
+            }
+        );
         MatcherAssert.assertThat(
             select,
             Matchers.hasSize(1)

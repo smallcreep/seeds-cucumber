@@ -37,8 +37,10 @@ public final class SqlString extends SqlValueEnvelope {
      */
     public SqlString() {
         super(
-            input -> new FormattedText("'%s'", input)
-                .asString()
+            input -> new FormattedText(
+                "'%s'",
+                input.replaceAll("'", "''")
+            ).asString()
         );
     }
 }

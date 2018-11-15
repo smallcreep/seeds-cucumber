@@ -47,4 +47,18 @@ public final class SqlStringTest {
             )
         );
     }
+
+    /**
+     * SqlString can escape single quotes.
+     * @throws Exception if fails
+     */
+    @Test
+    public void escapeSingleQuotes() throws Exception {
+        MatcherAssert.assertThat(
+            new SqlString().apply("single'quotes"),
+            Matchers.equalTo(
+                "'single''quotes'"
+            )
+        );
+    }
 }
