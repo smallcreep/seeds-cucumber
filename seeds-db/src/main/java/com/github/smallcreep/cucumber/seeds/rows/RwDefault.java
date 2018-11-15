@@ -24,13 +24,17 @@
 
 package com.github.smallcreep.cucumber.seeds.rows;
 
+import com.github.smallcreep.cucumber.seeds.Context;
+import com.github.smallcreep.cucumber.seeds.DataBases;
 import com.github.smallcreep.cucumber.seeds.Rows;
 import com.github.smallcreep.cucumber.seeds.Table;
 import com.github.smallcreep.cucumber.seeds.generator.Surrogate;
 import com.github.smallcreep.cucumber.seeds.generator.surrogate.SurrogateSimple;
+import com.github.smallcreep.cucumber.seeds.storage.StorageScenarioProperties;
 import com.github.smallcreep.cucumber.seeds.storage.StorageWithoutIids;
 import java.util.Map;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.text.JoinedText;
 
 /**
  * Default implementation {@link Rows}.
@@ -54,16 +58,62 @@ public final class RwDefault implements Rows {
     private final Surrogate surrogate;
 
     /**
+     * Scenario context.
+     */
+    private final Context ctx;
+
+    /**
+     * Properties name in Storage.
+     */
+    private final String props;
+
+    /**
+     * Ctor.
+     * @param rows Rows
+     * @param context Scenario context
+     * @param schema Database schema
+     * @param table Database table
+     * @throws Exception if fails
+     * @checkstyle ParameterNumberCheck (6 lines)
+     */
+    public RwDefault(
+        final Iterable<Map<String, String>> rows,
+        final Context context,
+        final String schema,
+        final String table
+    ) throws Exception {
+        this(
+            ((DataBases) context.value("databases"))
+                .database()
+                .schema(schema)
+                .table(table),
+            rows,
+            new SurrogateSimple(),
+            context,
+            new JoinedText(
+                ".",
+                schema,
+                table
+            ).asString()
+        );
+    }
+
+    /**
      * Ctor.
      * @param table Database Table
      * @param rows Rows
+     * @param context Scenario context
+     * @param props Properties name in Storage.
      * @throws Exception if fails
+     * @checkstyle ParameterNumberCheck (6 lines)
      */
     public RwDefault(
         final Table table,
-        final Iterable<Map<String, String>> rows
+        final Iterable<Map<String, String>> rows,
+        final Context context,
+        final String props
     ) throws Exception {
-        this(table, rows, new SurrogateSimple());
+        this(table, rows, new SurrogateSimple(), context, props);
     }
 
     /**
@@ -71,24 +121,35 @@ public final class RwDefault implements Rows {
      * @param table Database Table
      * @param rows Rows
      * @param surrogate Surrogate
+     * @param context Scenario context
+     * @param props Properties name in Storage.
+     * @checkstyle ParameterNumberCheck (10 lines)
      */
     RwDefault(
         final Table table,
         final Iterable<Map<String, String>> rows,
-        final Surrogate surrogate
+        final Surrogate surrogate,
+        final Context context,
+        final String props
     ) {
         this.table = table;
         this.rows = rows;
         this.surrogate = surrogate;
+        this.ctx = context;
+        this.props = props;
     }
 
     @Override
     public void add() throws Exception {
         this.table.insert(
             new StorageWithoutIids(
-                new Mapped<>(
-                    this.surrogate,
-                    this.rows
+                new StorageScenarioProperties(
+                    new Mapped<>(
+                        this.surrogate,
+                        this.rows
+                    ),
+                    this.ctx,
+                    this.props
                 )
             )
         );

@@ -24,7 +24,6 @@
 
 package com.github.smallcreep.cucumber.seeds.db.steps;
 
-import com.github.smallcreep.cucumber.seeds.DataBases;
 import com.github.smallcreep.cucumber.seeds.Suit;
 import com.github.smallcreep.cucumber.seeds.rows.RwDefault;
 import com.github.smallcreep.cucumber.seeds.suit.StSmart;
@@ -71,16 +70,12 @@ public final class StpDefInsert {
         final DataTable rows
     ) throws Exception {
         new RwDefault(
-            (
-                (DataBases) this.suit
-                    .scenario()
-                    .context()
-                    .value("databases")
-            )
-                .database()
-                .schema(schema)
-                .table(table),
-            rows.asMaps(String.class, String.class)
+            rows.asMaps(String.class, String.class),
+            this.suit
+                .scenario()
+                .context(),
+            schema,
+            table
         ).add();
     }
 }

@@ -25,6 +25,7 @@
 package com.github.smallcreep.cucumber.seeds.rows;
 
 import com.github.smallcreep.cucumber.seeds.Connect;
+import com.github.smallcreep.cucumber.seeds.context.CxSimple;
 import com.github.smallcreep.cucumber.seeds.db.DataBaseXml;
 import com.github.smallcreep.cucumber.seeds.db.DbDefault;
 import com.jcabi.jdbc.JdbcSession;
@@ -61,6 +62,7 @@ public final class RwDefaultItCase extends Connect {
         final String title = "title";
         final String value = "value";
         final String md5 = "md5";
+        final CxSimple context = new CxSimple();
         new RwDefault(
             new DataBaseXml(
                 new DbDefault(
@@ -92,7 +94,9 @@ public final class RwDefaultItCase extends Connect {
                         md5, "#Encryption#Md5(#Random#String)"
                     )
                 )
-            )
+            ),
+            context,
+            "public.test"
         ).add();
         final Collection<Map<String, String>> select = new JdbcSession(
             this.source()
