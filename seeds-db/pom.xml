@@ -27,19 +27,19 @@ SOFTWARE.
   <parent>
     <groupId>com.github.smallcreep.cucumber</groupId>
     <artifactId>seeds</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.2.0</version>
   </parent>
   <artifactId>seeds-db</artifactId>
   <dependencies>
     <dependency>
       <groupId>com.github.smallcreep.cucumber</groupId>
       <artifactId>seeds-core</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.2.0</version>
     </dependency>
     <dependency>
       <groupId>com.github.smallcreep.cucumber</groupId>
       <artifactId>seeds-generator</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.2.0</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
