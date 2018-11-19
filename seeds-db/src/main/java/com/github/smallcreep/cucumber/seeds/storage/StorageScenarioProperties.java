@@ -29,6 +29,8 @@ import com.github.smallcreep.cucumber.seeds.Storage;
 import java.util.Map;
 import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.iterable.StickyIterable;
+import org.cactoos.map.StickyMap;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.JoinedText;
 import org.cactoos.text.UncheckedText;
@@ -52,31 +54,36 @@ public final class StorageScenarioProperties
         final String name
     ) {
         super(
-            () -> new Mapped<>(
-                input -> {
-                    final String iid = input.get("iid");
-                    input.forEach(
-                        (key, value) -> ctx.add(
-                            new UncheckedText(
-                                new JoinedText(
-                                    "#",
-                                    "#Storage",
-                                    name,
-                                    new UncheckedText(
-                                        new FormattedText(
-                                            "iid=%s(%s)",
-                                            iid,
-                                            key
-                                        )
-                                    ).asString()
-                                )
-                            ).asString(),
-                            value
-                        )
-                    );
-                    return input;
-                },
-                maps
+            () -> new StickyIterable<>(
+                new Mapped<>(
+                    input -> {
+                        final Map<String, String> map = new StickyMap<>(
+                            input
+                        );
+                        final String iid = map.get("iid");
+                        map.forEach(
+                            (key, value) -> ctx.add(
+                                new UncheckedText(
+                                    new JoinedText(
+                                        "#",
+                                        "#Storage",
+                                        name,
+                                        new UncheckedText(
+                                            new FormattedText(
+                                                "iid=%s(%s)",
+                                                iid,
+                                                key
+                                            )
+                                        ).asString()
+                                    )
+                                ).asString(),
+                                value
+                            )
+                        );
+                        return map;
+                    },
+                    maps
+                )
             )
         );
     }
