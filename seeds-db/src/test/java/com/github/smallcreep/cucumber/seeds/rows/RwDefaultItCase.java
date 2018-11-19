@@ -55,6 +55,7 @@ public final class RwDefaultItCase extends Connect {
      * @checkstyle LocalFinalVariableNameCheck (10 lines)
      */
     @Test
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     public void checkInsertNewRow() throws Exception {
         final String id = "id";
         final String title = "title";
