@@ -48,5 +48,10 @@ SOFTWARE.
       <version>1.4</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.github.smallcreep.cucumber</groupId>
+      <artifactId>seeds-core</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 </project>

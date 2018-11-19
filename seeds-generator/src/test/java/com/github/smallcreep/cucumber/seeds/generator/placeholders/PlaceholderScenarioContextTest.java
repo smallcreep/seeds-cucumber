@@ -24,23 +24,34 @@
 
 package com.github.smallcreep.cucumber.seeds.generator.placeholders;
 
+import com.github.smallcreep.cucumber.seeds.suit.StSmart;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * All placeholders, apply all iterable Placeholders.
+ * Test Case for {@link PlaceholderScenarioContext}.
  * @since 0.2.0
  */
-public final class PlaceholdersWithoutFunctions extends PlaceholderEnvelope {
+public final class PlaceholderScenarioContextTest {
 
     /**
-     * Ctor.
+     * Check PlaceholderScenarioContext can replace placeholder
+     * from scenario context.
+     * @throws Exception if fails
      */
-    public PlaceholdersWithoutFunctions() {
-        super(
-            new PlaceholdersAll(
-                new PlaceholderRandomInt(),
-                new PlaceholderRandomString(),
-                new PlaceholderTimestampNow(),
-                new PlaceholderRandomSerial(),
-                new PlaceholderScenarioContext()
+    @Test
+    public void replacePlaceholderFromScenarioContext() throws Exception {
+        StSmart.instance().scenario().context().add(
+            "#test",
+            "replacePlaceholderFromScenarioContext"
+        );
+        MatcherAssert.assertThat(
+            new PlaceholderScenarioContext().apply(
+                "start_#Scenario#test$_end"
+            ),
+            Matchers.equalTo(
+                "start_replacePlaceholderFromScenarioContext_end"
             )
         );
     }
