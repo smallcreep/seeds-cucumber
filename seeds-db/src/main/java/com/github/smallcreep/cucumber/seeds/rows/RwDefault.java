@@ -34,6 +34,7 @@ import com.github.smallcreep.cucumber.seeds.storage.StorageScenarioProperties;
 import com.github.smallcreep.cucumber.seeds.storage.StorageWithoutIids;
 import java.util.Map;
 import org.cactoos.iterable.Mapped;
+import org.cactoos.iterable.StickyIterable;
 import org.cactoos.text.JoinedText;
 
 /**
@@ -143,13 +144,15 @@ public final class RwDefault implements Rows {
     public void add() throws Exception {
         this.table.insert(
             new StorageWithoutIids(
-                new StorageScenarioProperties(
-                    new Mapped<>(
-                        this.surrogate,
-                        this.rows
-                    ),
-                    this.ctx,
-                    this.props
+                new StickyIterable<Map<String, String>>(
+                    new StorageScenarioProperties(
+                        new Mapped<>(
+                            this.surrogate,
+                            this.rows
+                        ),
+                        this.ctx,
+                        this.props
+                    )
                 )
             )
         );
