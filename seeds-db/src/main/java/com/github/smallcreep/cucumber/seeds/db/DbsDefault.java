@@ -31,6 +31,8 @@ import com.github.smallcreep.cucumber.seeds.Suit;
 import com.github.smallcreep.cucumber.seeds.props.PrDbsSuit;
 import com.jcabi.jdbc.JdbcSession;
 import com.jolbox.bonecp.BoneCPDataSource;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Default Data Bases.
@@ -65,7 +67,7 @@ public final class DbsDefault implements DataBases {
     }
 
     @Override
-    public DataBase database(final String name) {
+    public DataBase database(final String name) throws IOException {
         final BoneCPDataSource src = new BoneCPDataSource();
         final Props<String> base = this.props.property(name);
         src.setDriverClass(base.property("jdbc.driver"));
@@ -74,8 +76,11 @@ public final class DbsDefault implements DataBases {
         );
         src.setUser(base.property("user"));
         src.setPassword(base.property("password"));
-        this.current = new DbDefault(
-            new JdbcSession(src)
+        this.current = new DataBaseXml(
+            new DbDefault(
+                new JdbcSession(src)
+            ),
+            new File(base.property("schema"))
         );
         return this.database();
     }

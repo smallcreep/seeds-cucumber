@@ -24,6 +24,8 @@
 
 package com.github.smallcreep.cucumber.seeds;
 
+import java.io.IOException;
+
 /**
  * Data Bases store.
  * @since 0.1.1
@@ -34,8 +36,9 @@ public interface DataBases {
      * Return database by name or alias.
      * @param name Name or alias DB
      * @return DataBase
+     * @throws IOException if fails
      */
-    DataBase database(String name);
+    DataBase database(String name) throws IOException;
 
     /**
      * Get already connected database.

@@ -63,6 +63,15 @@ public final class DbsDefaultItCase {
                                 ),
                                 new MapEntry<>(
                                     "password", "mysecret"
+                                ),
+                                new MapEntry<>(
+                                    "schema",
+                                    Thread
+                                        .currentThread()
+                                        .getContextClassLoader()
+                                        .getResource(
+                                            "base.xml"
+                                        ).getFile()
                                 )
                             )
                         )

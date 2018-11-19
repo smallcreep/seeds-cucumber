@@ -26,6 +26,7 @@ package com.github.smallcreep.cucumber.seeds.db;
 
 import com.github.smallcreep.cucumber.seeds.Props;
 import com.github.smallcreep.cucumber.seeds.props.PrMap;
+import java.io.IOException;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.hamcrest.CoreMatchers;
@@ -40,9 +41,10 @@ public final class DbsDefaultTest {
 
     /**
      * Check correct database created.
+     * @throws IOException if fails
      */
     @Test
-    public void checkCorrectDatabaseCreated() {
+    public void checkCorrectDatabaseCreated() throws IOException {
         final String name = "master";
         MatcherAssert.assertThat(
             new DbsDefault(
@@ -63,6 +65,15 @@ public final class DbsDefaultTest {
                                     ),
                                     new MapEntry<>(
                                         "password", "secret"
+                                    ),
+                                    new MapEntry<>(
+                                        "schema",
+                                        Thread
+                                            .currentThread()
+                                            .getContextClassLoader()
+                                            .getResource(
+                                                "base.xml"
+                                            ).getFile()
                                     )
                                 )
                             )
@@ -71,7 +82,7 @@ public final class DbsDefaultTest {
                 )
             ).database(name),
             CoreMatchers.instanceOf(
-                DbDefault.class
+                DataBaseXml.class
             )
         );
     }
