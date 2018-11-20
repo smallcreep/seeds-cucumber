@@ -25,9 +25,17 @@
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
 /**
- * Serial sql value.
- * @since 0.2.0
+ * Sql value return input as is.
+ * @since 0.2.1
  */
-public final class Serial extends SqlValueAsIs {
+public abstract class SqlValueAsIs extends SqlValueEnvelope {
 
+    /**
+     * Ctor.
+     */
+    public SqlValueAsIs() {
+        super(
+            input -> input
+        );
+    }
 }

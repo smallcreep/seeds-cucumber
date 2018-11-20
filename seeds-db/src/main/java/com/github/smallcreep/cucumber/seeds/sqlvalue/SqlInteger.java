@@ -25,9 +25,9 @@
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
 /**
- * Serial sql value.
- * @since 0.2.0
+ * Integer sql value.
+ * @since 0.2.1
  */
-public final class Serial extends SqlValueAsIs {
+public final class SqlInteger extends SqlValueAsIs {
 
 }

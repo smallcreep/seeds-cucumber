@@ -24,10 +24,26 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
-/**
- * Serial sql value.
- * @since 0.2.0
- */
-public final class Serial extends SqlValueAsIs {
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
+/**
+ * Test Case for {@link SqlInteger}.
+ * @since 0.2.1
+ */
+public final class SqlIntegerTest {
+
+    /**
+     * SqlInteger return input without modification.
+     * @throws Exception if fails
+     */
+    @Test
+    public void returnInputWithoutModification() throws Exception {
+        final String input = "returnInputWithoutModification";
+        MatcherAssert.assertThat(
+            new SqlInteger().apply(input),
+            Matchers.equalTo(input)
+        );
+    }
 }
