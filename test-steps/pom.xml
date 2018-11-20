@@ -167,6 +167,30 @@ SOFTWARE.
             </executions>
           </plugin>
           <plugin>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.6.2</version>
+            <executions>
+              <execution>
+                <id>update</id>
+                <phase>pre-integration-test</phase>
+                <goals>
+                  <goal>update</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <changeLogFile>
+                ${basedir}/src/main/liquibase/master.xml
+              </changeLogFile>
+              <driver>org.postgresql.Driver</driver>
+              <url>jdbc:postgresql://${docker.container.postgres.ip}:5432/testuser</url>
+              <username>testuser</username>
+              <password>mysecret</password>
+              <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+            </configuration>
+          </plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <dependencies>
