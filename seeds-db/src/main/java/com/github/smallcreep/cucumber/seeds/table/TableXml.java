@@ -28,6 +28,7 @@ import com.github.smallcreep.cucumber.seeds.SqlValue;
 import com.github.smallcreep.cucumber.seeds.Table;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Bytea;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Serial;
+import com.github.smallcreep.cucumber.seeds.sqlvalue.SqlBoolean;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.SqlInteger;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Text;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Varchar;
@@ -91,6 +92,10 @@ public final class TableXml implements Table {
                 new MapEntry<>(
                     "Integer",
                     new SqlInteger()
+                ),
+                new MapEntry<>(
+                    "Boolean",
+                    new SqlBoolean()
                 )
             )
         );
