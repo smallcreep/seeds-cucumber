@@ -24,10 +24,13 @@
 
 package com.github.smallcreep.cucumber.seeds.db;
 
+import com.github.smallcreep.cucumber.seeds.Schema;
 import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseFake;
 import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseQueryFake;
+import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseSchemaFake;
 import com.github.smallcreep.cucumber.seeds.fake.ResultSetFakeGetLong;
 import com.github.smallcreep.cucumber.seeds.fake.StatementFake;
+import com.github.smallcreep.cucumber.seeds.schema.SchemaSimple;
 import com.github.smallcreep.cucumber.seeds.sql.SimpleSql;
 import com.jcabi.jdbc.Outcome;
 import java.util.Collections;
@@ -114,6 +117,42 @@ public final class DataBaseLoggedTest {
         ).update(
             new SimpleSql("databaseXmlRunUpdateFromOrigin"),
             Outcome.VOID
+        );
+    }
+
+    /**
+     * Schema throw unsupported exception.
+     */
+    @Test
+    public void schemaThrowException() {
+        this.exception.expect(UnsupportedOperationException.class);
+        this.exception.expectMessage("Unsupported #schema() in this fake.");
+        new DataBaseFake() {
+        }.schema("schemaThrowException");
+    }
+
+    /**
+     * DataBaseLogged run schema from origin Database.
+     * @throws Exception if fails
+     */
+    @Test
+    public void databaseXmlRunSchemaFromOrigin() throws Exception {
+        final Schema schema = new SchemaSimple(
+            "databaseXmlRunSchemaFromOrigin",
+            new DataBaseFake() {
+            }
+        );
+        MatcherAssert.assertThat(
+            new DataBaseLogged(
+                new DataBaseSchemaFake(
+                    schema
+                )
+            ).schema(
+                "schema"
+            ),
+            Matchers.equalTo(
+                schema
+            )
         );
     }
 
