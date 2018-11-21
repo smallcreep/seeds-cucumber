@@ -49,6 +49,7 @@ import uk.org.lidalia.slf4jtest.TestLoggerFactory;
 /**
  * Test Case for {@link DataBaseLogged}.
  * @since 0.2.1
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class DataBaseLoggedTest {
 
