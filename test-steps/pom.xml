@@ -27,7 +27,7 @@ SOFTWARE.
   <parent>
     <artifactId>seeds</artifactId>
     <groupId>com.github.smallcreep.cucumber</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.2.1</version>
   </parent>
   <artifactId>test-steps</artifactId>
   <dependencies>
@@ -66,13 +66,13 @@ SOFTWARE.
     <dependency>
       <groupId>com.github.smallcreep.cucumber</groupId>
       <artifactId>seeds-db</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.2.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.github.smallcreep.cucumber</groupId>
       <artifactId>seeds-core</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>0.2.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>

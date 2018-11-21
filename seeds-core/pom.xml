@@ -27,7 +27,7 @@ SOFTWARE.
   <parent>
     <artifactId>seeds</artifactId>
     <groupId>com.github.smallcreep.cucumber</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.2.1</version>
   </parent>
   <artifactId>seeds-core</artifactId>
   <dependencies>
