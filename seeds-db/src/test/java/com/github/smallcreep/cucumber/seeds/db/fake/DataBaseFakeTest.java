@@ -55,9 +55,10 @@ public final class DataBaseFakeTest {
 
     /**
      * Result throw unsupported exception.
+     * @throws Exception if fails
      */
     @Test
-    public void resultThrowException() {
+    public void resultThrowException() throws Exception {
         this.exception.expect(UnsupportedOperationException.class);
         this.exception.expectMessage("Unsupported #result() in this fake.");
         new DataBaseFake() {

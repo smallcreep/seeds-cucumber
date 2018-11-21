@@ -82,7 +82,7 @@ public final class DbsDefaultTest {
                 )
             ).database(name),
             CoreMatchers.instanceOf(
-                DataBaseXml.class
+                DataBaseLogged.class
             )
         );
     }

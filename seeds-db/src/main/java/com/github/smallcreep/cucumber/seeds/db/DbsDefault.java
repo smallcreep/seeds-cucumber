@@ -76,11 +76,13 @@ public final class DbsDefault implements DataBases {
         );
         src.setUser(base.property("user"));
         src.setPassword(base.property("password"));
-        this.current = new DataBaseXml(
-            new DbDefault(
-                new JdbcSession(src)
-            ),
-            new File(base.property("schema"))
+        this.current = new DataBaseLogged(
+            new DataBaseXml(
+                new DbDefault(
+                    new JdbcSession(src)
+                ),
+                new File(base.property("schema"))
+            )
         );
         return this.database();
     }

@@ -22,48 +22,39 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds.db.fake;
+package com.github.smallcreep.cucumber.seeds.sql;
 
 import com.github.smallcreep.cucumber.seeds.Sql;
-import com.jcabi.jdbc.Outcome;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import org.cactoos.Func;
+import org.cactoos.func.StickyFunc;
 
 /**
- * Fake method update in database.
- * @since 0.2.0
+ * Cached version of a Sql.
+ *
+ * <p>This {@link Sql} decorator technically is an in-memory
+ * cache.</p>
+ *
+ * @since 0.2.1
  */
-public final class DataBaseUpdateFake extends DataBaseFake {
+public final class SqlSticky implements Sql {
 
     /**
-     * ResultSet for update.
+     * Func.
      */
-    private final ResultSet res;
-
-    /**
-     * Statement for update.
-     */
-    private final Statement statement;
+    private final Func<Boolean, String> func;
 
     /**
      * Ctor.
-     * @param res ResultSet
-     * @param statement Statement
+     * @param sql The Sql to cache
      */
-    public DataBaseUpdateFake(final ResultSet res, final Statement statement) {
-        super();
-        this.res = res;
-        this.statement = statement;
+    public SqlSticky(final Sql sql) {
+        this.func = new StickyFunc<>(
+            input -> sql.query()
+        );
     }
 
     @Override
-    public <E> E update(
-        final Sql sql,
-        final Outcome<E> outcome
-    ) throws Exception {
-        return outcome.handle(
-            this.res,
-            this.statement
-        );
+    public String query() throws Exception {
+        return this.func.apply(true);
     }
 }

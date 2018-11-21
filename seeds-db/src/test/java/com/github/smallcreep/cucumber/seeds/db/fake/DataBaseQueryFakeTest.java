@@ -34,29 +34,61 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Test Case for {@link DataBaseUpdateFake}.
+ * Test Case for {@link DataBaseQueryFake}.
  * @since 0.2.0
  */
-public final class DataBaseUpdateFakeTest {
+public final class DataBaseQueryFakeTest {
 
     /**
-     * DataBaseUpdateFake can return to update outcome
+     * DataBaseQueryFake can return to update outcome
      * ResultSet and Statement from constructor.
      * @throws Exception if fails
      */
     @Test
-    public void returnTheSameParamsFromCtor() throws Exception {
+    public void returnToUpdateTheSameParamsFromCtor() throws Exception {
         final ResultSetFakeGetLong res = new ResultSetFakeGetLong(
             new IteratorOf<Map<String, Long>>(
             )
         );
         final StatementFake state = new StatementFake() {
         };
-        new DataBaseUpdateFake(
+        new DataBaseQueryFake(
             res,
             state
         ).update(
-            new SimpleSql("updateThrowException"),
+            new SimpleSql("returnToUpdateTheSameParamsFromCtor"),
+            (result, statement) -> {
+                MatcherAssert.assertThat(
+                    result,
+                    Matchers.equalTo(res)
+                );
+                MatcherAssert.assertThat(
+                    statement,
+                    Matchers.equalTo(state)
+                );
+                return null;
+            }
+        );
+    }
+
+    /**
+     * DataBaseQueryFake can return to result outcome
+     * ResultSet and Statement from constructor.
+     * @throws Exception if fails
+     */
+    @Test
+    public void returnToResultTheSameParamsFromCtor() throws Exception {
+        final ResultSetFakeGetLong res = new ResultSetFakeGetLong(
+            new IteratorOf<Map<String, Long>>(
+            )
+        );
+        final StatementFake state = new StatementFake() {
+        };
+        new DataBaseQueryFake(
+            res,
+            state
+        ).result(
+            new SimpleSql("returnToResultTheSameParamsFromCtor"),
             (result, statement) -> {
                 MatcherAssert.assertThat(
                     result,

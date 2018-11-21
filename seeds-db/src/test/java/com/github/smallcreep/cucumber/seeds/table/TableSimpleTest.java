@@ -26,7 +26,7 @@ package com.github.smallcreep.cucumber.seeds.table;
 
 import com.github.smallcreep.cucumber.seeds.DataBase;
 import com.github.smallcreep.cucumber.seeds.db.DbDefault;
-import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseUpdateFake;
+import com.github.smallcreep.cucumber.seeds.db.fake.DataBaseQueryFake;
 import com.github.smallcreep.cucumber.seeds.fake.ResultSetFakeGetLong;
 import com.github.smallcreep.cucumber.seeds.fake.StatementFake;
 import com.jcabi.jdbc.JdbcSession;
@@ -80,7 +80,7 @@ public final class TableSimpleTest {
      */
     @Test
     public void returnInsertedRows() throws Exception {
-        final DataBase base = new DataBaseUpdateFake(
+        final DataBase base = new DataBaseQueryFake(
             new ResultSetFakeGetLong(
                 new IteratorOf<Map<String, Long>>(
                     new MapOf<String, Long>(
