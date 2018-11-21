@@ -24,10 +24,26 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * Integer sql value.
+ * Test Case for {@link SqlNumber}.
  * @since 0.2.1
  */
-public final class SqlInteger extends SqlValueAsIs {
+public final class SqlNumberTest {
 
+    /**
+     * SqlNumber return input without modification.
+     * @throws Exception if fails
+     */
+    @Test
+    public void returnInputWithoutModification() throws Exception {
+        final String input = "returnInputWithoutModification";
+        MatcherAssert.assertThat(
+            new SqlNumber().apply(input),
+            Matchers.equalTo(input)
+        );
+    }
 }

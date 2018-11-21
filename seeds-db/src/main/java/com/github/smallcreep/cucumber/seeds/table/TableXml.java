@@ -27,9 +27,8 @@ package com.github.smallcreep.cucumber.seeds.table;
 import com.github.smallcreep.cucumber.seeds.SqlValue;
 import com.github.smallcreep.cucumber.seeds.Table;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Bytea;
-import com.github.smallcreep.cucumber.seeds.sqlvalue.Serial;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.SqlBoolean;
-import com.github.smallcreep.cucumber.seeds.sqlvalue.SqlInteger;
+import com.github.smallcreep.cucumber.seeds.sqlvalue.SqlNumber;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Text;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Varchar;
 import com.jcabi.xml.XML;
@@ -79,7 +78,7 @@ public final class TableXml implements Table {
                 ),
                 new MapEntry<>(
                     "Serial",
-                    new Serial()
+                    new SqlNumber()
                 ),
                 new MapEntry<>(
                     "Text",
@@ -91,7 +90,11 @@ public final class TableXml implements Table {
                 ),
                 new MapEntry<>(
                     "Integer",
-                    new SqlInteger()
+                    new SqlNumber()
+                ),
+                new MapEntry<>(
+                    "Smallint",
+                    new SqlNumber()
                 ),
                 new MapEntry<>(
                     "Boolean",
