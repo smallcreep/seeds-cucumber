@@ -27,6 +27,7 @@ package com.github.smallcreep.cucumber.seeds.table;
 import com.github.smallcreep.cucumber.seeds.SqlValue;
 import com.github.smallcreep.cucumber.seeds.Table;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Bytea;
+import com.github.smallcreep.cucumber.seeds.sqlvalue.Jsonb;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.SqlBoolean;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.SqlNumber;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Text;
@@ -99,6 +100,10 @@ public final class TableXml implements Table {
                 new MapEntry<>(
                     "Boolean",
                     new SqlBoolean()
+                ),
+                new MapEntry<>(
+                    "Jsonb",
+                    new Jsonb()
                 )
             )
         );

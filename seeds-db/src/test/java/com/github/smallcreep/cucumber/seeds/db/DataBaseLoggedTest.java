@@ -38,7 +38,7 @@ import java.util.Map;
 import org.cactoos.iterator.IteratorOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Before;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -68,8 +68,8 @@ public final class DataBaseLoggedTest {
     /**
      * Clear logger before test.
      */
-    @Before
-    public void setUp() {
+    @After
+    public void tearDown() {
         this.logger.clear();
     }
 
