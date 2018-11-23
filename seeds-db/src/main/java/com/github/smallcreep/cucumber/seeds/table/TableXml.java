@@ -104,6 +104,10 @@ public final class TableXml implements Table {
                 new MapEntry<>(
                     "Jsonb",
                     new Jsonb()
+                ),
+                new MapEntry<>(
+                    "Real",
+                    new SqlNumber()
                 )
             )
         );
