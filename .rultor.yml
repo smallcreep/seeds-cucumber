@@ -16,7 +16,7 @@ architect:
 merge:
   script: |
     pdd --file=/dev/null
-    mvn clean install -Pqulice -Pintegration -Pcucumber --errors --settings ../settings.xml
+    mvn clean install -Pqulice -Pintegration -Pcucumber -Pmutation --errors --settings ../settings.xml
 deploy:
   script: |
     mvn clean deploy -Pqulice -Pintegration -Pcucumber --errors --settings ../settings.xml

@@ -302,5 +302,37 @@ SOFTWARE.
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>mutation</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <version>1.4.2</version>
+            <configuration>
+              <targetClasses>
+                <param>com.github.smallcreep.cucumber.seeds.*</param>
+              </targetClasses>
+              <targetTests>
+                <param>com.github.smallcreep.cucumber.seeds.*Test*</param>
+              </targetTests>
+              <threads>4</threads>
+              <mutationThreshold>70</mutationThreshold>
+              <coverageThreshold>80</coverageThreshold>
+            </configuration>
+            <executions>
+              <execution>
+                <id>mutation-tests</id>
+                <goals>
+                  <goal>mutationCoverage</goal>
+                </goals>
+                <phase>test</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 </project>
