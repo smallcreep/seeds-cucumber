@@ -26,6 +26,7 @@ package com.github.smallcreep.cucumber.seeds.table;
 
 import com.github.smallcreep.cucumber.seeds.SqlValue;
 import com.github.smallcreep.cucumber.seeds.Table;
+import com.github.smallcreep.cucumber.seeds.sqlvalue.ArrayBytea;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.ArrayInteger;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Bytea;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Cidr;
@@ -118,6 +119,10 @@ public final class TableXml implements Table {
                 new MapEntry<>(
                     "Integer[]",
                     new ArrayInteger()
+                ),
+                new MapEntry<>(
+                    "Bytea[]",
+                    new ArrayBytea()
                 )
             )
         );

@@ -24,19 +24,33 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
+import org.cactoos.text.JoinedText;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * Integer Array sql value.
+ * Test Case for {@link ArrayBytea}.
  * @since 0.2.2
  */
-public final class ArrayInteger extends SqlValueCastArrayEnvelope {
+public final class ArrayByteaTest {
 
     /**
-     * Ctor.
+     * ArrayBytea can return value envelope with cast to bytea[].
+     * @throws Exception if fails
      */
-    public ArrayInteger() {
-        super(
-            "INTEGER[]",
-            new SqlNumber()
+    @Test
+    public void returnValueEnvelopeWitchCastToByteaArray() throws Exception {
+        MatcherAssert.assertThat(
+            new ArrayBytea().apply("1234, 2341"),
+            Matchers.equalTo(
+                new JoinedText(
+                    ",",
+                    "CAST(ARRAY[decode('1234', 'hex')",
+                    "decode('2341', 'hex')] as BYTEA[])"
+                ).asString()
+            )
         );
     }
+
 }

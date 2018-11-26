@@ -24,19 +24,41 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
+import com.github.smallcreep.cucumber.seeds.SqlValue;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.text.FormattedText;
+import org.cactoos.text.JoinedText;
+
 /**
- * Integer Array sql value.
+ * Envelope sql value with array type with casting.
  * @since 0.2.2
  */
-public final class ArrayInteger extends SqlValueCastArrayEnvelope {
+public abstract class SqlValueCastArrayEnvelope extends SqlValueCastEnvelope {
 
     /**
      * Ctor.
+     * @param type Cast type
+     * @param value Sql value for element
      */
-    public ArrayInteger() {
+    public SqlValueCastArrayEnvelope(final String type, final SqlValue value) {
         super(
-            "INTEGER[]",
-            new SqlNumber()
+            type,
+            input -> new FormattedText(
+                "ARRAY[%s]",
+                new JoinedText(
+                    ",",
+                    new Mapped<>(
+                        value,
+                        new Mapped<>(
+                            String::trim,
+                            new IterableOf<>(
+                                input.split(",")
+                            )
+                        )
+                    )
+                ).asString()
+            ).asString()
         );
     }
 }

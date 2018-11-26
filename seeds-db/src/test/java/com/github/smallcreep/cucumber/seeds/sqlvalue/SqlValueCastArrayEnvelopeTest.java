@@ -24,19 +24,32 @@
 
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * Integer Array sql value.
+ * Test Case for {@link SqlValueCastArrayEnvelope}.
  * @since 0.2.2
  */
-public final class ArrayInteger extends SqlValueCastArrayEnvelope {
+public final class SqlValueCastArrayEnvelopeTest {
 
     /**
-     * Ctor.
+     * SqlValueCastArrayEnvelope can return array values envelope
+     * with cast to type.
+     * @throws Exception if fails
      */
-    public ArrayInteger() {
-        super(
-            "INTEGER[]",
-            new SqlNumber()
+    @Test
+    public void returnArrayValuesEnvelopeWitchCastToType() throws Exception {
+        MatcherAssert.assertThat(
+            new SqlValueCastArrayEnvelope(
+                "test_type[]",
+                new SqlString()
+            ) {
+            }.apply("123, 345"),
+            Matchers.equalTo(
+                "CAST(ARRAY['123','345'] as test_type[])"
+            )
         );
     }
 }

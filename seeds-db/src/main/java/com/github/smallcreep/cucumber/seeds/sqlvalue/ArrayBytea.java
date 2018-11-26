@@ -25,18 +25,18 @@
 package com.github.smallcreep.cucumber.seeds.sqlvalue;
 
 /**
- * Integer Array sql value.
+ * Bytea Array sql value.
  * @since 0.2.2
  */
-public final class ArrayInteger extends SqlValueCastArrayEnvelope {
+public final class ArrayBytea extends SqlValueCastArrayEnvelope {
 
     /**
      * Ctor.
      */
-    public ArrayInteger() {
+    public ArrayBytea() {
         super(
-            "INTEGER[]",
-            new SqlNumber()
+            "BYTEA[]",
+            new Bytea()
         );
     }
 }
