@@ -22,25 +22,8 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
-
-import java.util.Map;
-import org.cactoos.Scalar;
-
 /**
- * Database table.
- * @since 0.2.0
+ * Misc functionality Iterable.
+ * @since 0.2.2
  */
-public interface Table extends Scalar<String> {
-
-    /**
-     * Insert new rows to table.
-     * @param rows Rows
-     * @return Ids inserted rows
-     * @throws Exception if fails
-     */
-    Iterable<Map<String, String>> insert(
-        Iterable<Map<String, String>> rows
-    ) throws Exception;
-
-}
+package com.github.smallcreep.cucumber.seeds.iterable;

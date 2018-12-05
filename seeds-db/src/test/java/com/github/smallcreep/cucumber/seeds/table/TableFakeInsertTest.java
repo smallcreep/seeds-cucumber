@@ -28,8 +28,8 @@ import com.github.smallcreep.cucumber.seeds.db.DbDefault;
 import com.jcabi.jdbc.JdbcSession;
 import com.jolbox.bonecp.BoneCPDataSource;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
@@ -52,7 +52,7 @@ public final class TableFakeInsertTest {
     public void returnEnvelopeTableName() {
         MatcherAssert.assertThat(
             new TableFakeInsert(
-                new CollectionOf<>(1L),
+                Collections.emptyList(),
                 new TableSimple(
                     "public",
                     "returnEnvelopeTableName",
@@ -70,7 +70,7 @@ public final class TableFakeInsertTest {
      */
     @Test
     public void insertReturnedFromTransferredValue() {
-        final CollectionOf<Long> results = new CollectionOf<>(1L);
+        final Iterable<Map<String, String>> results = Collections.emptyList();
         MatcherAssert.assertThat(
             new TableFakeInsert(
                 results,
@@ -112,7 +112,7 @@ public final class TableFakeInsertTest {
             )
         );
         final TableFakeInsert fake = new TableFakeInsert(
-            new CollectionOf<>(),
+            new IterableOf<Map<String, String>>(),
             new TableSimple(
                 () -> "public.saveInsertedRows",
                 new DbDefault(

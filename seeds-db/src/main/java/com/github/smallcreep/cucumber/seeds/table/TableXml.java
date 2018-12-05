@@ -38,7 +38,6 @@ import com.github.smallcreep.cucumber.seeds.sqlvalue.Text;
 import com.github.smallcreep.cucumber.seeds.sqlvalue.Varchar;
 import com.jcabi.xml.XML;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Map;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.map.MapEntry;
@@ -150,7 +149,7 @@ public final class TableXml implements Table {
     }
 
     @Override
-    public Collection<Long> insert(
+    public Iterable<Map<String, String>> insert(
         final Iterable<Map<String, String>> rows
     ) throws Exception {
         return this.origin.insert(

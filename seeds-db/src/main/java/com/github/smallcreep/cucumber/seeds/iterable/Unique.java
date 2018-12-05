@@ -22,25 +22,26 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.iterable;
 
-import java.util.Map;
-import org.cactoos.Scalar;
+import org.cactoos.iterable.IterableEnvelope;
 
 /**
- * Database table.
- * @since 0.2.0
+ * Unique iterable. Return only unique items.
+ * @param <T> Element type
+ * @since 0.2.2
  */
-public interface Table extends Scalar<String> {
+public final class Unique<T> extends IterableEnvelope<T> {
 
     /**
-     * Insert new rows to table.
-     * @param rows Rows
-     * @return Ids inserted rows
-     * @throws Exception if fails
+     * Ctor.
+     * @param scr Source iterable
      */
-    Iterable<Map<String, String>> insert(
-        Iterable<Map<String, String>> rows
-    ) throws Exception;
-
+    public Unique(final Iterable<T> scr) {
+        super(() -> () -> new com.github.smallcreep.cucumber.seeds
+            .iterator.Unique<>(
+                scr.iterator()
+            )
+        );
+    }
 }

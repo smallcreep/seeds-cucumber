@@ -25,7 +25,6 @@
 package com.github.smallcreep.cucumber.seeds.table;
 
 import com.github.smallcreep.cucumber.seeds.Table;
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -39,7 +38,7 @@ public final class TableFakeInsert implements Table {
     /**
      * Fake results to insert.
      */
-    private final Collection<Long> results;
+    private final Iterable<Map<String, String>> results;
 
     /**
      * Origin table.
@@ -56,7 +55,10 @@ public final class TableFakeInsert implements Table {
      * @param results Fake results to insert
      * @param origin Origin table
      */
-    public TableFakeInsert(final Collection<Long> results, final Table origin) {
+    public TableFakeInsert(
+        final Iterable<Map<String, String>> results,
+        final Table origin
+    ) {
         this(results, origin, new AtomicReference<>());
     }
 
@@ -67,7 +69,7 @@ public final class TableFakeInsert implements Table {
      * @param inserted Inserted rows
      */
     private TableFakeInsert(
-        final Collection<Long> results,
+        final Iterable<Map<String, String>> results,
         final Table origin,
         final AtomicReference<Iterable<Map<String, String>>> inserted
     ) {
@@ -77,7 +79,9 @@ public final class TableFakeInsert implements Table {
     }
 
     @Override
-    public Collection<Long> insert(final Iterable<Map<String, String>> rows) {
+    public Iterable<Map<String, String>> insert(
+        final Iterable<Map<String, String>> rows
+    ) {
         this.inserted.set(rows);
         return this.results;
     }

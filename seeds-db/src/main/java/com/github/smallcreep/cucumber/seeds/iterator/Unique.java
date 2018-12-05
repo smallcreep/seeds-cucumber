@@ -22,25 +22,51 @@
  * SOFTWARE.
  */
 
-package com.github.smallcreep.cucumber.seeds;
+package com.github.smallcreep.cucumber.seeds.iterator;
 
-import java.util.Map;
-import org.cactoos.Scalar;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import org.cactoos.scalar.StickyScalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Database table.
- * @since 0.2.0
+ * Unique iterator. Return only unique items.
+ * @param <T> Element type
+ * @since 0.2.2
  */
-public interface Table extends Scalar<String> {
+public final class Unique<T> implements Iterator<T> {
 
     /**
-     * Insert new rows to table.
-     * @param rows Rows
-     * @return Ids inserted rows
-     * @throws Exception if fails
+     * Unique scalar.
      */
-    Iterable<Map<String, String>> insert(
-        Iterable<Map<String, String>> rows
-    ) throws Exception;
+    private final UncheckedScalar<Iterator<T>> scalar;
 
+    /**
+     * Ctor.
+     * @param iterator The original iterator
+     */
+    public Unique(final Iterator<T> iterator) {
+        this.scalar = new UncheckedScalar<>(
+            new StickyScalar<>(
+                () -> {
+                    final Set<T> items = new HashSet<>();
+                    while (iterator.hasNext()) {
+                        items.add(iterator.next());
+                    }
+                    return items.iterator();
+                }
+            )
+        );
+    }
+
+    @Override
+    public boolean hasNext() {
+        return this.scalar.value().hasNext();
+    }
+
+    @Override
+    public T next() {
+        return this.scalar.value().next();
+    }
 }

@@ -40,6 +40,7 @@ import org.cactoos.map.MapOf;
 import org.h2.Driver;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
@@ -99,6 +100,7 @@ public final class TableSimpleTest {
             }
         );
         final String first = "first";
+        final String second = "second";
         MatcherAssert.assertThat(
             new TableSimple(
                 "public",
@@ -116,14 +118,40 @@ public final class TableSimpleTest {
                             first, "2"
                         ),
                         new MapEntry<>(
-                            "second", "2"
+                            second, "2"
                         )
                     )
                 )
             ),
-            CoreMatchers.hasItems(
-                1L,
-                2L
+            Matchers.allOf(
+                Matchers.hasItem(
+                    Matchers.allOf(
+                        Matchers.hasEntry(
+                            "id",
+                            "1"
+                        ),
+                        Matchers.hasEntry(
+                            first,
+                            "1"
+                        )
+                    )
+                ),
+                Matchers.hasItem(
+                    Matchers.allOf(
+                        Matchers.hasEntry(
+                            "id",
+                            "2"
+                        ),
+                        Matchers.hasEntry(
+                            first,
+                            "2"
+                        ),
+                        Matchers.hasEntry(
+                            second,
+                            "2"
+                        )
+                    )
+                )
             )
         );
     }

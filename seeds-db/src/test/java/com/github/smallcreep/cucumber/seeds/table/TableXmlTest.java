@@ -29,9 +29,8 @@ import com.jcabi.jdbc.JdbcSession;
 import com.jcabi.xml.XMLDocument;
 import com.jolbox.bonecp.BoneCPDataSource;
 import java.io.UncheckedIOException;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
-import org.cactoos.collection.CollectionOf;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
@@ -82,7 +81,8 @@ public final class TableXmlTest {
     @Test
     public void wrapInsertedValues() throws Exception {
         final TableFakeInsert fake = new TableFakeInsert(
-            new CollectionOf<Long>(),
+            new IterableOf<Map<String, String>>(
+            ),
             new TableSimple(
                 "wrap",
                 "InsertedValues",
@@ -124,7 +124,7 @@ public final class TableXmlTest {
      */
     @Test
     public void insertReturnedFromTransferredValue() throws Exception {
-        final Collection<Long> results = new CollectionOf<>();
+        final Iterable<Map<String, String>> results = Collections.emptyList();
         MatcherAssert.assertThat(
             new TableXml(
                 new TableFakeInsert(
@@ -157,7 +157,7 @@ public final class TableXmlTest {
         this.exception.expect(UncheckedIOException.class);
         this.exception.expectMessage("Not found type 'Not exists'");
         final TableFakeInsert fake = new TableFakeInsert(
-            new CollectionOf<Long>(),
+            new IterableOf<Map<String, String>>(),
             new TableSimple(
                 "throwException",
                 "ColumnNotFound",

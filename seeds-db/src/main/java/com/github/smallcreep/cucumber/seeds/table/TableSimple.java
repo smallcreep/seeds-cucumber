@@ -26,19 +26,24 @@ package com.github.smallcreep.cucumber.seeds.table;
 
 import com.github.smallcreep.cucumber.seeds.DataBase;
 import com.github.smallcreep.cucumber.seeds.Table;
+import com.github.smallcreep.cucumber.seeds.iterable.Unique;
 import com.github.smallcreep.cucumber.seeds.outcome.OutcomeIds;
 import com.github.smallcreep.cucumber.seeds.sql.InsertSql;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Text;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Joined;
+import org.cactoos.iterable.Mapped;
 import org.cactoos.iterable.StickyIterable;
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
 import org.cactoos.text.FormattedText;
 
 /**
  * Simple implementation table.
  * @since 0.2.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (150 lines)
  */
 public final class TableSimple implements Table {
 
@@ -82,28 +87,38 @@ public final class TableSimple implements Table {
     }
 
     @Override
-    public Collection<Long> insert(final Iterable<Map<String, String>> rows)
-        throws Exception {
+    public Iterable<Map<String, String>> insert(
+        final Iterable<Map<String, String>> rows
+    ) throws Exception {
         final Iterable<Map<String, String>> sticky = new StickyIterable<>(
             rows
         );
-        final List<String> heads = new LinkedList<>();
-        sticky.forEach(
-            row -> row.keySet().forEach(
-                column -> {
-                    if (!heads.contains(column)) {
-                        heads.add(column);
-                    }
-                }
-            )
-        );
-        return this.base.update(
+        final Iterator<Long> ids = this.base.update(
             new InsertSql(
-                heads,
+                new Unique<>(
+                    new Joined<>(
+                        new Mapped<Map<String, String>, Iterable<String>>(
+                            Map::keySet,
+                            sticky
+                        )
+                    )
+                ),
                 sticky,
                 this.value()
             ),
             new OutcomeIds()
+        ).iterator();
+        return new Mapped<Map<String, String>, Map<String, String>>(
+            input -> new MapOf<String, String>(
+                input,
+                new IterableOf<Map.Entry<String, String>>(
+                    new MapEntry<>(
+                        "id",
+                        String.valueOf(ids.next())
+                    )
+                )
+            ),
+            sticky.iterator()
         );
     }
 }
