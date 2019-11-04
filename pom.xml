@@ -86,6 +86,7 @@ SOFTWARE.
     <module>seeds-generator</module>
     <module>seeds-db</module>
     <module>test-steps</module>
+    <module>seeds-web-browser</module>
   </modules>
   <dependencies>
     <dependency>
